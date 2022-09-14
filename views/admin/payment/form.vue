@@ -3,23 +3,18 @@
 
         <div class="row">
             <div class="col-md-6">
-
                 <FormKit label="Id" id="id" type="hidden" validation="required" />
                 <FormKit label="Title" id="title" type="text" validation="required" />
-                <FormKit label="Slug" id="slug" type="text" validation="required" />
-                <FormKit label="Billing Cycle" id="billing_cycle_id" type="text" validation="required" />
-                <FormKit label="Speed" id="speed" type="text" validation="required" />
-                <FormKit label="Speed Type" id="speed_type" type="select" validation="required" :option="['kilobyte', 'megabyte']" />
-
+                <FormKit label="Subscription" id="subscription_id" type="text" validation="required" />
+                <FormKit label="Invoice" id="invoice_id" type="text" validation="required" />
             </div>
             <div class="col-md-6">
                 <FormKit label="Description" id="description" type="textarea" validation="required" />
-                <FormKit label="Published" id="published" type="switch" validation="required" />
-
+                <FormKit label="Is Paid" id="is_paid" type="switch" validation="required" />
+                <FormKit label="Completed" id="completed" type="switch" validation="required" />
+                <FormKit label="Successful" id="successful" type="switch" validation="required" />
             </div>
         </div>
-
-
     </table-edit>
 </template>
 
@@ -31,19 +26,20 @@ export default {
     data () {
         return {
             id: null,
-            path_param: ["isp", "package"],
+            path_param: ["isp", "payment"],
             model: {
                 id: "",
                 title: "",
-                slug: "",
+                subscription_id: "",
+                invoice_id: "",
                 description: "",
-                billing_cycle_id: "",
-                speed: "",
-                speed_type: "",
-                published: "",
-                amount: "",
+                is_paid: "",
+                completed: "",
+                successful: "",
             },
+
         };
     }
 };
 </script>
+

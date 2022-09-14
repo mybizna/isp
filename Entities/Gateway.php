@@ -5,12 +5,12 @@ namespace Modules\Isp\Entities;
 use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 
-class BillingCycle extends BaseModel
+class Gateway extends BaseModel
 {
 
-    protected $fillable = ['title', 'slug', 'description', 'duration', 'duration_type', 'published'];
+    protected $fillable = ['title', 'username', 'password', 'database', 'ip_address', 'port', 'type', 'published'];
     public $migrationDependancy = [];
-    protected $table = "isp_billing_cycle";
+    protected $table = "isp_gateway";
 
     /**
      * List of fields for managing postings.
@@ -22,10 +22,14 @@ class BillingCycle extends BaseModel
     {
         $table->increments('id');
         $table->string('title');
-        $table->string('slug');
-        $table->string('description')->nullable();
-        $table->string('duration')->nullable();
-        $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('month')->nullable();
+        $table->string('username');
+        $table->string('password');
+        $table->string('database');
+        $table->string('ip_address');
+        $table->string('port');
+        $table->string('type');
         $table->boolean('published')->default(true)->nullable();
     }
+
+
 }

@@ -3,22 +3,18 @@
 
         <div class="row">
             <div class="col-md-6">
-
                 <FormKit label="Id" id="id" type="hidden" validation="required" />
                 <FormKit label="Title" id="title" type="text" validation="required" />
-                <FormKit label="Slug" id="slug" type="text" validation="required" />
-                <FormKit label="Billing Cycle" id="billing_cycle_id" type="text" validation="required" />
-                <FormKit label="Speed" id="speed" type="text" validation="required" />
-                <FormKit label="Speed Type" id="speed_type" type="select" validation="required" :option="['kilobyte', 'megabyte']" />
-
+                <FormKit label="Package" id="package_id" type="text" validation="required" />
+                <FormKit label="Ledger" id="ledger_id" type="text" validation="required" />
             </div>
             <div class="col-md-6">
+                <FormKit label="Price" id="price" type="text" validation="required" />
+                <FormKit label="Quantity" id="quantity" type="text" validation="required" />
                 <FormKit label="Description" id="description" type="textarea" validation="required" />
                 <FormKit label="Published" id="published" type="switch" validation="required" />
-
             </div>
         </div>
-
 
     </table-edit>
 </template>
@@ -31,19 +27,21 @@ export default {
     data () {
         return {
             id: null,
-            path_param: ["isp", "package"],
+            path_param: ["isp", "package_charge"],
             model: {
                 id: "",
                 title: "",
-                slug: "",
+                package_id: "",
+                ledger_id: "",
                 description: "",
-                billing_cycle_id: "",
-                speed: "",
-                speed_type: "",
+                quantity: "",
+                price: "",
                 published: "",
-                amount: "",
             },
+
         };
+
+
     }
 };
 </script>

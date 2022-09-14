@@ -9,7 +9,7 @@ use Modules\Base\Classes\Migration;
 class Package extends BaseModel
 {
 
-    protected $fillable = ['title', 'description', 'gateway_id', 'billing_cycle_id', 'speed', 'speed_type', 'published', 'amount'];
+    protected $fillable = ['title', 'slug', 'description', 'gateway_id', 'billing_cycle_id', 'speed', 'speed_type', 'published', 'amount'];
     public $migrationDependancy = ['isp_billing_cycle'];
     protected $table = "isp_package";
 
@@ -23,9 +23,11 @@ class Package extends BaseModel
     {
         $table->increments('id');
         $table->string('title');
+        $table->string('slug');
         $table->string('description')->nullable();
 
         $table->integer('billing_cycle_id')->unsigned()->nullable();
+        $table->integer('gateway_id')->unsigned()->nullable();
 
         $table->string('speed')->nullable();
         $table->enum('speed_type', ['kilobyte', 'megabyte'])->default('megabyte')->nullable();
@@ -37,6 +39,10 @@ class Package extends BaseModel
     {
         if (Migration::checkKeyExist('isp_package', 'billing_cycle_id')) {
             $table->foreign('billing_cycle_id')->references('id')->on('isp_billing_cycle')->nullOnDelete();
+        }
+        
+        if (Migration::checkKeyExist('isp_package', 'gateway_id')) {
+            $table->foreign('gateway_id')->references('id')->on('isp_gateway')->nullOnDelete();
         }
     }
 }
