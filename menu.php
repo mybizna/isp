@@ -4,13 +4,12 @@ $this->add_module_info("isp", [
     'title' => 'Isp',
     'description' => 'Isp',
     'icon' => 'fas fa-network-wired',
-    'path' => '/admin/isp',
+    'path' => '/isp/admin/subscriber',
     'class_str' => 'text-secondary border-secondary'
 ]);
 
-$this->add_menu("isp", "dashboard", "Dashboard", "/dashboard", "fas fa-cogs", 1);
-$this->add_menu("isp", "subscriber", "Billing", "/isp/admin/subscriber", "fas fa-cogs", 5);
-$this->add_menu("isp", "subscription", "Connection", "/isp/admin/subscription", "fas fa-cogs", 5);
+$this->add_menu("isp", "subscriber", "Subscriber", "/isp/admin/subscriber", "fas fa-cogs", 5);
+$this->add_menu("isp", "subscription", "Subscription", "/isp/admin/subscription", "fas fa-cogs", 5);
 $this->add_menu("isp", "payment", "Payment", "/isp/admin/payment", "fas fa-cogs", 5);
 $this->add_menu("isp", "package", "Package", "/isp/admin/package", "fas fa-cogs", 5);
 $this->add_menu("isp", "setting", "Setting", "/isp/admin/gateway", "fas fa-cogs", 5);
