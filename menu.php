@@ -4,7 +4,7 @@ $this->add_module_info("isp", [
     'title' => 'Isp',
     'description' => 'Isp',
     'icon' => 'fas fa-network-wired',
-    'path' => 'isp.admin.subscriber',
+    'path' => '/isp/admin/subscriber',
     'class_str' => 'text-secondary border-secondary'
 ]);
 
