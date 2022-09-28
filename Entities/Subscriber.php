@@ -23,7 +23,7 @@ class Subscriber extends BaseModel
     {
         $table->increments('id');
         $table->string('username');
-        $table->string('password')->nullable();
+        $table->string('password');
         $table->integer('partner_id')->unsigned()->nullable();
     }
 

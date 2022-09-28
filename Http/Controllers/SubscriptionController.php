@@ -25,6 +25,7 @@ class SubscriptionController extends BaseController
         $mac_esc =  $request->get('mac-esc');
 
         $result = [
+            'view' => 'package',
             'mac' => $mac,
             'ip' => $ip,
             'username' => $username,
@@ -38,7 +39,7 @@ class SubscriptionController extends BaseController
             'mac_esc' => $mac_esc,
         ];
 
-        return view('isp::access', $result );
+        return view('isp::access', $result);
 
     }
 }
