@@ -12,6 +12,7 @@ class SubscriptionController extends BaseController
     public function access(Request $request)
     {
 
+        $view =  $request->get('view', 'login');
         $mac =  $request->get('mac');
         $ip =  $request->get('ip');
         $username =  $request->get('username');
@@ -25,7 +26,7 @@ class SubscriptionController extends BaseController
         $mac_esc =  $request->get('mac-esc');
 
         $result = [
-            'view' => 'package',
+            'view' => $view,
             'mac' => $mac,
             'ip' => $ip,
             'username' => $username,
@@ -38,6 +39,10 @@ class SubscriptionController extends BaseController
             'link_orig_esc' => $link_orig_esc,
             'mac_esc' => $mac_esc,
         ];
+
+        if($view == 'package'){
+            $packages = DB::table('isp_package')->all();
+        }
 
         return view('isp::access', $result);
 

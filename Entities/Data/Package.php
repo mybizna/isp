@@ -24,6 +24,8 @@ class Package
             "speed" => "1",
             "speed_type" => "megabyte",
             "published" => true,
+            "featured" => false,
+            "hidden" => false,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -35,6 +37,8 @@ class Package
             "speed" => "2",
             "speed_type" => "megabyte",
             "published" => true,
+            "featured" => true,
+            "hidden" => false,
         ]);    
         
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -46,6 +50,8 @@ class Package
             "speed" => "1",
             "speed_type" => "megabyte",
             "published" => true,
+            "featured" => false,
+            "hidden" => true,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -57,6 +63,8 @@ class Package
             "speed" => "2",
             "speed_type" => "megabyte",
             "published" => true,
+            "featured" => false,
+            "hidden" => true,
         ]);  
 
     }

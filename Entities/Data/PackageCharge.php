@@ -13,10 +13,10 @@ class PackageCharge
     public function data(Datasetter $datasetter)
     {
 
-        $package_id = DB::table('isp_package')->where('slug', '1m-hotspot')->value('id');
+        $package_id = DB::table('isp_package')->where('slug', '1m-ppp')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Router",
-            "slug" => "1m-hotspot-router",
+            "slug" => "1m-ppp-router",
             "description" => "Router",
             "package_id" => $package_id,
             "amount" => 10,
@@ -25,7 +25,7 @@ class PackageCharge
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Cable",
-            "slug" => "1m-hotspot-cable",
+            "slug" => "1m-ppp-cable",
             "description" => "Cable",
             "package_id" => $package_id,
             "amount" => 6,
@@ -34,17 +34,17 @@ class PackageCharge
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Installation",
-            "slug" => "1m-hotspot-installation",
+            "slug" => "1m-ppp-installation",
             "description" => "Installation",
             "package_id" => $package_id,
             "amount" => 15,
             "published" => true
         ]);
 
-        $package_id = DB::table('isp_package')->where('slug', '2m-hotspot')->value('id');
+        $package_id = DB::table('isp_package')->where('slug', '2m-ppp')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Router",
-            "slug" => "2m-hotspot-router",
+            "slug" => "2m-ppp-router",
             "description" => "Router",
             "package_id" => $package_id,
             "amount" => 10,
@@ -53,7 +53,7 @@ class PackageCharge
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Cable",
-            "slug" => "2m-hotspot-cable",
+            "slug" => "2m-ppp-cable",
             "description" => "Cable",
             "package_id" => $package_id,
             "amount" => 6,
@@ -62,7 +62,7 @@ class PackageCharge
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Installation",
-            "slug" => "2m-hotspot-installation",
+            "slug" => "2m-ppp-installation",
             "description" => "Installation",
             "package_id" => $package_id,
             "amount" => 15,

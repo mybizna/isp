@@ -32,6 +32,8 @@ class Package extends BaseModel
         $table->string('speed')->nullable();
         $table->enum('speed_type', ['kilobyte', 'megabyte'])->default('megabyte')->nullable();
         $table->boolean('published')->default(true)->nullable();
+        $table->boolean('featured')->default(false)->nullable();
+        $table->boolean('is_hidden')->default(false)->nullable();
         $table->double('amount', 8, 2)->nullable();
     }
 

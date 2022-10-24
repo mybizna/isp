@@ -15,6 +15,8 @@
             <div class="col-md-6">
                 <FormKit label="Description" id="description" type="textarea" validation="required" />
                 <FormKit label="Published" id="published" type="switch" validation="required" />
+                <FormKit label="Hidden in Portal" id="is_hidden" type="switch" validation="required" />
+                <FormKit label="Featured" id="featured" type="switch" validation="required" />
 
             </div>
         </div>
@@ -41,6 +43,8 @@ export default {
                 speed: "",
                 speed_type: "",
                 published: "",
+                is_hidden: "",
+                featured: "",
                 amount: "",
             },
         };
