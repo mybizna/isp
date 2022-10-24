@@ -18,123 +18,33 @@
             class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]">
         </div>
 
-        <div class="relative mt-12 w-full md:px-8 lg:mt-0" role="list">
+        <div class="relative mt-12 w-full md:px-8 lg:mt-0 " role="list">
 
             <img src="https://i.ibb.co/0n6DSS3/bgimg.png" class="absolute -ml-12 mt-24 w-full"
                 alt="background circle images" />
 
-            @if ($view == 'package')
-                <div class="relative overflow-hidden mb-8">
-                    <div class="flex justify-center">
-                        <div role="listitem"
-                            class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2">
-                            <div class="items-center justify-between flex">
-                                <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white">Starter</h2>
-                                <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                    1,000<span class="text-base font-normal">/month</span></p>
-                            </div>
-                            <div class="items-center justify-between flex">
-                                <small class="text-base text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">2GB
-                                    Limit per Day
-                                </small>
-                                <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</button>
-                            </div>
-                        </div>
-                    </div>
+            <form method="GET">
+                @if ($view == 'package')
+                    @include('isp::access-package')
+                @elseif($view == 'register')
+                    @include('isp::access-register')
+                @elseif($view == 'login')
+                    @include('isp::access-login')
+                @endif
+            </form>
 
-                    <div class="flex justify-center">
-                        <div role="listitem"
-                            class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2">
-                            <div class="items-center justify-between flex">
-                                <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white">Basic</h2>
-                                <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                    1,500<span class="text-base font-normal">/month</span></p>
-                            </div>
-                            <div class="items-center justify-between flex">
-                                <small
-                                    class="text-base text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">1 MBPs Maximum
-                                    Limit</small>
-                                <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="flex justify-center">
-                        <div role="listitem"
-                            class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2 border-l-4 border-indigo-500">
-                            <div class="h-auto w-2.5 rounded-tl-md rounded-bl-md bg-indigo-700"></div>
-                            <div class="w-full">
-                                <div class="items-center justify-between flex">
-                                    <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white">Max
-                                    </h2>
-                                    <p
-                                        class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                        1,800<span class="text-base font-normal">/month</span></p>
-                                </div>
-                                <div class="items-center justify-between flex">
-                                    <small
-                                        class="text-base text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">2 MBPs Maximum
-                                        Limit</small>
-                                    <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @elseif($view == 'login')
-                <div class="relative overflow-hidden mb-8">
-                    <div class="overflow-hidden px-3 py-10 flex justify-center">
-                        <div class="w-full max-w-xs">
-                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                                        Username
-                                    </label>
-                                    <input
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="username" type="text" placeholder="Username">
-                                </div>
-                                <div class="mb-6">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                                        Password
-                                    </label>
-                                    <input
-                                        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="password" type="password" placeholder="******************">
-                                    <p class="text-red-500 text-xs italic">Please choose a password.</p>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="button">
-                                        Login
-                                    </button>
-                                    <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                                        href="#">
-                                        Forgot Password?
-                                    </a>
-                                </div>
-
-                                <div style="text-align:center; margin-top:20px;">
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="button">
-                                        Create Account
-                                    </button>
-                                </div>
-                            </form>
-                            <p class="text-center text-gray-500 text-xs">
-                                &copy;2022. All rights reserved.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            <input type="hidden" name="view" value="{{ $view }}">
+            <input type="hidden" name="mac" value="{{ $mac }}">
+            <input type="hidden" name="ip" value="{{ $ip }}">
+            <input type="hidden" name="username" value="{{ $username }}">
+            <input type="hidden" name="link_login" value="{{ $link_login }}">
+            <input type="hidden" name="link_orig" value="{{ $link_orig }}">
+            <input type="hidden" name="error" value="{{ $error }}">
+            <input type="hidden" name="chap_id" value="{{ $chap_id }}">
+            <input type="hidden" name="chap_challenge" value="{{ $chap_challenge }}">
+            <input type="hidden" name="mac_esc" value="{{ $mac_esc }}">
+            <input type="hidden" name="link_login_id" value="{{ $link_login_id }}">
+            <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
 
 
         </div>
