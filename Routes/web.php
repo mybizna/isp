@@ -2,5 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('isp/access', 'SubscriptionController@access');
-
+Route::match(['get', 'post'], 'isp/access', 'SubscriptionController@access');

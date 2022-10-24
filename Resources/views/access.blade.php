@@ -23,7 +23,7 @@
             <img src="https://i.ibb.co/0n6DSS3/bgimg.png" class="absolute -ml-12 mt-24 w-full"
                 alt="background circle images" />
 
-            <form method="GET">
+            <form method="POST">
                 @if ($view == 'package')
                     @include('isp::access-package')
                 @elseif($view == 'register')
