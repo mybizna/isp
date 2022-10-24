@@ -59,9 +59,27 @@
         /* ! tailwindcss v3.1.8 | MIT License | https://tailwindcss.com */
 
         /*
-1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
-2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
-*/
+        1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+        2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+        */
+        .login-card {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: 0.25rem;
+            padding:10px;
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
 
         *,
         ::before,
@@ -82,11 +100,11 @@
         }
 
         /*
-1. Use a consistent sensible line-height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-3. Use a more readable tab size.
-4. Use the user's configured `sans` font-family by default.
-*/
+        1. Use a consistent sensible line-height in all browsers.
+        2. Prevent adjustments of font size after orientation changes in iOS.
+        3. Use a more readable tab size.
+        4. Use the user's configured `sans` font-family by default.
+        */
 
         html {
             line-height: 1.5;
@@ -102,9 +120,9 @@
         }
 
         /*
-1. Remove the margin in all browsers.
-2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
-*/
+        1. Remove the margin in all browsers.
+        2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+        */
 
         body {
             margin: 0;
@@ -114,10 +132,10 @@
         }
 
         /*
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-3. Ensure horizontal rules are visible by default.
-*/
+        1. Add the correct height in Firefox.
+        2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+        3. Ensure horizontal rules are visible by default.
+        */
 
         hr {
             height: 0;
@@ -129,8 +147,8 @@
         }
 
         /*
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
+        Add the correct text decoration in Chrome, Edge, and Safari.
+        */
 
         abbr:where([title]) {
             -webkit-text-decoration: underline dotted;
@@ -138,8 +156,8 @@ Add the correct text decoration in Chrome, Edge, and Safari.
         }
 
         /*
-Remove the default font size and weight for headings.
-*/
+        Remove the default font size and weight for headings.
+        */
 
         h1,
         h2,
@@ -152,8 +170,8 @@ Remove the default font size and weight for headings.
         }
 
         /*
-Reset links to optimize for opt-in styling instead of opt-out.
-*/
+        Reset links to optimize for opt-in styling instead of opt-out.
+        */
 
         a {
             color: inherit;
@@ -161,8 +179,8 @@ Reset links to optimize for opt-in styling instead of opt-out.
         }
 
         /*
-Add the correct font weight in Edge and Safari.
-*/
+        Add the correct font weight in Edge and Safari.
+        */
 
         b,
         strong {
@@ -170,9 +188,9 @@ Add the correct font weight in Edge and Safari.
         }
 
         /*
-1. Use the user's configured `mono` font family by default.
-2. Correct the odd `em` font sizing in all browsers.
-*/
+        1. Use the user's configured `mono` font family by default.
+        2. Correct the odd `em` font sizing in all browsers.
+        */
 
         code,
         kbd,
@@ -185,8 +203,8 @@ Add the correct font weight in Edge and Safari.
         }
 
         /*
-Add the correct font size in all browsers.
-*/
+        Add the correct font size in all browsers.
+        */
 
         small {
             font-size: 80%;
