@@ -42,7 +42,6 @@
 
                 <input type="hidden" name="mac" value="{{ $mac }}">
                 <input type="hidden" name="ip" value="{{ $ip }}">
-                <input type="hidden" name="username" value="{{ $username }}">
                 <input type="hidden" name="link_login" value="{{ $link_login }}">
                 <input type="hidden" name="link_orig" value="{{ $link_orig }}">
                 <input type="hidden" name="error" value="{{ $error }}">

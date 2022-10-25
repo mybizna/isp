@@ -9,7 +9,7 @@
                     </label>
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="name" type="text" placeholder="Name">
+                        id="name" name="name" type="text" placeholder="Name" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
@@ -17,7 +17,7 @@
                     </label>
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="username" type="text" placeholder="Username">
+                        id="username" name="username" type="text" placeholder="Username" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -25,7 +25,7 @@
                     </label>
                     <input
                         class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="password" type="password" placeholder="******************">
+                        id="password" name="password" type="password" placeholder="******************" required>
                     <p class="text-red-500 text-xs italic">Please choose a password.</p>
                 </div>
 
@@ -33,8 +33,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
                         Phone
                     </label>
-                    <input id="phone" type="tel" placeholder="722-xxx-xxx"
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{6}"
+                    <input id="phone" name="phone" type="tel" placeholder="722-xxx-xxx"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
 
@@ -44,13 +43,13 @@
                     </label>
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="email" type="email" placeholder="Email">
+                        id="email" name="email" type="email" placeholder="Email">
                 </div>
 
                 <div class="flex items-center justify-between">
                     <button
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit" name="view" value="login">
+                        type="submit" name="view" value="submit-register">
                         Register
                     </button>
                     <button
