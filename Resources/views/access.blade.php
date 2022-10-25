@@ -24,6 +24,8 @@
                 alt="background circle images" />
 
             <form method="POST">
+                @csrf
+
                 @if ($view == 'package')
                     @include('isp::access-package')
                 @elseif($view == 'register')
@@ -31,22 +33,21 @@
                 @elseif($view == 'login')
                     @include('isp::access-login')
                 @endif
+            
+
+                <input type="hidden" name="mac" value="{{ $mac }}">
+                <input type="hidden" name="ip" value="{{ $ip }}">
+                <input type="hidden" name="username" value="{{ $username }}">
+                <input type="hidden" name="link_login" value="{{ $link_login }}">
+                <input type="hidden" name="link_orig" value="{{ $link_orig }}">
+                <input type="hidden" name="error" value="{{ $error }}">
+                <input type="hidden" name="chap_id" value="{{ $chap_id }}">
+                <input type="hidden" name="chap_challenge" value="{{ $chap_challenge }}">
+                <input type="hidden" name="mac_esc" value="{{ $mac_esc }}">
+                <input type="hidden" name="link_login_id" value="{{ $link_login_id }}">
+                <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
+                
             </form>
-
-            <input type="hidden" name="view" value="{{ $view }}">
-            <input type="hidden" name="mac" value="{{ $mac }}">
-            <input type="hidden" name="ip" value="{{ $ip }}">
-            <input type="hidden" name="username" value="{{ $username }}">
-            <input type="hidden" name="link_login" value="{{ $link_login }}">
-            <input type="hidden" name="link_orig" value="{{ $link_orig }}">
-            <input type="hidden" name="error" value="{{ $error }}">
-            <input type="hidden" name="chap_id" value="{{ $chap_id }}">
-            <input type="hidden" name="chap_challenge" value="{{ $chap_challenge }}">
-            <input type="hidden" name="mac_esc" value="{{ $mac_esc }}">
-            <input type="hidden" name="link_login_id" value="{{ $link_login_id }}">
-            <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
-
-
         </div>
 
 
