@@ -1,7 +1,8 @@
 <div class="relative overflow-hidden mb-8">
     <div class="overflow-hidden px-3 py-10 flex justify-center">
         <div class="w-full max-w-xs login-card">
-            <div class="bg-white pt-6 pb-8 mb-4">
+            <h3 style="text-align: center"> - REGISTER - </h3>
+            <div class="bg-white">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
                         Name
@@ -18,7 +19,7 @@
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="username" type="text" placeholder="Username">
                 </div>
-                <div class="mb-6">
+                <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         Password
                     </label>
@@ -27,24 +28,42 @@
                         id="password" type="password" placeholder="******************">
                     <p class="text-red-500 text-xs italic">Please choose a password.</p>
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                        Phone
+                    </label>
+                    <input id="phone" type="tel" placeholder="722-xxx-xxx"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{6}"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        Email
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="email" type="email" placeholder="Email">
+                </div>
+
                 <div class="flex items-center justify-between">
                     <button
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit" name="view" value="login">
                         Register
                     </button>
-                    <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                        href="#">
-                        Forgot Password?
-                    </a>
+                    <button
+                        class="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"name="view" value="login">
+                        Back to Login
+                    </button>
                 </div>
 
+
+
                 <div style="text-align:center; margin-top:20px;">
-                    <button
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit" value="register">
-                        Login
-                    </button>
+
                 </div>
             </div>
             <p class="text-center text-gray-500 text-xs">

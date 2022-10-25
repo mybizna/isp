@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ISP Access</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js" integrity="sha512-+gShyB8GWoOiXNwOlBaYXdLTiZt10Iy6xjACGadpqMs20aJOoh+PJt3bwUVA6Cefe7yF7vblX6QwyXZiVwTWGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
 </head>
 
 <body>
@@ -54,7 +59,15 @@
 
     </div>
 
+    <script>
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+          // any initialisation options go here
+          preferredCountries: ["ke","us","gb" ],
+          separateDialCode:true,
 
+        });
+      </script>
 
     <style>
         /* ! tailwindcss v3.1.8 | MIT License | https://tailwindcss.com */
@@ -156,19 +169,7 @@
             text-decoration: underline dotted;
         }
 
-        /*
-        Remove the default font size and weight for headings.
-        */
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-size: inherit;
-            font-weight: inherit;
-        }
+     
 
         /*
         Reset links to optimize for opt-in styling instead of opt-out.
@@ -824,7 +825,10 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             --tw-bg-opacity: 1;
             background-color: rgb(67 56 202 / var(--tw-bg-opacity));
         }
-
+        .bg-red-500{
+            --tw-bg-opacity: 1;
+            background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+        }
         .bg-blue-500 {
             --tw-bg-opacity: 1;
             background-color: rgb(59 130 246 / var(--tw-bg-opacity));
