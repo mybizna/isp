@@ -35,6 +35,8 @@
                     @include('isp::access-package')
                 @elseif($view == 'register')
                     @include('isp::access-register')
+                @elseif($view == 'payment')
+                    @include('isp::access-payment')
                 @elseif($view == 'login')
                     @include('isp::access-login')
                 @endif

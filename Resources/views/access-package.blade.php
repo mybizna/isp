@@ -15,7 +15,7 @@
                     <small class="text-base text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
                         {{ $package->description }}, Package: {{ $package->package_title }}, Speed: {{ $package->speed }} {{ $package->speed_type == 'kilobyte' ? 'KB' : 'MB' }}
                     </small>
-                    <button id='package' type="submit" name="view" value="submit-package" data-mdb-ripple="true" data-mdb-ripple-color="light"
+                    <button id='package' type="submit" name="view" value="package_{{ $package->id }}" data-mdb-ripple="true" data-mdb-ripple-color="light"
                         class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</button>
                 </div>
             </div>
