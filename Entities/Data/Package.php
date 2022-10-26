@@ -13,7 +13,7 @@ class Package
     public function data(Datasetter $datasetter)
     {
         $gateway_id = DB::table('isp_gateway')->where('type', 'freeradius')->value('id');
-        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', 'monthly')->value('id');
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
         
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "1M Hotspot",
@@ -21,11 +21,12 @@ class Package
             "description" => "1M Hotspot",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 100,
             "speed" => "1",
             "speed_type" => "megabyte",
             "published" => true,
-            "featured" => false,
-            "hidden" => false,
+            "featured" => 0,
+            "hidden" => 0,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -34,11 +35,12 @@ class Package
             "description" => "2M Hotspot",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 150,
             "speed" => "2",
             "speed_type" => "megabyte",
             "published" => true,
-            "featured" => true,
-            "hidden" => false,
+            "featured" => 1,
+            "hidden" => 0,
         ]);    
         
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -47,11 +49,12 @@ class Package
             "description" => "1M-PPP",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 100,
             "speed" => "1",
             "speed_type" => "megabyte",
             "published" => true,
-            "featured" => false,
-            "hidden" => true,
+            "featured" => 0,
+            "hidden" => 1,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -60,11 +63,12 @@ class Package
             "description" => "2M-PPP",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 150,
             "speed" => "2",
             "speed_type" => "megabyte",
             "published" => true,
-            "featured" => false,
-            "hidden" => true,
+            "featured" => 0,
+            "hidden" => 1,
         ]);  
 
     }

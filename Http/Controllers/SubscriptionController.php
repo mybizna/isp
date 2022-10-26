@@ -69,6 +69,7 @@ class SubscriptionController extends BaseController
             $data['packages'] = DB::table('isp_package AS p')
                 ->select('p.*', 'b.title as package_title')
                 ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
+                ->where(['p.is_hidden'=>false])
                 ->get();
         }
 
