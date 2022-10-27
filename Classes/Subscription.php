@@ -2,11 +2,12 @@
 
 namespace Modules\Isp\Classes;
 
-use Illuminate\Support\Str;
-use Modules\Account\Entities\Invoice as DBInvoice;
-use Modules\Account\Classes\Invoice;
-use Modules\Isp\Entities\Subscriber;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Modules\Account\Classes\Invoice;
+use Modules\Account\Entities\Invoice as DBInvoice;
+use Modules\Isp\Entities\Subscriber;
+use Modules\Partner\Classes\Partner;
 
 class Subscription
 {
@@ -52,56 +53,61 @@ class Subscription
 
     public function register($data)
     {
+        $partner_cls = new Partner();
+
         $name_arr = explode(' ', $data['name']);
         $username = Str::of($data['username'])->trim();
         $password = Str::of($data['password'])->trim();
 
-        $partner = Partner::create([
+        $partner = $partner_cls->createPartner([
             'first_name' => $name_arr[0],
             'last_name' => $name_arr[1],
             'email' => $data['email'],
             'phone' => $data['phone'],
+            'slugs' => [$username],
         ]);
 
-        $subscriber = Subscriber::create([
-            'partner_id' => $partner->id,
-            'username' => $username,
-            'password' => $password,
-        ]);
+        if ($partner) {
+            $subscriber = Subscriber::create([
+                'partner_id' => $partner->id,
+                'username' => $username,
+                'password' => $password,
+            ]);
 
-        $data['view'] = 'login';
+            $data['view'] = 'login';
+
+        }
 
         return $data;
     }
 
     public function package($data)
     {
-        
+
         $username = Str::of($data['username'])->trim();
 
         $data['packages'] = DB::table('isp_package AS p')
-        ->select('p.*', 'b.title as package_title')
-        ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
-        ->where(['p.is_hidden' => false])
-        ->get();
-        
+            ->select('p.*', 'b.title as package_title')
+            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
+            ->where(['p.is_hidden' => false])
+            ->get();
+
         $subscriber = Subscriber::where(['username' => $username])->first();
 
         $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
-        
+
         $data['invoices'] = collect([]);
 
-        if($invoices){
-            $data['invoices'] = $invoices; 
+        if ($invoices) {
+            $data['invoices'] = $invoices;
         }
-        
+
         return $data;
     }
 
     public function packageId($data)
     {
         $invoice = new Invoice();
-       
 
         $view_arr = explode('_', $data['view']);
         $username = Str::of($data['username'])->trim();
@@ -110,7 +116,7 @@ class Subscription
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.id' => $view_arr[1]])
-            ->first();;
+            ->first();
 
         $subscriber = Subscriber::where(['username' => $username])->first();
 
@@ -118,12 +124,12 @@ class Subscription
         $partner_id = $subscriber->partner_id;
         $amount = $package->amount;
 
-        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, ]];
+        $items = [['title' => $title, 'price' => $amount, 'total' => $amount]];
 
         $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
-        
+
         $invoice = DBInvoice::where(['id' => $invoice_id])->get();
-        
+
         $data['invoice'] = $invoice;
 
         $data['view'] = 'payment';
@@ -133,7 +139,7 @@ class Subscription
 
     public function payment($data)
     {
-        
+
         $data['packages'] = DB::table('isp_package AS p')
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
@@ -163,9 +169,9 @@ class Subscription
         $invoice_id = $view_arr[1];
 
         $invoice = DBInvoice::where(['id' => $invoice_id])->get();
-        
+
         $data['invoice'] = $invoice;
-       
+
         $data['view'] = 'payment';
 
         return $data;
