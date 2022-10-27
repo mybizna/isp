@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ISP Access</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js" integrity="sha512-+gShyB8GWoOiXNwOlBaYXdLTiZt10Iy6xjACGadpqMs20aJOoh+PJt3bwUVA6Cefe7yF7vblX6QwyXZiVwTWGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"
+        integrity="sha512-+gShyB8GWoOiXNwOlBaYXdLTiZt10Iy6xjACGadpqMs20aJOoh+PJt3bwUVA6Cefe7yF7vblX6QwyXZiVwTWGg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+        integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -40,7 +41,7 @@
                 @elseif($view == 'login')
                     @include('isp::access-login')
                 @endif
-            
+
 
                 <input type="hidden" name="mac" value="{{ $mac }}">
                 <input type="hidden" name="ip" value="{{ $ip }}">
@@ -52,7 +53,7 @@
                 <input type="hidden" name="mac_esc" value="{{ $mac_esc }}">
                 <input type="hidden" name="link_login_id" value="{{ $link_login_id }}">
                 <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
-                
+
             </form>
         </div>
 
@@ -62,15 +63,79 @@
 
     <script>
         var input = document.querySelector("#phone");
+
         window.intlTelInput(input, {
-          // any initialisation options go here
-          preferredCountries: ["ke","us","gb" ],
-          separateDialCode:true,
+            // any initialisation options go here
+            onlyCountries: ["ke"],
+            separateDialCode: true,
 
         });
-      </script>
+
+        function openCity(evt, methodName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(methodName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 
     <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            padding: 5px 10px 5px 0;
+        }
+        
+        .tablinks{
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 5px 10px;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab a:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab a.active {
+            color: white;
+            border: 1px solid rgb(31, 114, 49);
+            background-color: #298a31;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            border-top: none;
+        }
+
         /* ! tailwindcss v3.1.8 | MIT License | https://tailwindcss.com */
 
         /*
@@ -92,8 +157,8 @@
             background-clip: border-box;
             border: 1px solid rgba(0, 0, 0, .125);
             border-radius: 0.25rem;
-            padding:10px;
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+            padding: 10px;
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
         }
 
         *,
@@ -170,7 +235,7 @@
             text-decoration: underline dotted;
         }
 
-     
+
 
         /*
         Reset links to optimize for opt-in styling instead of opt-out.
@@ -826,10 +891,12 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             --tw-bg-opacity: 1;
             background-color: rgb(67 56 202 / var(--tw-bg-opacity));
         }
-        .bg-red-500{
+
+        .bg-red-500 {
             --tw-bg-opacity: 1;
             background-color: rgb(239 68 68 / var(--tw-bg-opacity));
         }
+
         .bg-blue-500 {
             --tw-bg-opacity: 1;
             background-color: rgb(59 130 246 / var(--tw-bg-opacity));

@@ -60,8 +60,8 @@ class Subscription
         $password = Str::of($data['password'])->trim();
 
         $partner = $partner_cls->createPartner([
-            'first_name' => $name_arr[0],
-            'last_name' => $name_arr[1],
+            'first_name' => (isset($name_arr[0])) ? $name_arr[0] : '',
+            'last_name' => (isset($name_arr[1])) ? $name_arr[1] : '',
             'email' => $data['email'],
             'phone' => $data['phone'],
             'slugs' => [$username],
