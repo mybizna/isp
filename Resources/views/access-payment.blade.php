@@ -28,15 +28,23 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="phone" name="phone" type="text" placeholder="Phone">
                     </div>
+                    <div style="text-align:center; margin-top:20px;">
+                        <button id='stkpush' type="submit" name="view" value="stkpush_{{ $invoice->id }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Send STK Push
+                        </button>
+                    </div>
                 </div>
 
                 <div id="TILLNO" class="tabcontent">
                     <br>
                     <h3>TILL No</h3>
                     <small>
-                        - Send Money to Till Number <b>232323</b> and enter the Mpesa Code
+                        - ONLY <strong>SAFARICOM/MPESA</strong> Accepted.<br />
+                        - Please Go to <strong>LIPA na MPesa</strong><br />
+                        - Select <strong>Buy Goods and Services</strong><br />
+                        - Send to Till Number <strong>232323</strong><br />
                     </small>
-                    <br>
                     <div class="mb-4">
                         <br>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="mpesa_code">
@@ -46,28 +54,36 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="mpesa_code" name="mpesa_code" type="text" placeholder="MPesa Code">
                     </div>
+                    <div style="text-align:center; margin-top:20px;">
+                        <button id='tillno' type="submit" name="view" value="tillno_{{ $invoice->id }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Verify MPesa Code
+                        </button>
+                    </div>
                 </div>
 
                 <div id="PAYBILL" class="tabcontent">
                     <br>
                     <h3>Paybill No</h3>
                     <small>
-                        - Send Money to Pay Bill Number <b>232323</b> and enter the Account as
-                        <b>{{ $username }}</b>
+                        - ONLY <strong>SAFARICOM/MPESA</strong> Accepted.<br />
+                        - Please Go to <strong>LIPA na MPesa</strong><br />
+                        - Select <strong>Buy Goods and Services</strong><br />
+                        - Send to Paybill Number <strong>232323</strong><br />
+                        - Send to Account Name <strong>{{ $username }}</strong><br />
                     </small>
-                    <br>
-                 
+                    <div style="text-align:center; margin-top:20px;">
+                        <button id='paybill' type="submit" name="view" value="paybill_{{ $invoice->id }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Verify MPesa 
+                        </button>
+                    </div>              
                 </div>
 
 
 
 
-                <div style="text-align:center; margin-top:20px;">
-                    <button id='register' type="submit" name="view" value="register"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Complete Payment
-                    </button>
-                </div>
+
             </div>
             <p class="text-center text-gray-500 text-xs">
                 &copy;2022. All rights reserved.

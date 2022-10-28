@@ -168,7 +168,7 @@ class Subscription
 
         $invoice_id = $view_arr[1];
 
-        $invoice = DBInvoice::where(['id' => $invoice_id])->get();
+        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
 
         $data['invoice'] = $invoice;
 
@@ -176,4 +176,51 @@ class Subscription
 
         return $data;
     }
+
+    public function paybill($data)
+    {
+        $view_arr = explode('_', $data['view']);
+
+        $invoice_id = $view_arr[1];
+
+        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
+
+        $data['invoice'] = $invoice;
+
+        $data['view'] = 'payment';
+
+        return $data;
+    }
+
+    public function tillno($data)
+    {
+        $view_arr = explode('_', $data['view']);
+
+        $invoice_id = $view_arr[1];
+
+        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
+
+        $data['invoice'] = $invoice;
+
+        $data['view'] = 'payment';
+
+        return $data;
+    }
+
+    public function stkpush($data)
+    {
+        $view_arr = explode('_', $data['view']);
+
+        $invoice_id = $view_arr[1];
+
+        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
+
+        $data['invoice'] = $invoice;
+
+        $data['view'] = 'payment';
+
+        return $data;
+    }
+    
+
 }

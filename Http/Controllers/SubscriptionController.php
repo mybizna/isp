@@ -26,15 +26,7 @@ class SubscriptionController extends BaseController
         if ($data['view'] == 'submit-register') {
             $data = $subscription->register($data);
         } 
-        
-        if ($data['view'] == 'package') {
-            $data = $subscription->package($data);
-        } 
-        
-        if (Str::contains($data['view'], 'package_')) {
-            $data = $subscription->packageId($data);
-        } 
-        
+
         if (Str::contains($data['view'], 'invoicecancel_')) {
             $data = $subscription->invoiceCancel($data);
         } 
@@ -43,6 +35,26 @@ class SubscriptionController extends BaseController
             $data = $subscription->invoiceBuy($data);
         } 
         
+        if ($data['view'] == 'package') {
+            $data = $subscription->package($data);
+        } 
+        
+        if (Str::contains($data['view'], 'package_')) {
+            $data = $subscription->packageId($data);
+        } 
+
+        if ($data['view'] == 'paybill') {
+            $data = $subscription->paybill($data);
+        }
+        
+        if ($data['view'] == 'tillno') {
+            $data = $subscription->tillno($data);
+        }
+        
+        if ($data['view'] == 'stkpush') {
+            $data = $subscription->stkpush($data);
+        } 
+           
         if ($data['view'] == 'payment') {
             $data = $subscription->payment($data);
         }
