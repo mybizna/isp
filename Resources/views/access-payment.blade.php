@@ -29,10 +29,17 @@
                             id="phone" name="phone" type="text" placeholder="Phone">
                     </div>
                     <div style="text-align:center; margin-top:20px;">
-                        <button id='stkpush' type="submit" name="view" value="stkpush_{{ $invoice->id }}"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Send STK Push
-                        </button>
+                        @if ($request_sent)
+                            <button id='stkpush' type="submit" name="view" value="stkpush_{{ $invoice->id }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Verify Payment
+                            </button>
+                        @else
+                            <button id='stkpush' type="submit" name="view" value="stkpush_{{ $invoice->id }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Send STK Push
+                            </button>
+                        @endif
                     </div>
                 </div>
 
@@ -75,9 +82,9 @@
                     <div style="text-align:center; margin-top:20px;">
                         <button id='paybill' type="submit" name="view" value="paybill_{{ $invoice->id }}"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Verify MPesa 
+                            Verify MPesa
                         </button>
-                    </div>              
+                    </div>
                 </div>
 
 

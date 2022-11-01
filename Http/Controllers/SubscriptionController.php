@@ -43,21 +43,22 @@ class SubscriptionController extends BaseController
             $data = $subscription->packageId($data);
         } 
 
-        if ($data['view'] == 'paybill') {
+        if (Str::contains($data['view'], 'paybill_')) {
             $data = $subscription->paybill($data);
         }
         
-        if ($data['view'] == 'tillno') {
+        if (Str::contains($data['view'], 'tillno_')) {
             $data = $subscription->tillno($data);
         }
         
-        if ($data['view'] == 'stkpush') {
+        if (Str::contains($data['view'], 'stkpush_')) {
             $data = $subscription->stkpush($data);
         } 
            
         if ($data['view'] == 'payment') {
             $data = $subscription->payment($data);
         }
+        print_r($data); exit;
 
         return view('isp::access', $data);
 

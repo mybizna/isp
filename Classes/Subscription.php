@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Entities\Subscriber;
+use Modules\Mpesa\Classes\Mpesa;
 use Modules\Partner\Classes\Partner;
 
 class Subscription
@@ -209,6 +210,7 @@ class Subscription
 
     public function stkpush($data)
     {
+      
         $view_arr = explode('_', $data['view']);
 
         $invoice_id = $view_arr[1];
@@ -218,9 +220,12 @@ class Subscription
         $data['invoice'] = $invoice;
 
         $data['view'] = 'payment';
+        $data['request_sent'] = 1;
+
+        $mpesa = new Mpesa();
+        $mpesa->stkpush($data['phone'], $invoice->total, $invoice->title);
 
         return $data;
     }
-    
 
 }
