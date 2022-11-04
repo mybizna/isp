@@ -141,6 +141,14 @@ class Subscription
     public function payment($data)
     {
 
+        if (!isset($data['request_sent'])) {
+            $data['request_sent'] = 0;
+        }
+
+        if (!isset($data['phone'])) {
+            $data['phone'] = '';
+        }
+
         $data['packages'] = DB::table('isp_package AS p')
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
@@ -210,7 +218,6 @@ class Subscription
 
     public function stkpush($data)
     {
-      
         $view_arr = explode('_', $data['view']);
 
         $invoice_id = $view_arr[1];
@@ -220,10 +227,22 @@ class Subscription
         $data['invoice'] = $invoice;
 
         $data['view'] = 'payment';
-        $data['request_sent'] = 1;
 
-        $mpesa = new Mpesa();
-        $mpesa->stkpush($data['phone'], $invoice->total, $invoice->title);
+        if (isset($data['verifying']) && $data['verifying']) {
+            $data['view'] = 'thankyou';
+            $mpesa = new Mpesa();
+            $stkpush = $mpesa->validateStkpush($data['phone'], $invoice->total);
+
+        } else {
+            $mpesa = new Mpesa();
+            $stkpush = $mpesa->stkpush($data['phone'], $invoice->total, $invoice->title);
+
+            if ($stkpush) {
+                $data['request_sent'] = 1;
+            } else {
+                $data['request_sent'] = 0;
+            }
+        }
 
         return $data;
     }

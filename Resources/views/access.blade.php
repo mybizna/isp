@@ -40,6 +40,8 @@
                     @include('isp::access-payment')
                 @elseif($view == 'login')
                     @include('isp::access-login')
+                    @elseif($view == 'thankyou')
+                        @include('isp::access-thankyou')
                 @endif
 
 

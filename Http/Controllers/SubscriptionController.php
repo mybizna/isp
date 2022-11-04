@@ -58,7 +58,6 @@ class SubscriptionController extends BaseController
         if ($data['view'] == 'payment') {
             $data = $subscription->payment($data);
         }
-        print_r($data); exit;
 
         return view('isp::access', $data);
 
