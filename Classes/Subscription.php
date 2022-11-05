@@ -231,7 +231,7 @@ class Subscription
         if (isset($data['verifying']) && $data['verifying']) {
             $data['view'] = 'thankyou';
             $mpesa = new Mpesa();
-            $stkpush = $mpesa->validateStkpush($data['phone'], $invoice->total);
+            $stkpush = $mpesa->validateStkpush($data['phone'], $invoice->total, $invoice->title, $invoice->partner_id, $invoice->id);
 
         } else {
             $mpesa = new Mpesa();
