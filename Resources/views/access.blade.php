@@ -29,6 +29,7 @@
             <img src="https://i.ibb.co/0n6DSS3/bgimg.png" class="absolute -ml-12 mt-24 w-full"
                 alt="background circle images" />
 
+            @if ($view != 'thankyou')
             <form method="POST">
                 @csrf
 
@@ -40,10 +41,7 @@
                     @include('isp::access-payment')
                 @elseif($view == 'login')
                     @include('isp::access-login')
-                    @elseif($view == 'thankyou')
-                        @include('isp::access-thankyou')
                 @endif
-
 
                 <input type="hidden" name="mac" value="{{ $mac }}">
                 <input type="hidden" name="ip" value="{{ $ip }}">
@@ -57,6 +55,9 @@
                 <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
 
             </form>
+            @else    
+                @include('isp::access-thankyou')
+            @endif
         </div>
 
 
