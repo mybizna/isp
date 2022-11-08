@@ -12,24 +12,35 @@ use Modules\Partner\Classes\Partner;
 
 class Subscription
 {
-    public function initData($request)
+    public function processData($request, $tmp_data = [])
     {
-        if ($request->isMethod('post')) {
-            $data = $request->all();
-        } else {
-            $data['view'] = $request->get('view', 'login');
-            $data['mac'] = $request->get('mac');
-            $data['ip'] = $request->get('ip');
-            $data['username'] = $request->get('username');
-            $data['link_login'] = $request->get('link-login');
-            $data['link_orig'] = $request->get('link-orig');
-            $data['error'] = $request->get('error');
-            $data['chap_id'] = $request->get('chap-id');
-            $data['chap_challenge'] = $request->get('chap-challenge');
-            $data['link_login_id'] = $request->get('link-login-id');
-            $data['link_orig_esc'] = $request->get('link-orig-esc');
-            $data['mac_esc'] = $request->get('mac-esc');
+        $data = $request->session()->get('subscription_data', []);
+
+        if (empty($tmp_data)) {
+            if ($request->isMethod('post')) {
+                $tmp_data = $request->all();
+            } else {
+                $tmp_data['view'] = $request->get('view', 'login');
+                $tmp_data['mac'] = $request->get('mac');
+                $tmp_data['ip'] = $request->get('ip');
+                $tmp_data['username'] = $request->get('username');
+                $tmp_data['link_login'] = $request->get('link-login');
+                $tmp_data['link_orig'] = $request->get('link-orig');
+                $tmp_data['error'] = $request->get('error');
+                $tmp_data['chap_id'] = $request->get('chap-id');
+                $tmp_data['chap_challenge'] = $request->get('chap-challenge');
+                $tmp_data['link_login_id'] = $request->get('link-login-id');
+                $tmp_data['link_orig_esc'] = $request->get('link-orig-esc');
+                $tmp_data['mac_esc'] = $request->get('mac-esc');
+            }
+
         }
+
+        $data = array_merge($tmp_data, $data);
+
+        $request->session()->put('subscription_data', $tmp_data);
+
+        $data = $request->session()->get('subscription_data', []);
 
         return $data;
     }
@@ -44,12 +55,10 @@ class Subscription
         $subscriber = Subscriber::where($where)->first();
 
         if ($subscriber === null) {
-            $data['view'] = 'login';
-        } else {
-            $data['view'] = 'package';
+            return false;
         }
 
-        return $data;
+        return true;
     }
 
     public function register($data)
@@ -75,19 +84,18 @@ class Subscription
                 'password' => $password,
             ]);
 
-            $data['view'] = 'login';
-
+            return true;
         }
 
-        return $data;
+        return false;
     }
 
-    public function package($data)
+    public function packages($data)
     {
-
         $username = Str::of($data['username'])->trim();
 
-        $data['packages'] = DB::table('isp_package AS p')
+        $tmpdata = [];
+        $tmpdata['packages'] = DB::table('isp_package AS p')
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.is_hidden' => false])
@@ -97,23 +105,25 @@ class Subscription
 
         $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
 
-        $data['invoices'] = collect([]);
+        $tmpdata['invoices'] = collect([]);
 
         if ($invoices) {
-            $data['invoices'] = $invoices;
+            $tmpdata['invoices'] = $invoices;
         }
 
-        return $data;
+        return $tmpdata;
+
     }
 
-    public function packageId($data)
+    public function singlePackage($data, $id)
     {
         $invoice = new Invoice();
 
         $view_arr = explode('_', $data['view']);
         $username = Str::of($data['username'])->trim();
 
-        $data['package'] = $package = DB::table('isp_package AS p')
+        $tmpdata = [];
+        $tmpdata['package'] = $package = DB::table('isp_package AS p')
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.id' => $view_arr[1]])
@@ -131,120 +141,98 @@ class Subscription
 
         $invoice = DBInvoice::where(['id' => $invoice_id])->get();
 
-        $data['invoice'] = $invoice;
+        $tmpdata['invoice'] = $invoice;
 
-        $data['view'] = 'payment';
-
-        return $data;
+        return $tmpdata;
     }
 
     public function payment($data)
     {
+        $tmpdata = [];
 
         if (!isset($data['request_sent'])) {
-            $data['request_sent'] = 0;
+            $tmpdata['request_sent'] = 0;
         }
 
         if (!isset($data['phone'])) {
-            $data['phone'] = '';
+            $tmpdata['phone'] = '';
         }
 
-        $data['packages'] = DB::table('isp_package AS p')
+        $tmpdata['packages'] = DB::table('isp_package AS p')
             ->select('p.*', 'b.title as package_title')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.is_hidden' => false])
             ->get();
 
-        return $data;
+        return $tmpdata;
     }
 
-    public function invoiceCancel($data)
+    public function invoiceCancel($data, $id)
     {
         $invoice = new Invoice();
 
-        $view_arr = explode('_', $data['view']);
-
-        $invoice->deleteInvoices($view_arr[1]);
-
-        $data['view'] = 'package';
-
-        return $data;
+        $invoice->deleteInvoices($id);
     }
 
-    public function invoiceBuy($data)
+    public function invoiceBuy($data, $id)
     {
-        $view_arr = explode('_', $data['view']);
-
-        $invoice_id = $view_arr[1];
-
-        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
+        $invoice = DBInvoice::where(['id' => $id])->first();
 
         $data['invoice'] = $invoice;
 
-        $data['view'] = 'payment';
+        if ($invoice === null) {
+            return false;
+        }
 
-        return $data;
+        return true;
     }
 
-    public function paybill($data)
+    public function paybill($data, $id)
     {
-        $view_arr = explode('_', $data['view']);
+        $invoice = DBInvoice::where(['id' => $id])->first();
 
-        $invoice_id = $view_arr[1];
+        $tmpdata = [];
 
-        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
+        $tmpdata['invoice'] = $invoice;
 
-        $data['invoice'] = $invoice;
-
-        $data['view'] = 'payment';
-
-        return $data;
+        return $tmpdata;
     }
 
-    public function tillno($data)
+    public function tillno($data, $id)
     {
-        $view_arr = explode('_', $data['view']);
+        $invoice = DBInvoice::where(['id' => $id])->first();
+        
+        $tmpdata = [];
 
-        $invoice_id = $view_arr[1];
+        $tmpdata['invoice'] = $invoice;
 
-        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
-
-        $data['invoice'] = $invoice;
-
-        $data['view'] = 'payment';
-
-        return $data;
+        return $tmpdata;
     }
 
-    public function stkpush($data)
+    public function stkpush($data, $id)
     {
-        $view_arr = explode('_', $data['view']);
+        $invoice = DBInvoice::where(['id' => $id])->first();
 
-        $invoice_id = $view_arr[1];
-
-        $invoice = DBInvoice::where(['id' => $invoice_id])->first();
-
-        $data['invoice'] = $invoice;
-
-        $data['view'] = 'payment';
+        $tmpdata = [];
+        $tmpdata['invoice'] = $invoice;
 
         if (isset($data['verifying']) && $data['verifying']) {
             $data['view'] = 'thankyou';
             $mpesa = new Mpesa();
             $stkpush = $mpesa->validateStkpush($data['phone'], $invoice->total, $invoice->title, $invoice->partner_id, $invoice->id);
-
+            return true;
         } else {
             $mpesa = new Mpesa();
             $stkpush = $mpesa->stkpush($data['phone'], $invoice->total, $invoice->title);
 
             if ($stkpush) {
-                $data['request_sent'] = 1;
+                $tmpdata['request_sent'] = 1;
             } else {
-                $data['request_sent'] = 0;
+                $tmpdata['request_sent'] = 0;
             }
         }
 
-        return $data;
+        return $tmpdata;
     }
 
 }

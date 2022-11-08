@@ -29,35 +29,7 @@
             <img src="https://i.ibb.co/0n6DSS3/bgimg.png" class="absolute -ml-12 mt-24 w-full"
                 alt="background circle images" />
 
-            @if ($view != 'thankyou')
-            <form method="POST">
-                @csrf
-
-                @if ($view == 'package')
-                    @include('isp::access-package')
-                @elseif($view == 'register')
-                    @include('isp::access-register')
-                @elseif($view == 'payment')
-                    @include('isp::access-payment')
-                @elseif($view == 'login')
-                    @include('isp::access-login')
-                @endif
-
-                <input type="hidden" name="mac" value="{{ $mac }}">
-                <input type="hidden" name="ip" value="{{ $ip }}">
-                <input type="hidden" name="link_login" value="{{ $link_login }}">
-                <input type="hidden" name="link_orig" value="{{ $link_orig }}">
-                <input type="hidden" name="error" value="{{ $error }}">
-                <input type="hidden" name="chap_id" value="{{ $chap_id }}">
-                <input type="hidden" name="chap_challenge" value="{{ $chap_challenge }}">
-                <input type="hidden" name="mac_esc" value="{{ $mac_esc }}">
-                <input type="hidden" name="link_login_id" value="{{ $link_login_id }}">
-                <input type="hidden" name="link_orig_esc" value="{{ $link_orig_esc }}">
-
-            </form>
-            @else    
-                @include('isp::access-thankyou')
-            @endif
+            @yield('content')
         </div>
 
 
@@ -102,8 +74,8 @@
             overflow: hidden;
             padding: 5px 10px 5px 0;
         }
-        
-        .tablinks{
+
+        .tablinks {
             border: 1px solid #eee;
             border-radius: 20px;
             padding: 5px 10px;
