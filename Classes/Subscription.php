@@ -9,49 +9,53 @@ use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Entities\Subscriber;
 use Modules\Mpesa\Classes\Mpesa;
 use Modules\Partner\Classes\Partner;
+use Session;
 
 class Subscription
 {
     public function processData($request, $tmp_data = [])
     {
-        $data = $request->session()->get('subscription_data', []);
-
+        $data = Session::get('subscription_data');
+        
         if (empty($tmp_data)) {
             if ($request->isMethod('post')) {
                 $tmp_data = $request->all();
             } else {
-                $tmp_data['view'] = $request->get('view', 'login');
-                $tmp_data['mac'] = $request->get('mac');
-                $tmp_data['ip'] = $request->get('ip');
-                $tmp_data['username'] = $request->get('username');
-                $tmp_data['link_login'] = $request->get('link-login');
-                $tmp_data['link_orig'] = $request->get('link-orig');
-                $tmp_data['error'] = $request->get('error');
-                $tmp_data['chap_id'] = $request->get('chap-id');
-                $tmp_data['chap_challenge'] = $request->get('chap-challenge');
-                $tmp_data['link_login_id'] = $request->get('link-login-id');
-                $tmp_data['link_orig_esc'] = $request->get('link-orig-esc');
-                $tmp_data['mac_esc'] = $request->get('mac-esc');
+                if (empty($data)) { 
+                    $tmp_data['phone'] = '';
+                    $tmp_data['view'] = $request->get('view', 'login');
+                    $tmp_data['mac'] = $request->get('mac');
+                    $tmp_data['ip'] = $request->get('ip');
+                    $tmp_data['username'] = $request->get('username');
+                    $tmp_data['link_login'] = $request->get('link-login');
+                    $tmp_data['link_orig'] = $request->get('link-orig');
+                    $tmp_data['error'] = $request->get('error');
+                    $tmp_data['chap_id'] = $request->get('chap-id');
+                    $tmp_data['chap_challenge'] = $request->get('chap-challenge');
+                    $tmp_data['link_login_id'] = $request->get('link-login-id');
+                    $tmp_data['link_orig_esc'] = $request->get('link-orig-esc');
+                    $tmp_data['mac_esc'] = $request->get('mac-esc');
+                }
             }
-
         }
+     
+        $data = array_merge($data, $tmp_data);
+        
+        Session::put('subscription_data', $data);
 
-        $data = array_merge($tmp_data, $data);
-
-        $request->session()->put('subscription_data', $tmp_data);
-
-        $data = $request->session()->get('subscription_data', []);
+        $data = Session::get('subscription_data', []);
 
         return $data;
     }
 
+   
     public function login($data)
     {
         $username = Str::of($data['username'])->trim();
         $password = Str::of($data['password'])->trim();
 
         $where = ['username' => $username, 'password' => $password];
-
+        
         $subscriber = Subscriber::where($where)->first();
 
         if ($subscriber === null) {
@@ -100,11 +104,11 @@ class Subscription
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.is_hidden' => false])
             ->get();
-
+            
         $subscriber = Subscriber::where(['username' => $username])->first();
 
         $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
-
+        
         $tmpdata['invoices'] = collect([]);
 
         if ($invoices) {
@@ -150,9 +154,6 @@ class Subscription
     {
         $tmpdata = [];
 
-        if (!isset($data['request_sent'])) {
-            $tmpdata['request_sent'] = 0;
-        }
 
         if (!isset($data['phone'])) {
             $tmpdata['phone'] = '';
@@ -174,33 +175,36 @@ class Subscription
         $invoice->deleteInvoices($id);
     }
 
-    public function invoiceBuy($data, $id)
+    public function getInvoice($id)
     {
         $invoice = DBInvoice::where(['id' => $id])->first();
+        
+        if ($invoice === null) {
+            return false;
+        }
+        
+        return $invoice;
+    }
 
-        $data['invoice'] = $invoice;
+    public function invoiceBuy($data, $id)
+    {
+        $tmpdata = [];
 
+        $invoice = DBInvoice::where(['id' => $id])->first();
+        
         if ($invoice === null) {
             return false;
         }
 
-        return true;
-    }
-
-    public function paybill($data, $id)
-    {
-        $invoice = DBInvoice::where(['id' => $id])->first();
-
-        $tmpdata = [];
-
-        $tmpdata['invoice'] = $invoice;
+        $tmpdata['invoice_id'] = $id;
 
         return $tmpdata;
     }
 
-    public function tillno($data, $id)
+    public function paybill($data)
     {
-        $invoice = DBInvoice::where(['id' => $id])->first();
+      
+        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
         
         $tmpdata = [];
 
@@ -209,9 +213,20 @@ class Subscription
         return $tmpdata;
     }
 
-    public function stkpush($data, $id)
+    public function tillno($data)
     {
-        $invoice = DBInvoice::where(['id' => $id])->first();
+        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
+        
+        $tmpdata = [];
+
+        $tmpdata['invoice'] = $invoice;
+
+        return $tmpdata;
+    }
+
+    public function stkpush($data)
+    {
+        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
 
         $tmpdata = [];
         $tmpdata['invoice'] = $invoice;

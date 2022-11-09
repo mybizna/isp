@@ -1,7 +1,7 @@
 @extends('isp::access')
 
 @section('content')
-    <form method="POST">
+    <form method="POST" action="{{ url(route('isp_access_submitlogin')) }}">
         @csrf
         <div class="relative overflow-hidden mb-8">
             <div class="overflow-hidden px-3 py-10 flex justify-center">

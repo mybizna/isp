@@ -1,7 +1,7 @@
 @extends('isp::access')
 
 @section('content')
-    <form method="POST">
+    <form method="POST" action="{{ url(route('isp_access_submitlogin')) }}">
         @csrf
         <div class="relative overflow-hidden mb-8">
 
@@ -22,15 +22,14 @@
                             </div>
                             <div class="items-center justify-between flex">
 
-                                <button id='invoice-cancel' type="submit" name="view"
-                                    value="invoicecancel_{{ $invoice->id }}" data-mdb-ripple="true"
-                                    data-mdb-ripple-color="light"
-                                    class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</button>
-
-                                <button id='invoice-complete' type="submit" name="view"
-                                    value="invoicebuy_{{ $invoice->id }}" data-mdb-ripple="true"
-                                    data-mdb-ripple-color="light"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</button>
+                                <a id='invoice-cancel' 
+                                    href="{{ url(route('isp_access_invoicecancel',['id' => $invoice->id])) }}"
+                                    class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
+                                    
+                                <a id='invoice-complete'
+                                    href="{{ url(route('isp_access_invoicebuy',['id' => $invoice->id])) }}"
+                                    value="invoicebuy_{{ $invoice->id }}"
+                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
                             </div>
                         </div>
                     </div>
@@ -57,18 +56,14 @@
                                     {{ $package->description }}, Package: {{ $package->package_title }}, Speed:
                                     {{ $package->speed }} {{ $package->speed_type == 'kilobyte' ? 'KB' : 'MB' }}
                                 </small>
-                                <button id='package' type="submit" name="view" value="package_{{ $package->id }}"
+                                <a id='package' href="{{ url(route('isp_access_singlepackage',['id' => $package->id])) }}"
                                     data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</button>
+                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             @endif
-
-
-            <input type="hidden" name="username" value="{{ $username }}">
-            <input type="hidden" name="password" value="{{ $password }}">
         </div>
     </form>
 @endsection
