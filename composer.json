@@ -2,7 +2,8 @@
     "name": "mybizna/isp",
     "description": "",
     "type": "asgard-module",
-    "version": "0.9.7.3",
+    "version": "0.9.7.4",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Dedan Irungu",
