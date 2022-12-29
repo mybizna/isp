@@ -6,9 +6,13 @@
     "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "Dedan Irungu",
+            "name": "Mybizna",
             "homepage": "https://mybizna.com",
             "email": "info@mybizna.com"
+        },
+        {
+            "name": "Dedan Irungu",
+            "email": "dedanirungu@gmail.com"
         }
     ],
     "require": {
