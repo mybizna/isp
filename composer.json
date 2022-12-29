@@ -2,7 +2,7 @@
     "name": "mybizna/isp",
     "description": "",
     "type": "asgard-module",
-    "version": "0.9.8.1",
+    "version": "1.0.0",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "mybizna/core": "^0.9.5"
+        "mybizna/core": "^1.0.0"
     },
     "extra": {
         "laravel": {
