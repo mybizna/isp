@@ -11,14 +11,16 @@ class PackageCharge
     public $ordering = 7;
 
     public function data(Datasetter $datasetter)
-    {
-
+    {   
+        
+        $ledger_id = DB::table('account_ledger')->where('slug', 'sales_revenue')->value('id');
         $package_id = DB::table('isp_package')->where('slug', '1m-ppp')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Router",
             "slug" => "1m-ppp-router",
             "description" => "Router",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 10,
             "published" => true
         ]);   
@@ -28,25 +30,30 @@ class PackageCharge
             "slug" => "1m-ppp-cable",
             "description" => "Cable",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 6,
             "published" => true
         ]);
 
+        $ledger_id = DB::table('account_ledger')->where('slug', 'service_revenue')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Installation",
             "slug" => "1m-ppp-installation",
             "description" => "Installation",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 15,
             "published" => true
         ]);
 
+        $ledger_id = DB::table('account_ledger')->where('slug', 'sales_revenue')->value('id');
         $package_id = DB::table('isp_package')->where('slug', '2m-ppp')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Router",
             "slug" => "2m-ppp-router",
             "description" => "Router",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 10,
             "published" => true
         ]);   
@@ -56,15 +63,18 @@ class PackageCharge
             "slug" => "2m-ppp-cable",
             "description" => "Cable",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 6,
             "published" => true
         ]);
 
+        $ledger_id = DB::table('account_ledger')->where('slug', 'service_revenue')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Installation",
             "slug" => "2m-ppp-installation",
             "description" => "Installation",
             "package_id" => $package_id,
+            "ledger_id" => $ledger_id,
             "amount" => 15,
             "published" => true
         ]);
