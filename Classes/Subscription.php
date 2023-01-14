@@ -2,6 +2,7 @@
 
 namespace Modules\Isp\Classes;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Account\Classes\Invoice;
@@ -16,12 +17,12 @@ class Subscription
     public function processData($request, $tmp_data = [])
     {
         $data = Session::get('subscription_data');
-        
+
         if (empty($tmp_data)) {
             if ($request->isMethod('post')) {
                 $tmp_data = $request->all();
             } else {
-                if (empty($data)) { 
+                if (empty($data)) {
                     $tmp_data['phone'] = '';
                     $tmp_data['view'] = $request->get('view', 'login');
                     $tmp_data['mac'] = $request->get('mac');
@@ -38,9 +39,9 @@ class Subscription
                 }
             }
         }
-     
+
         $data = array_merge($data, $tmp_data);
-        
+
         Session::put('subscription_data', $data);
 
         $data = Session::get('subscription_data', []);
@@ -48,14 +49,13 @@ class Subscription
         return $data;
     }
 
-   
     public function login($data)
     {
         $username = Str::of($data['username'])->trim();
         $password = Str::of($data['password'])->trim();
 
         $where = ['username' => $username, 'password' => $password];
-        
+
         $subscriber = Subscriber::where($where)->first();
 
         if ($subscriber === null) {
@@ -94,6 +94,39 @@ class Subscription
         return false;
     }
 
+    public function getSubscriber()
+    {
+        $user = Auth::user();
+
+        $subscriber = Subscriber::where(['username' => $user->username])->first();
+
+        return $subscriber;
+
+    }
+
+    public function getPackages()
+    {
+        $packages = DB::table('isp_package AS p')
+            ->select('p.*', 'b.title as package_title')
+            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
+            ->where(['p.is_hidden' => false])
+            ->get();
+
+        return $packages;
+
+    }
+
+    public function getInvoices($subscriber)
+    {
+        $invoices = collect([]);
+
+        if (isset($subscriber->partner_id) && $subscriber->partner_id) {
+            $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
+        }
+
+        return $invoices;
+    }
+
     public function packages($data)
     {
         $username = Str::of($data['username'])->trim();
@@ -104,11 +137,11 @@ class Subscription
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.is_hidden' => false])
             ->get();
-            
+
         $subscriber = Subscriber::where(['username' => $username])->first();
 
         $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
-        
+
         $tmpdata['invoices'] = collect([]);
 
         if ($invoices) {
@@ -154,7 +187,6 @@ class Subscription
     {
         $tmpdata = [];
 
-
         if (!isset($data['phone'])) {
             $tmpdata['phone'] = '';
         }
@@ -178,11 +210,11 @@ class Subscription
     public function getInvoice($id)
     {
         $invoice = DBInvoice::where(['id' => $id])->first();
-        
+
         if ($invoice === null) {
             return false;
         }
-        
+
         return $invoice;
     }
 
@@ -191,7 +223,7 @@ class Subscription
         $tmpdata = [];
 
         $invoice = DBInvoice::where(['id' => $id])->first();
-        
+
         if ($invoice === null) {
             return false;
         }
@@ -203,9 +235,9 @@ class Subscription
 
     public function paybill($data)
     {
-      
+
         $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
-        
+
         $tmpdata = [];
 
         $tmpdata['invoice'] = $invoice;
@@ -216,7 +248,7 @@ class Subscription
     public function tillno($data)
     {
         $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
-        
+
         $tmpdata = [];
 
         $tmpdata['invoice'] = $invoice;

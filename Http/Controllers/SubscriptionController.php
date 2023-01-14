@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Base\Http\Controllers\BaseController;
 use Modules\Isp\Classes\Subscription;
 use Modules\Mpesa\Entities\Gateway;
-
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends BaseController
 {
@@ -17,9 +17,12 @@ class SubscriptionController extends BaseController
 
         $subscription = new Subscription();
 
-        $data = $subscription->processData($request);
+        $user = Auth::user();
+        $subscriber = $subscription->getSubscriber();
+        $packages = $subscription->getPackages();
+        $invoices = $subscription->getInvoices($subscriber);
 
-        return view('isp::access-login', $data);
+        return view('isp::access-dashboard', ['subscriber' => $subscriber, 'packages' => $packages, 'invoices' => $invoices, 'user' => $user]);
     }
 
     public function register(Request $request)
@@ -67,7 +70,7 @@ class SubscriptionController extends BaseController
         if ($is_logged_in) {
             return redirect()->route('isp_access_packages');
         }
-        
+
         return redirect()->route('isp_access_login');
     }
 
@@ -89,14 +92,13 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $data = $subscription->processData($request);
-        
+
         $result = $subscription->invoiceBuy($data, $id);
-        
+
         if (is_array($result)) {
             $data = $subscription->processData($request, $result);
             return redirect()->route('isp_access_payment');
         }
-        
 
         return redirect()->route('isp_access_packages');
     }
@@ -104,7 +106,7 @@ class SubscriptionController extends BaseController
     public function packages(Request $request)
     {
         $subscription = new Subscription();
-        
+
         $data = $subscription->processData($request);
 
         $tmpdata = $subscription->packages($data);
@@ -121,7 +123,7 @@ class SubscriptionController extends BaseController
         $data = $subscription->processData($request);
 
         $tmpdata = $subscription->singlePackage($data, $id);
-        
+
         $data = $subscription->processData($request, $tmpdata);
 
         return redirect()->route('isp_access_payment');
@@ -162,17 +164,17 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $data = $subscription->processData($request);
-       
+
         $result = $subscription->stkpush($data);
-        $tmp_data = ['request_sent'=>0];
+        $tmp_data = ['request_sent' => 0];
         if ($result === true) {
             return redirect()->route('isp_access_thankyou');
         } else if (is_array($result)) {
             $data = $subscription->processData($request, $result);
             $tmp_data['request_sent'] = 1;
         }
-        
-        return redirect()->route('isp_access_payment',$tmp_data);
+
+        return redirect()->route('isp_access_payment', $tmp_data);
     }
 
     public function payment(Request $request)
@@ -180,13 +182,13 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $data = $subscription->processData($request);
-        
+
         $tmpdata = $subscription->payment($data);
-        
+
         $tmp_data['request_sent'] = $request->get('request_sent', 0);
-        $tmp_data['gateway'] = Gateway::where(['default'=>true])->first();
-        $tmp_data['invoice'] = $subscription->getInvoice($data['invoice_id'] );
-        
+        $tmp_data['gateway'] = Gateway::where(['default' => true])->first();
+        $tmp_data['invoice'] = $subscription->getInvoice($data['invoice_id']);
+
         $data = array_merge($data, $tmp_data);
 
         return view('isp::access-payment', $data);
