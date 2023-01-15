@@ -107,7 +107,7 @@ class Subscription
     public function getPackages()
     {
         $packages = DB::table('isp_package AS p')
-            ->select('p.*', 'b.title as package_title')
+            ->select('p.*', 'b.title as package_title', 'b.duration_type', 'b.duration')
             ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
             ->where(['p.is_hidden' => false])
             ->get();
