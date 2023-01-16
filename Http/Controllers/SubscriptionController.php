@@ -39,65 +39,13 @@ class SubscriptionController extends BaseController
         return view('isp::access-dashboard', $data);
     }
 
-    public function register(Request $request)
+    public function buyPackage(Request $request, $id)
     {
         $subscription = new Subscription();
 
-        $data = $subscription->processData($request);
+        $invoice_id = $subscription->buyPackage($id);
 
-        return view('isp::access-register', $data);
-    }
-
-    public function submitregister(Request $request)
-    {
-        $subscription = new Subscription();
-
-        $data = $subscription->processData($request);
-
-        $is_registered = $subscription->register($data);
-
-        if ($is_registered) {
-            return redirect()->route('isp_access_login');
-        }
-
-        return redirect()->route('isp_access_register');
-    }
-
-    public function login(Request $request)
-    {
-        $subscription = new Subscription();
-
-        $data = $subscription->processData($request);
-
-        return view('isp::access-login', $data);
-    }
-
-    public function submitlogin(Request $request)
-    {
-
-        $subscription = new Subscription();
-
-        $data = $subscription->processData($request);
-
-        $is_logged_in = $subscription->login($data);
-
-        if ($is_logged_in) {
-            return redirect()->route('isp_access_packages');
-        }
-
-        return redirect()->route('isp_access_login');
-    }
-
-    public function invoicecancel(Request $request, $id)
-    {
-
-        $subscription = new Subscription();
-
-        $data = $subscription->processData($request);
-
-        $subscription->invoicecancel($data, $id);
-
-        return redirect()->route('isp_access_packages');
+        return redirect()->route('account_payment', ['invoice_id' => $invoice_id]);
     }
 
     public function invoicebuy(Request $request, $id)
@@ -128,19 +76,6 @@ class SubscriptionController extends BaseController
         $data = $subscription->processData($request, $tmpdata);
 
         return view('isp::access-packages', $data);
-    }
-
-    public function singlepackage(Request $request, $id)
-    {
-        $subscription = new Subscription();
-
-        $data = $subscription->processData($request);
-
-        $tmpdata = $subscription->singlePackage($data, $id);
-
-        $data = $subscription->processData($request, $tmpdata);
-
-        return redirect()->route('isp_access_payment');
     }
 
     public function paybill(Request $request)

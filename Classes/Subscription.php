@@ -2,14 +2,15 @@
 
 namespace Modules\Isp\Classes;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Entities\Subscriber;
 use Modules\Mpesa\Classes\Mpesa;
-use Modules\Partner\Classes\Partner;
+use Modules\Partner\Classes\Partner as PartnerCls;
+use Modules\Partner\Entities\Partner;
 use Session;
 
 class Subscription
@@ -49,58 +50,66 @@ class Subscription
         return $data;
     }
 
-    public function login($data)
-    {
-        $username = Str::of($data['username'])->trim();
-        $password = Str::of($data['password'])->trim();
-
-        $where = ['username' => $username, 'password' => $password];
-
-        $subscriber = Subscriber::where($where)->first();
-
-        if ($subscriber === null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function register($data)
-    {
-        $partner_cls = new Partner();
-
-        $name_arr = explode(' ', $data['name']);
-        $username = Str::of($data['username'])->trim();
-        $password = Str::of($data['password'])->trim();
-
-        $partner = $partner_cls->createPartner([
-            'first_name' => (isset($name_arr[0])) ? $name_arr[0] : '',
-            'last_name' => (isset($name_arr[1])) ? $name_arr[1] : '',
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'slugs' => [$username],
-        ]);
-
-        if ($partner) {
-            $subscriber = Subscriber::create([
-                'partner_id' => $partner->id,
-                'username' => $username,
-                'password' => $password,
-            ]);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getSubscriber()
+    public function getSubscriber($user_id = '')
     {
         $user = Auth::user();
 
+        if ($user_id) {
+            $user = User::where(['id' => $user_id])->first();
+        }
+
         $subscriber = Subscriber::where(['username' => $user->username])->first();
 
+        if (!$subscriber) {
+            $partner = $this->addPartner($user);
+
+            if ($partner) {
+                $subscriber = $this->addSubscriber($partner, $user);
+            }
+        }
+
         return $subscriber;
+
+    }
+
+    public function addSubscriber($partner, $user)
+    {
+        $subscriber = Subscriber::where('username', $user->username)->first();
+
+        if (!$subscriber) {
+            $password = $this->generatePassword(8);
+
+            $subscriber = Subscriber::create([
+                'partner_id' => $partner->id,
+                'username' => $user->username,
+                'password' => $password,
+            ]);
+        }
+
+        return $subscriber;
+
+    }
+
+    public function addPartner($user)
+    {
+        $partner_cls = new PartnerCls();
+
+        $name_arr = explode(' ', $user->name);
+
+        $partner = Partner::where('email', $user->email)
+            ->orWhere('phone', $user->phone)->first();
+
+        if (!$partner) {
+            $partner = $partner_cls->createPartner([
+                'first_name' => (isset($name_arr[0])) ? $name_arr[0] : '',
+                'last_name' => (isset($name_arr[1])) ? $name_arr[1] : '',
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'slugs' => [$user->username],
+            ]);
+        }
+
+        return $partner;
 
     }
 
@@ -116,6 +125,47 @@ class Subscription
 
     }
 
+    public function getPackage($id)
+    {
+        $package = DB::table('isp_package AS p')
+            ->select('p.*', 'b.title as package_title', 'b.duration_type', 'b.duration')
+            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
+            ->where(['p.id' => $id])
+            ->first();
+
+        return $package;
+
+    }
+
+    public function buyPackage($id)
+    {
+
+        $invoice = new Invoice();
+
+        $package = $this->getPackage($id);
+        $subscriber = $this->getSubscriber();
+
+        $speed_type = $package->speed_type == 'kilobyte' ? 'KBps' : ($package->speed_type == 'megabyte' ? 'MBps' : 'GBps');
+        $bundle_type = $package->bundle_type == 'kilobyte' ? 'KB' : ($package->bundle_type == 'megabyte' ? 'MB' : 'GB');
+
+        $title = "Internet Purchase for " . $package->title . "  (" . $subscriber->username . ") [";
+        if ($package->bundle) {
+            $title .= " Bundle: " . $package->bundle . $bundle_type;
+        } else {
+            $title .= " Speed: " . $package->speed . $speed_type;
+        }
+
+        $title .= " for " . $package->duration . " " . $package->duration_type . "]";
+        $partner_id = $subscriber->partner_id;
+        $amount = $package->amount;
+
+        $items = [['title' => $title, 'price' => $amount, 'total' => $amount]];
+
+        $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
+
+        return $invoice_id;
+    }
+
     public function getInvoices($subscriber)
     {
         $invoices = collect([]);
@@ -127,60 +177,15 @@ class Subscription
         return $invoices;
     }
 
-    public function packages($data)
+    public function getInvoice($id)
     {
-        $username = Str::of($data['username'])->trim();
+        $invoice = DBInvoice::where(['id' => $id])->first();
 
-        $tmpdata = [];
-        $tmpdata['packages'] = DB::table('isp_package AS p')
-            ->select('p.*', 'b.title as package_title')
-            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
-            ->where(['p.is_hidden' => false])
-            ->get();
-
-        $subscriber = Subscriber::where(['username' => $username])->first();
-
-        $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
-
-        $tmpdata['invoices'] = collect([]);
-
-        if ($invoices) {
-            $tmpdata['invoices'] = $invoices;
+        if ($invoice === null) {
+            return false;
         }
 
-        return $tmpdata;
-
-    }
-
-    public function singlePackage($data, $id)
-    {
-        $invoice = new Invoice();
-
-        $view_arr = explode('_', $data['view']);
-        $username = Str::of($data['username'])->trim();
-
-        $tmpdata = [];
-        $tmpdata['package'] = $package = DB::table('isp_package AS p')
-            ->select('p.*', 'b.title as package_title')
-            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
-            ->where(['p.id' => $view_arr[1]])
-            ->first();
-
-        $subscriber = Subscriber::where(['username' => $username])->first();
-
-        $title = $package->title . " " . $package->speed . " " . $username;
-        $partner_id = $subscriber->partner_id;
-        $amount = $package->amount;
-
-        $items = [['title' => $title, 'price' => $amount, 'total' => $amount]];
-
-        $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
-
-        $invoice = DBInvoice::where(['id' => $invoice_id])->get();
-
-        $tmpdata['invoice'] = $invoice;
-
-        return $tmpdata;
+        return $invoice;
     }
 
     public function payment($data)
@@ -205,17 +210,6 @@ class Subscription
         $invoice = new Invoice();
 
         $invoice->deleteInvoices($id);
-    }
-
-    public function getInvoice($id)
-    {
-        $invoice = DBInvoice::where(['id' => $id])->first();
-
-        if ($invoice === null) {
-            return false;
-        }
-
-        return $invoice;
     }
 
     public function invoiceBuy($data, $id)
@@ -280,6 +274,28 @@ class Subscription
         }
 
         return $tmpdata;
+    }
+
+    public function generatePassword($_len = 6, $special_char = false)
+    {
+
+        $_alphaSmall = 'abcdefghijklmnopqrstuvwxyz'; // small letters
+        $_alphaCaps = strtoupper($_alphaSmall); // CAPITAL LETTERS
+        $_numerics = '1234567890'; // numerics
+        $_specialChars = '`~!@#$%^&*()-_=+]}[{;:,<.>/?\'"\|'; // Special Characters
+
+        $_container = ($special_char)
+        ? $_alphaSmall . $_alphaCaps . $_numerics . $_specialChars
+        : $_alphaSmall . $_alphaCaps . $_numerics;
+
+        $password = '';
+
+        for ($i = 0; $i < $_len; $i++) { // Loop till the length mentioned
+            $_rand = rand(0, strlen($_container) - 1); // Get Randomized Length
+            $password .= substr($_container, $_rand, 1); // returns part of the string [ high tensile strength ;) ]
+        }
+
+        return $password; // Returns the generated Pass
     }
 
 }

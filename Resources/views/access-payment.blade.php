@@ -14,6 +14,8 @@
                             <a class="tablinks" onclick="openCity(event, 'PAYBILL')">Paybill</a>
                         </div>
 
+                        
+
                         <!-- Tab content -->
                         <div id="STKPUSH" class="tabcontent active" style="display: block">
                             <form method="POST" action="{{ url(route('isp_access_stkpush')) }}">
@@ -100,7 +102,7 @@
                                     - Please Go to <strong>LIPA na MPesa</strong><br />
                                     - Select <strong>Paybill</strong><br />
                                     - Send to Paybill Number <strong>{{ $gateway->till_bill_no }}</strong><br />
-                                    - Send to Account Name <strong>{{ $username }}</strong><br />
+                                    - Send to Account Name <strong>{{ $user->username }}</strong><br />
                                 </small>
                                 <div style="text-align:center; margin-top:20px;">
                                     <button id='paybill' type="submit" name="view" value="paybill_{{ $invoice->id }}"
@@ -110,12 +112,6 @@
                                 </div>
                             </form>
                         </div>
-
-
-
-                        <input type="hidden" name="username" value="{{ $username }}">
-                        <input type="hidden" name="password" value="{{ $password }}">
-
 
                     </div>
                     <p class="text-center text-gray-500 text-xs">

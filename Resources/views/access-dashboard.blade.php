@@ -35,16 +35,23 @@
                                             </p>
                                         </div>
 
-
-                                        <div class="flex-auto w-1/2 sm:w-1/4 p-2">
-                                            <p class="mb-0 leading-normal text-white text-sm">SPEED</p>
-                                            <p class="mb-0 text-white text-xs">
-                                                @if ($current_package)
-                                                    {{ $current_package->speed }}
-                                                    {{ $current_package->speed_type == 'kilobyte' ? 'KB' : 'MB' }}
-                                                @endif
-                                            </p>
-                                        </div>
+                                        @if ($current_package->bundle)
+                                            <div class="flex-auto w-1/2 sm:w-1/4 p-2">
+                                                <p class="mb-0 leading-normal text-white text-sm">Bundle</p>
+                                                <p class="mb-0 text-white text-xs">
+                                                        {{ $current_package->bundle }}
+                                                        {{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                </p>
+                                            </div>
+                                        @else
+                                            <div class="flex-auto w-1/2 sm:w-1/4 p-2">
+                                                <p class="mb-0 leading-normal text-white text-sm">SPEED</p>
+                                                <p class="mb-0 text-white text-xs">
+                                                        {{ $current_package->speed }}
+                                                        {{ $current_package->speed_type == 'kilobyte' ? 'KB' : ($current_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                </p>
+                                            </div>
+                                        @endif
 
                                         <div class="flex-auto w-1/2 sm:w-1/4 p-2">
                                             <p class="mb-0 leading-normal text-white text-sm">DURATION</p>
@@ -65,9 +72,9 @@
                                 </div>
                             </div>
 
-                            <div class="text-center">
-                                <button type="submit"
-                                    class="mb-1 bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Renew Package') }}</button>
+                            <div class="text-center pb-5">
+                                <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
+                                    class="mb-1 bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Renew Package') }}</a>
                             </div>
                         @else
                             <div class="flex">
@@ -125,28 +132,28 @@
                         <div
                             class=" shadow-xl rounded-md bg-gradient-to-br from-pink-500 via-red-900 to-pink-700 hover:from-pink-500  hover:via-red-900  hover:to-yellow-900 sm:ml-2 m-1">
 
-                            @if (isset($current_package->id))
+                            @if (isset($featured_package->id))
                                 <div class="h-40">
                                     <h3 class="text-4xl text-white text-center py-2">
-                                        {{ $current_package->title }}
+                                        {{ $featured_package->title }}
                                     </h3>
 
                                     <p class="text-white text-center py-2">
-                                        {{ $current_package->speed }}
-                                        {{ $current_package->speed_type == 'kilobyte' ? 'KBps' : 'MBps' }}
+                                        {{ $featured_package->speed }}
+                                        {{ $featured_package->speed_type == 'kilobyte' ? 'KB' : ($featured_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
 
-                                        for {{ $current_package->duration }} {{ $current_package->duration_type }}
+                                        for {{ $featured_package->duration }} {{ $featured_package->duration_type }}
                                     </p>
 
                                     <div class="flex p-1">
                                         <div class="flex-none w-28">
                                             <h4 class="text-2xl text-white">
-                                                {{ $current_package->amount }} KES
+                                                {{ $featured_package->amount }} KES
                                             </h4>
                                         </div>
                                         <div class="flex-auto text-right pr-4">
-                                            <button type="submit"
-                                                class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Buy') }}</button>
+                                            <a href="{{ url(route('isp_access_buypackage', ['id' => $featured_package->id])) }}"
+                                                class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Buy') }}</a>
                                         </div>
                                     </div>
 
@@ -219,84 +226,76 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ url(route('isp_access_submitlogin')) }}">
-                @csrf
 
-                <div class="relative overflow-hidden mb-8">
+            <div class="relative overflow-hidden mb-8">
 
-                    @if ($invoices->count() > 0)
-                        <h3 class="text-center">Past Buy Request</h3>
-                        @foreach ($invoices as $invoice)
-                            <div class="flex justify-center">
-                                <div role="listitem"
-                                    class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2">
-                                    <div class="items-center justify-between flex">
-                                        <h4 class="font-semibold leading-6 text-gray-800 dark:text-white">
-                                            {{ $invoice->title }}
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        </h4>
-                                        <p
-                                            class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                            {{ $invoice->total }}
-                                            <span class="text-base font-normal">KES</span>
-                                        </p>
-                                    </div>
-                                    <div class="items-center justify-between flex">
+                @if ($invoices->count() > 0)
+                    <h3 class="text-center">Past Buy Request</h3>
+                    @foreach ($invoices as $invoice)
+                        <div class="flex justify-center">
+                            <div role="listitem"
+                                class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2">
+                                <div class="items-center justify-between flex">
+                                    <h4 class="font-semibold leading-6 text-gray-800 dark:text-white">
+                                        {{ $invoice->title }}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </h4>
+                                    <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
+                                        {{ $invoice->total }}
+                                        <span class="text-base font-normal">KES</span>
+                                    </p>
+                                </div>
+                                <div class="items-center justify-between flex">
 
-                                        <a id='invoice-cancel'
-                                            href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id])) }}"
-                                            class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
+                                    <a id='invoice-cancel'
+                                        href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id])) }}"
+                                        class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
 
-                                        <a id='invoice-complete'
-                                            href="{{ url(route('isp_access_invoicebuy', ['id' => $invoice->id])) }}"
-                                            value="invoicebuy_{{ $invoice->id }}"
+                                    <a id='invoice-complete'
+                                        href="{{ url(route('isp_access_invoicebuy', ['id' => $invoice->id])) }}"
+                                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
+                @if ($packages->count() > 0)
+                    <h3 class="text-center"> Package </h3>
+                    @foreach ($packages as $package)
+                        <div class="mb-5">
+                            <div role="listitem" class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 rounded m-2">
+
+                                <div class="text-center mb-1 ">
+                                    <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center">
+                                        {{ $package->title }}
+                                    </h2>
+
+                                    <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
+                                        {{ $package->description }}, Package: {{ $package->package_title }},
+                                        Speed:
+                                        {{ $package->speed }}
+                                        {{ $package->speed_type == 'kilobyte' ? 'KB' : ($package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                    </small>
+                                </div>
+
+                                <div class="items-center justify-between flex">
+                                    <p class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
+                                        {{ $package->amount }}
+                                        <span class="text-base font-normal">KES</span>
+                                    </p>
+                                    <div>
+                                        <a id='package'
+                                            href="{{ url(route('isp_access_buypackage', ['id' => $package->id])) }}"
                                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
                                     </div>
                                 </div>
+
                             </div>
-                        @endforeach
-                    @endif
-
-                    @if ($packages->count() > 0)
-                        <h3 class="text-center"> Package </h3>
-                        @foreach ($packages as $package)
-                            <div class="mb-5">
-                                <div role="listitem"
-                                    class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 rounded m-2">
-
-                                    <div class="text-center mb-1 ">
-                                        <h2
-                                            class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center">
-                                            {{ $package->title }}
-                                        </h2>
-
-                                        <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                            {{ $package->description }}, Package: {{ $package->package_title }},
-                                            Speed:
-                                            {{ $package->speed }}
-                                            {{ $package->speed_type == 'kilobyte' ? 'KB' : 'MB' }}
-                                        </small>
-                                    </div>
-
-                                    <div class="items-center justify-between flex">
-                                        <p class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                            {{ $package->amount }}
-                                            <span class="text-base font-normal">KES</span>
-                                        </p>
-                                        <div>
-                                            <a id='package'
-                                                href="{{ url(route('isp_access_singlepackage', ['id' => $package->id])) }}"
-                                                data-mdb-ripple="true" data-mdb-ripple-color="light"
-                                                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </form>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
         </div>
     </section>
 
