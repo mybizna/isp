@@ -39,16 +39,16 @@
                                             <div class="flex-auto w-1/2 sm:w-1/4 p-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">Bundle</p>
                                                 <p class="mb-0 text-white text-xs">
-                                                        {{ $current_package->bundle }}
-                                                        {{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                    {{ $current_package->bundle }}
+                                                    {{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
                                                 </p>
                                             </div>
                                         @else
                                             <div class="flex-auto w-1/2 sm:w-1/4 p-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">SPEED</p>
                                                 <p class="mb-0 text-white text-xs">
-                                                        {{ $current_package->speed }}
-                                                        {{ $current_package->speed_type == 'kilobyte' ? 'KB' : ($current_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                    {{ $current_package->speed }}
+                                                    {{ $current_package->speed_type == 'kilobyte' ? 'KB' : ($current_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
                                                 </p>
                                             </div>
                                         @endif
@@ -66,7 +66,8 @@
                                         <div class="flex-auto w-1/2 sm:w-1/4 p-2">
                                             <p class="mb-0 leading-normal text-white text-sm">EXPIRE</p>
                                             <p class="mb-0 text-white text-xs">
-                                                {{ date('d/m/y H:i', strtotime($current_package->expiry_date)) }}</p>
+                                                {{ date('d/m/y H:i', strtotime($current_package->expiry_date)) }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +177,7 @@
             </div>
 
             @if (false)
-                <h3 class="text-center">Quick Links</h3>
+                <h3 class="text-center font-normal italic text-lg">Quick Links</h3>
                 <div class="grid grid-cols-4 gap-4 mt-2 my-4">
                     <div class="text-center rounded shadow sm:p-2 bg-white">
                         <a class="inline-block px-3 py-2 sm:px-8 sm:py-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
@@ -230,30 +231,30 @@
             <div class="relative overflow-hidden mb-8">
 
                 @if ($invoices->count() > 0)
-                    <h3 class="text-center">Past Buy Request</h3>
+                    <h3 class="text-center font-normal italic text-lg">Past Purchase Request</h3>
                     @foreach ($invoices as $invoice)
-                        <div class="flex justify-center">
-                            <div role="listitem"
-                                class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded sm:px-10 m-2">
-                                <div class="items-center justify-between flex">
-                                    <h4 class="font-semibold leading-6 text-gray-800 dark:text-white">
-                                        {{ $invoice->title }}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    </h4>
-                                    <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                        {{ $invoice->total }}
-                                        <span class="text-base font-normal">KES</span>
-                                    </p>
-                                </div>
-                                <div class="items-center justify-between flex">
+                        <div role="listitem" class="text-center bg-white p-2 shadow ring-1 ring-gray-900/5 rounded m-2">
+                            <h2 class="text-lg font-semibold leading-6 text-gray-800 dark:text-white pb-3 p-3">
+                                {{ $invoice->title }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h2>
 
+                            <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
+                                <b>Date:</b> {{ date('d/m/y H:i', strtotime($invoice->created_at)) }},
+                                <b>Status:</b> <span class="uppercase">{{ $invoice->status }}</span>
+                            </small>
+                            <div class="items-center justify-between flex">
+                                <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
+                                    {{ $invoice->total }}
+                                    <span class="text-base font-normal">KES</span>
+                                </p>
+                                <div>
                                     <a id='invoice-cancel'
                                         href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id])) }}"
                                         class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
-
                                     <a id='invoice-complete'
                                         href="{{ url(route('isp_access_invoicebuy', ['id' => $invoice->id])) }}"
-                                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
+                                        class="ml-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Payment</a>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +262,7 @@
                 @endif
 
                 @if ($packages->count() > 0)
-                    <h3 class="text-center"> Package </h3>
+                    <h3 class="text-center font-normal italic text-lg"> Package </h3>
                     @foreach ($packages as $package)
                         <div class="mb-5">
                             <div role="listitem" class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 rounded m-2">

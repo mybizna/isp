@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Entities\Subscriber;
-use Modules\Mpesa\Classes\Mpesa;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
 use Session;
@@ -159,9 +158,9 @@ class Subscription
         $partner_id = $subscriber->partner_id;
         $amount = $package->amount;
 
-        $items = [['title' => $title, 'price' => $amount, 'total' => $amount]];
+        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'source_id' => $id]];
 
-        $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
+        $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title, module:'Isp', model:'package', source_id:$id);
 
         return $invoice_id;
     }
@@ -186,94 +185,6 @@ class Subscription
         }
 
         return $invoice;
-    }
-
-    public function payment($data)
-    {
-        $tmpdata = [];
-
-        if (!isset($data['phone'])) {
-            $tmpdata['phone'] = '';
-        }
-
-        $tmpdata['packages'] = DB::table('isp_package AS p')
-            ->select('p.*', 'b.title as package_title')
-            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
-            ->where(['p.is_hidden' => false])
-            ->get();
-
-        return $tmpdata;
-    }
-
-    public function invoiceCancel($data, $id)
-    {
-        $invoice = new Invoice();
-
-        $invoice->deleteInvoices($id);
-    }
-
-    public function invoiceBuy($data, $id)
-    {
-        $tmpdata = [];
-
-        $invoice = DBInvoice::where(['id' => $id])->first();
-
-        if ($invoice === null) {
-            return false;
-        }
-
-        $tmpdata['invoice_id'] = $id;
-
-        return $tmpdata;
-    }
-
-    public function paybill($data)
-    {
-
-        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
-
-        $tmpdata = [];
-
-        $tmpdata['invoice'] = $invoice;
-
-        return $tmpdata;
-    }
-
-    public function tillno($data)
-    {
-        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
-
-        $tmpdata = [];
-
-        $tmpdata['invoice'] = $invoice;
-
-        return $tmpdata;
-    }
-
-    public function stkpush($data)
-    {
-        $invoice = DBInvoice::where(['id' => $data['invoice_id']])->first();
-
-        $tmpdata = [];
-        $tmpdata['invoice'] = $invoice;
-
-        if (isset($data['verifying']) && $data['verifying']) {
-            $data['view'] = 'thankyou';
-            $mpesa = new Mpesa();
-            $stkpush = $mpesa->validateStkpush($data['phone'], $invoice->total, $invoice->title, $invoice->partner_id, $invoice->id);
-            return true;
-        } else {
-            $mpesa = new Mpesa();
-            $stkpush = $mpesa->stkpush($data['phone'], $invoice->total, $invoice->title);
-
-            if ($stkpush) {
-                $tmpdata['request_sent'] = 1;
-            } else {
-                $tmpdata['request_sent'] = 0;
-            }
-        }
-
-        return $tmpdata;
     }
 
     public function generatePassword($_len = 6, $special_char = false)
