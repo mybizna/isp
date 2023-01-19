@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
+use Modules\Isp\Classes\Freeradius;
 use Modules\Isp\Entities\Subscriber;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
@@ -86,6 +87,57 @@ class Subscription
         }
 
         return $subscriber;
+
+    }
+
+    public function addSubscription($package_id, $subscriber_id)
+    {
+        $package = $this->getPackage($package_id);
+
+        $date = Carbon::now();
+
+        $start_date = $date->toDateTimeString();
+
+        switch ($package->duration_type) {
+            case 'minute':
+                $date = ($package->duration) ? $date->addMinutes($package->duration) : $date->addMinute();
+                break;
+            case 'hour':
+                $date = ($package->duration) ? $date->addHours($package->duration) : $date->addHour();
+                break;
+            case 'day':
+                $date = ($package->duration) ? $date->addDays($package->duration) : $date->addDay();
+                break;
+
+            case 'week':
+                $date = ($package->duration) ? $date->addWeeks($package->duration) : $date->addWeek();
+                break;
+
+            case 'month':
+                $date = ($package->duration) ? $date->addMonths($package->duration) : $date->addMonth();
+                break;
+
+            case 'year':
+                $date = ($package->duration) ? $date->addYears($package->duration) : $date->addYear();
+                break;
+            default:
+                throw new \Exception("Package [$package->title] does not have correct Duration setting", 1);
+                break;
+        }
+
+        $end_date = $date->toDateTimeString();
+
+        $input['subscriber_id'] = $subscriber_id;
+        $input['package_id'] = $package->id;
+        $input['start_date'] = $start_date;
+        $input['end_date'] = $end_date;
+
+        $subscription = Subscription::create($input);
+
+        if ($subscription) {
+            $freeradius = new Freeradius($subscription);
+            $freeradius ->setUser($package);
+        }
 
     }
 
