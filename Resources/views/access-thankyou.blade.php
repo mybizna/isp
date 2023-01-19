@@ -1,34 +1,40 @@
-@extends('isp::access')
+@extends('base::app')
 
 @section('content')
-    <div class="relative overflow-hidden mb-8">
-        <div class="overflow-hidden px-3 py-10 flex justify-center">
-            <div class="w-full max-w-xs login-card">
-                <h3 style="text-align: center"> - THANK YOU - </h3>
-                <div class="bg-white mb-4">
+    <section class="bg-blue-50 dark:bg-blue-900 h-full h-screen">
+        <div class="w-full md:w-4/5 lg:w-2/4 mx-auto pt-10">
 
-                    <p style="text-align:center; padding:20px;">
-                        Thank you.<br> Proceed to access Internet.
-                    </p>
+            <div class="sm:flex">
+                <div class="sm:flex-auto sm:w-1/2  my-5">
+                    <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-5 p-2  h-40">
 
-                    <form name="login" action="{{ $link_login }}" method="post">
-                        <input type="hidden" name="username" value="{{ $username }}">
-                        <input type="hidden" name="password" value="{{ $password }}">
-                        <input type="hidden" name="domain" value="">
-                        <input type="hidden" name="dst" value="{{ $link_orig_esc }}">
+                        <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center"> - Thank You
+                            for your Payment - </h3>
 
-                        <p style="text-align:center;" class="p-4">
-                            <button id='register' type="submit" name="view" value="register"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Access Internet
-                            </button>
-                        </p>
-                    </form>
+                        <div class="bg-white mb-4 text-center">
 
-                    <div style="text-align:center; margin-top:20px;">
+                            <p style="text-align:center; padding:20px;">
+                               Click the button <b>Access Internet</b> to proceed to Internet.
+                            </p>
+
+                            <a id='package' href="{{ url(route('isp_access_mikrotik_login')) }}"
+                                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Access Internet</a>
+
+
+                        </div>
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="relative overflow-hidden mb-8">
+        <div class="overflow-hidden px-3 py-10 flex justify-center">
+            <div class="w-full max-w-xs login-card">
+
                 <p class="text-center text-gray-500 text-xs">
                     &copy;2022. All rights reserved.
                 </p>

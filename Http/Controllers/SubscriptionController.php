@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Base\Http\Controllers\BaseController;
 use Modules\Isp\Classes\Subscription;
+use Modules\Isp\Entities\SubscriberLogin;
+use Modules\Isp\Entities\Subscription as DBSubscription;
 
 class SubscriptionController extends BaseController
 {
@@ -37,7 +39,25 @@ class SubscriptionController extends BaseController
 
         return view('isp::access-dashboard', $data);
     }
+    public function autosubscribe(Request $request)
+    {
 
+        $subscription = new Subscription();
+
+        $subscriber_id = $request->get('subscriber_id');
+        $package_id = $request->get('package_id');
+
+        $subscription->addSubscription($package_id, $subscriber_id);
+
+        $result = [
+            'error' => 0,
+            'status' => 1,
+            'message' => 'Auto Subscribed Successfully.',
+        ];
+
+        return response()->json($result);
+
+    }
     public function buyPackage(Request $request, $id)
     {
         $subscription = new Subscription();
@@ -52,11 +72,32 @@ class SubscriptionController extends BaseController
 
         $subscription = new Subscription();
 
-        $data = $subscription->processData($request);
+        $subscriber = $subscription->getSubscriber();
 
-        //$data = $subscription->thankyou($data);
+        $subscriber_login = SubscriberLogin::where('subscriber_id', $subscriber->id)->first();
+
+        $data = [
+            'subscriber' => $subscriber,
+            'subscriber_login' => $subscriber_login,
+        ];
 
         return view('isp::access-thankyou', $data);
     }
 
+    public function mikrotiklogin(Request $request)
+    {
+
+        $subscription = new Subscription();
+
+        $subscriber = $subscription->getSubscriber();
+
+        $subscriber_login = SubscriberLogin::where('subscriber_id', $subscriber->id)->first();
+
+        $data = [
+            'subscriber' => $subscriber,
+            'subscriber_login' => $subscriber_login,
+        ];
+
+        return view('isp::access-mikrotik-login', $data);
+    }
 }

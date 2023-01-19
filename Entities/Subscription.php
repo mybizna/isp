@@ -24,8 +24,8 @@ class Subscription extends BaseModel
         $table->increments('id');
         $table->integer('subscriber_id')->unsigned();
         $table->integer('package_id')->unsigned();
-        $table->date('start_date');
-        $table->date('end_date');
+        $table->datetime('start_date');
+        $table->datetime('end_date');
     }
 
     public function post_migration(Blueprint $table)

@@ -9,9 +9,11 @@ use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Classes\Freeradius;
 use Modules\Isp\Entities\Subscriber;
+use Modules\Isp\Entities\Subscription as DBSubscription;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
 use Session;
+use Carbon\Carbon;
 
 class Subscription
 {
@@ -132,10 +134,11 @@ class Subscription
         $input['start_date'] = $start_date;
         $input['end_date'] = $end_date;
 
-        $subscription = Subscription::create($input);
+        $subscription = DBSubscription::create($input);
 
         if ($subscription) {
             $freeradius = new Freeradius($subscription);
+            $freeradius ->setPackages();
             $freeradius ->setUser($package);
         }
 
