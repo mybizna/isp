@@ -8,8 +8,8 @@
                 <div class="sm:flex-auto sm:w-1/2  my-5">
                     <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
 
-                        <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-4"> - logging In
-                            -
+                        <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-4">
+                            - LOGGING IN -
                         </h3>
 
                         <div class="bg-white mb-4">

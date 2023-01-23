@@ -3,6 +3,7 @@
 namespace Modules\Isp\Classes;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
@@ -13,7 +14,6 @@ use Modules\Isp\Entities\Subscription as DBSubscription;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
 use Session;
-use Carbon\Carbon;
 
 class Subscription
 {
@@ -138,8 +138,8 @@ class Subscription
 
         if ($subscription) {
             $freeradius = new Freeradius($subscription);
-            $freeradius ->setPackages();
-            $freeradius ->setUser($package);
+            $freeradius->setPackages();
+            $freeradius->setUser($package);
         }
 
     }
@@ -213,20 +213,18 @@ class Subscription
         $partner_id = $subscriber->partner_id;
         $amount = $package->amount;
 
-        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'source_id' => $id]];
+        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'item_id' => $id]];
 
-        $invoice_id = $invoice->generateInvoice($title, $partner_id, $items, description:$title, module:'Isp', model:'package', source_id:$id);
+        $invoice = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
 
-        return $invoice_id;
+        return $invoice;
     }
 
     public function getInvoices($subscriber)
     {
-        $invoices = collect([]);
+        $invoice_cls = new Invoice();
 
-        if (isset($subscriber->partner_id) && $subscriber->partner_id) {
-            $invoices = DBInvoice::where(['partner_id' => $subscriber->partner_id])->get();
-        }
+        $invoices = $invoice_cls->getPartnerInvoices($subscriber->partner_id);
 
         return $invoices;
     }

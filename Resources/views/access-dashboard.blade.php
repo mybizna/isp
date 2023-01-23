@@ -102,30 +102,64 @@
                 <div class="sm:flex">
                     <div class="sm:flex-auto sm:w-1/2  my-5">
                         <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
-                            <div class="text-center">
-                                <span class="fa-stack fa-2x text-gray-500" style="vertical-align: top;">
-                                    <i class="fa-regular fa-circle fa-stack-2x"></i>
-                                    <i class="fa-solid fa-user fa-stack-1x"></i>
-                                </span>
+                            <div class="flex overflow-hidden">
+                                <div class="flex-none">
+                                    <div class="grid h-full place-items-center mr-4">
+                                        <span class="fa-stack fa-2x text-gray-500" style="vertical-align: top;">
+                                            <i class="fa-regular fa-circle fa-stack-2x"></i>
+                                            <i class="fa-solid fa-user fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="flex-auto">
+                                    <div class="border-b border-b-blue-100	">
+
+                                        <p class=" font-semibold whitespace-nowrap">
+                                            @if ($user->name)
+                                                {{ $user->name }}
+                                            @endif
+                                        </p>
+
+                                        <p class="whitespace-nowrap">
+                                            <i class="fa-solid fa-user"></i>: &nbsp;
+                                            @if ($user->username)
+                                                {{ $user->username }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
+
+                                        <p class="whitespace-nowrap">
+                                            <i class="fa-solid fa-envelope"></i>: &nbsp;
+                                            @if ($user->email)
+                                                {{ $user->email }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
+
+                                        <p class="whitespace-nowrap">
+                                            <i class="fa-solid fa-phone"></i>: &nbsp;
+                                            @if ($user->phone)
+                                                {{ $user->phone }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
+
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center border-b border-b-blue-100	">
-
-                                @if ($user->name)
-                                    {{ $user->name }}
-                                @endif
-
-                                @if ($user->username)
-                                    ({{ $user->username }})
-                                @endif
-                                <br>
-                                @if ($user->email)
-                                    <i class="fa-solid fa-envelope"></i>: {{ $user->email }}
-                                @endif
-                                @if ($user->phone)
-                                    , &nbsp; <i class="fa-solid fa-phone"></i>: {{ $user->phone }}
-                                @else
-                                    <br>&nbsp;
-                                @endif
+                            <div class="flex">
+                                <div class="flex-auto">
+                                    <small class="font-sm">BALANCE:</small><br>
+                                    <span class="font-bold text-xl">{{ $wallet['balance'] }} KES</span>
+                                </div>
+                                <div class="flex-auto text-center">
+                                    <small class="font-sm"> UNPAID INVOICES:</small><br>
+                                    {{ $invoices->count() }}
+                                </div>
                             </div>
                         </div>
                     </div>
