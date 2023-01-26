@@ -54,6 +54,8 @@ class Subscription
 
     public function getSubscriber($user_id = '')
     {
+        $partner_cls = new PartnerCls();
+
         $user = Auth::user();
 
         if ($user_id) {
@@ -61,12 +63,20 @@ class Subscription
         }
 
         $subscriber = Subscriber::where(['username' => $user->username])->first();
+        
+        $partner = $partner_cls->getPartner($user->username);
+
 
         if (!$subscriber) {
             $partner = $this->addPartner($user);
 
             if ($partner) {
                 $subscriber = $this->addSubscriber($partner, $user);
+            }
+        }else{
+            if($partner->id != $subscriber->partner_id){
+                $subscriber->partner_id = $partner->id;
+                $subscriber->save();
             }
         }
 
