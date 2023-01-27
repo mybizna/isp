@@ -22,7 +22,7 @@ class Subscriber extends BaseModel
     public function migration(Blueprint $table)
     {
         $table->increments('id');
-        $table->string('username');
+        $table->string('username')->unique();
         $table->string('password');
         $table->integer('partner_id')->unsigned()->nullable();
     }

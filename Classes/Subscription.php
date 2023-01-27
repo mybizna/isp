@@ -66,7 +66,6 @@ class Subscription
         
         $partner = $partner_cls->getPartner($user->username);
 
-
         if (!$subscriber) {
             $partner = $this->addPartner($user);
 

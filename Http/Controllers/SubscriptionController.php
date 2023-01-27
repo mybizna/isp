@@ -16,7 +16,7 @@ class SubscriptionController extends BaseController
     public function access(Request $request)
     {
         $request->session()->put('subscription_data', []);
-
+     
         $subscription = new Subscription();
         $ledger = new Ledger();
         $invoice = new Invoice();
