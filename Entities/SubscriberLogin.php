@@ -10,7 +10,7 @@ class SubscriberLogin extends BaseModel
 {
 
     protected $fillable = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', 'mac_esc'];
-    public $migrationDependancy = ['isp_subscriber'];
+    public $migrationDependancy = ['isp_subscriber', 'isp_subscription'];
     protected $table = "isp_subscriber_login";
 
     /**
