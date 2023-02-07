@@ -10,6 +10,7 @@ use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Classes\Freeradius;
 use Modules\Isp\Entities\Subscriber;
+use Modules\Isp\Entities\SubscriberLogin;
 use Modules\Isp\Entities\Subscription as DBSubscription;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
@@ -17,9 +18,11 @@ use Session;
 
 class Subscription
 {
-    public function processData( $data = [])
+    public function processData($data = [])
     {
         Session::put('subscription_data', $data);
+
+        SubscriberLogin::create($data);
 
         return $data;
     }
@@ -35,7 +38,7 @@ class Subscription
         }
 
         $subscriber = Subscriber::where(['username' => $user->username])->first();
-        
+
         $partner = $partner_cls->getPartner($user->username);
 
         if (!$subscriber) {
@@ -44,8 +47,8 @@ class Subscription
             if ($partner) {
                 $subscriber = $this->addSubscriber($partner, $user);
             }
-        }else{
-            if($partner->id != $subscriber->partner_id){
+        } else {
+            if ($partner->id != $subscriber->partner_id) {
                 $subscriber->partner_id = $partner->id;
                 $subscriber->save();
             }
