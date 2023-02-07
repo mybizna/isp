@@ -17,37 +17,9 @@ use Session;
 
 class Subscription
 {
-    public function processData($request, $tmp_data = [])
+    public function processData( $data = [])
     {
-        $data = Session::get('subscription_data');
-
-        if (empty($tmp_data)) {
-            if ($request->isMethod('post')) {
-                $tmp_data = $request->all();
-            } else {
-                if (empty($data)) {
-                    $tmp_data['phone'] = '';
-                    $tmp_data['view'] = $request->get('view', 'login');
-                    $tmp_data['mac'] = $request->get('mac');
-                    $tmp_data['ip'] = $request->get('ip');
-                    $tmp_data['username'] = $request->get('username');
-                    $tmp_data['link_login'] = $request->get('link-login');
-                    $tmp_data['link_orig'] = $request->get('link-orig');
-                    $tmp_data['error'] = $request->get('error');
-                    $tmp_data['chap_id'] = $request->get('chap-id');
-                    $tmp_data['chap_challenge'] = $request->get('chap-challenge');
-                    $tmp_data['link_login_id'] = $request->get('link-login-id');
-                    $tmp_data['link_orig_esc'] = $request->get('link-orig-esc');
-                    $tmp_data['mac_esc'] = $request->get('mac-esc');
-                }
-            }
-        }
-
-        $data = array_merge($data, $tmp_data);
-
         Session::put('subscription_data', $data);
-
-        $data = Session::get('subscription_data', []);
 
         return $data;
     }

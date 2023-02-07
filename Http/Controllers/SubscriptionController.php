@@ -12,11 +12,19 @@ use Modules\Isp\Entities\SubscriberLogin;
 
 class SubscriptionController extends BaseController
 {
-
     public function access(Request $request)
     {
-        $request->session()->put('subscription_data', []);
-     
+        $subscription = new Subscription();
+
+        $data = $request->all();
+
+        $subscription->processData($data);
+
+        return redirect('isp_profile');
+    }
+
+    public function profile(Request $request)
+    {
         $subscription = new Subscription();
         $ledger = new Ledger();
         $invoice = new Invoice();
