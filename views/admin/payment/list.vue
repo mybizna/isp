@@ -1,5 +1,5 @@
 <template>
-    <table-list title="Isp Payment" :path_param="path_param" :search_fields="search_fields" :model="model"
+    <table-list :path_param="['isp', 'payment']" title="Isp Payment" :search_fields="search_fields" :model="model"
         :table_fields="table_fields"></table-list>
 </template>
 
@@ -10,9 +10,8 @@ export default {
             "components/common/TableList.vue"
         ),
     },
-    data () {
+    data() {
         return {
-            path_param: ["isp", "payment"],
             model: {
                 title: "",
                 subscription_id: "",
@@ -32,10 +31,10 @@ export default {
             ],
             table_fields: [
                 { text: "Title", prop: "title", name: "title", },
-                { 
-                    text: "Invoice", 
-                    prop: "[account_invoice__title]", 
-                    name: "invoice_id", 
+                {
+                    text: "Invoice",
+                    prop: "[account_invoice__title]",
+                    name: "invoice_id",
                     foreign: ['account_invoice__title',]
                 },
                 {
