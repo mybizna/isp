@@ -20,7 +20,7 @@ class SubscriptionController extends BaseController
 
         $subscription->processData($data);
 
-        return redirect('isp_profile');
+        return redirect()->route('isp_profile');
     }
 
     public function profile(Request $request)
@@ -84,6 +84,24 @@ class SubscriptionController extends BaseController
             return redirect()->route('account_payment', ['invoice_id' => $invoice->id]);
         }
     }
+
+    public function canceled(Request $request)
+    {
+
+        $subscription = new Subscription();
+
+        $subscriber = $subscription->getSubscriber();
+
+        $subscriber_login = SubscriberLogin::where('subscriber_id', $subscriber->id)->first();
+
+        $data = [
+            'subscriber' => $subscriber,
+            'subscriber_login' => $subscriber_login,
+        ];
+
+        return view('isp::access-canceled', $data);
+    }
+
 
     public function thankyou(Request $request)
     {
