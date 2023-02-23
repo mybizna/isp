@@ -1,25 +1,24 @@
 <template>
-        <table-render title="Isp Payment Charge Rate" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-render>
+    <table-render :path_param="['isp', 'payment_charge_rate']" title="Isp Payment Charge Rate" :table_fields="table_fields">
+
+        <template #header>
+            <th-render>Payment Charge</th-render>
+            <th-render>Rate</th-render>
+        </template>
+
+        <template #body="{ item }">
+            <td>{{ item.payment_charge_id }}</td>
+            <td>{{ item.rate_id }}</td>
+        </template>
+
+    </table-render>
 </template>
 
 <script>
 export default {
-    data () {
+    data() {
         return {
-            path_param: ["isp", "payment_charge_rate"],
-            model: {
-                payment_charge_id: "",
-                rate_id: "",
-            },
-            search_fields: [
-                { type: "text", name: "payment_charge_id", label: "Payment Charge", ope: "", },
-                { type: "text", name: "rate_id", label: "Rate", ope: "", },
-            ],
-            table_fields: [
-                { text: "Payment Charge", prop: "payment_charge_id", name: "payment_charge_id", },
-                { text: "Rate", prop: "rate_id", name: "rate_id", },
-            ],
+            table_fields: ['payment_charge_id', 'rate_id'],
         };
     },
 };

@@ -1,37 +1,25 @@
 
 <template>
-    <table-render title="Isp Subscriber" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-render>
+    <table-render :path_param="['isp', 'subscriber']" title="Isp Subscriber" :table_fields="table_fields">
+
+        <template #header>
+            <th-render>Username</th-render>
+            <th-render>Invoice</th-render>
+        </template>
+        <template #body="{ item }">
+            <td>{{ item.username }}</td>
+            <td>{{ item.partner_id__partner__first_name }} {{ item.partner_id__partner__last_name }}</td>
+        </template>
+
+    </table-render>
 </template>
 
 <script>
 
 export default {
-    data () {
+    data() {
         return {
-            path_param: ["isp", "subscriber"],
-            model: {
-                id: "",
-                username: "",
-                password: "",
-                partner_id: "",
-            },
-            search_fields: [
-                { type: "text", name: "username", label: "Username", ope: "", },
-                { type: "select", name: "partner_id", label: "Partner", ope: "", },
-            ],
-            username: "",
-                password: "",
-                partner_id: "",
-            table_fields: [
-                { text: "Username", prop: "username", name: "username", },
-                { 
-                    text: "Invoice", 
-                    prop: "[partner__first_name] [partner__last_name]", 
-                    name: "partner_id", 
-                    foreign: ['partner__first_name','partner__last_name',]
-                },
-            ],
+            table_fields: ['username', 'partner_id__partner__first_name', 'partner_id__partner__last_name'],
         };
     }
 };

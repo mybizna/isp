@@ -1,46 +1,35 @@
 
 <template>
-    <table-render title="Isp Subscription" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-rendererererererer>
+    <table-render :path_param="['isp', 'subscription']" title="Isp Subscription" :table_fields="table_fields">
+      
+        <template #header>
+            <th-render>Package</th-render>
+            <th-render>Subscriber</th-render>
+            <th-render>Start Date</th-render>
+            <th-render>End Date</th-render>
+        </template>
+  
+        <template #body="{ item }">
+            <td>{{ item.package_id__isp_package__title }}</td>
+            <td>{{ item.subscriber_id__isp_subscriber__username }}</td>
+            <td>{{ item.start_date }}</td>
+            <td>{{ item.end_date }}</td>
+        </template>
+
+
+    </table-render>
 </template>
 
 <script>
 
 export default {
-    data () {
+    data() {
         return {
-            path_param: ["isp", "subscription"],
-            model: {
-                id: "",
-                package_id: "",
-                subscriber_id: "",
-                start_date: "",
-                end_date: "",
-            },
-            search_fields: [
-                { type: "text", name: "package_id", label: "Package", ope: "", },
-                { type: "text", name: "subscriber_id", label: "Subscriber", ope: "", },
-                { type: "text", name: "start_date", label: "start_date", ope: "", },
-                { type: "text", name: "end_date", label: "end_date", ope: "", },
-            ],
             table_fields: [
-                { 
-                    text: "Package", 
-                    prop: "[isp_package__title]", 
-                    name: "package_id", 
-                    foreign: ['isp_package__title',]
-                },
-                { 
-                    text: "Subscriber", 
-                    prop: "[isp_subscriber__username]", 
-                    name: "subscriber_id", 
-                    foreign: ['isp_subscriber__username',]
-                },
-                { text: "Package", prop: "package_id", name: "package_id", },
-                { text: "Subscriber", prop: "subscriber_id", name: "subscriber_id", },
-                { text: "Start Date", prop: "start_date", name: "start_date", },
-                { text: "End Date", prop: "end_date", name: "end_date", },
+                'package_id__isp_package__title','subscriber_id__isp_subscriber__username',
+                'package_id','subscriber_id','start_date','end_date'
             ],
+          
         };
     }
 };

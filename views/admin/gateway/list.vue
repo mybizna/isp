@@ -1,45 +1,39 @@
 
 <template>
-    <table-render title="Isp Gateway" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-renderererer>
+    <table-render :path_param="['isp', 'gateway']" title="Isp Gateway" :table_fields="table_fields">
+
+        <template #header>
+            <th-render>Title</th-render>
+            <th-render>Username</th-render>
+            <th-render>Password</th-render>
+            <th-render>Database</th-render>
+            <th-render>IP Address</th-render>
+            <th-render>Port</th-render>
+            <th-render>Type</th-render>
+            <th-render>Published</th-render>
+        </template>
+        <template #body="{ item }">
+            <td>{{ item.title }}</td>
+            <td>{{ item.username }}</td>
+            <td>{{ item.password }}</td>
+            <td>{{ item.database }}</td>
+            <td>{{ item.ip_address }}</td>
+            <td>{{ item.port }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.published }}</td>
+        </template>
+
+    </table-render>
 </template>
 
 
 <script>
 
 export default {
-    data () {
+    data() {
         return {
-            path_param: ["isp", "gateway"],
-            model: {
-                id: "",
-                title: "",
-                username: "",
-                password: "",
-                database: "",
-                ip_address: "",
-                port: "",
-                type: "",
-                published: "",
-            },
-            search_fields: [
-                { type: "text", name: "title", label: "Title", ope: "", },
-                { type: "text", name: "username", label: "Username", ope: "", },
-                { type: "text", name: "database", label: "Database", ope: "", },
-                { type: "text", name: "ip_address", label: "IP Address", ope: "", },
-                { type: "text", name: "port", label: "Port", ope: "", },
-                { type: "text", name: "published", label: "Published", ope: "", },
-            ],
-            table_fields: [
-                { text: "Title", prop: "title", name: "title", },
-                { text: "Username", prop: "username", name: "username", },
-                { text: "Password", prop: "password", name: "password", },
-                { text: "Database", prop: "database", name: "database", },
-                { text: "IP Address", prop: "ip_address", name: "ip_address", },
-                { text: "Port", prop: "port", name: "port", },
-                { text: "Type", prop: "type", name: "type", },
-                { text: "Published", prop: "published", name: "published", },
-            ],
+            table_fields: ['title', 'username', 'password', 'database', 'ip_address', 'port', 'type', 'published'],
+
         };
     }
 };
