@@ -1,6 +1,6 @@
 <template>
-    <table-list :path_param="['isp', 'payment']" title="Isp Payment" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-list>
+    <table-render :path_param="['isp', 'payment']" title="Isp Payment" :search_fields="search_fields" :model="model"
+        :table_fields="table_fields"></table-render>
 </template>
 
 <script>

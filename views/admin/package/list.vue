@@ -1,6 +1,6 @@
 
 <template>
-    <table-list :path_param="['isp', 'package']" title="Isp Package" :search_fields="search_fields" :model="model"
+    <table-render :path_param="['isp', 'package']" title="Isp Package" :search_fields="search_fields" :model="model"
         :table_fields="table_fields">
 
         <template #header>
@@ -44,7 +44,7 @@
             </td>
         </template>
 
-    </table-list>
+    </table-render>
 </template>
 
 <script>

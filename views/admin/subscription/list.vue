@@ -1,7 +1,7 @@
 
 <template>
-    <table-list title="Isp Subscription" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-list>
+    <table-render title="Isp Subscription" :path_param="path_param" :search_fields="search_fields" :model="model"
+        :table_fields="table_fields"></table-rendererererererer>
 </template>
 
 <script>

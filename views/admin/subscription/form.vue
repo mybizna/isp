@@ -1,5 +1,5 @@
 <template>
-    <table-edit :path_param="path_param" :model="model">
+    <edit-render :path_param="path_param" :model="model">
 
         <div class="row">
             <div class="col-md-6">
@@ -17,14 +17,11 @@
         </div>
 
 
-    </table-edit>
+    </edit-render>
 </template>
 
 <script>
 export default {
-    components: {
-        TableEdit: window.$func.fetchComponent("components/common/TableEdit.vue")
-    },
     data () {
         return {
             id: null,

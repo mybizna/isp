@@ -1,7 +1,7 @@
 
 <template>
-    <table-list title="Isp Package Charge Rate" :path_param="path_param" :search_fields="search_fields" :model="model"
-        :table_fields="table_fields"></table-list>
+    <table-render title="Isp Package Charge Rate" :path_param="path_param" :search_fields="search_fields" :model="model"
+        :table_fields="table_fields"></table-rendererer>
 </template>
 
 <script>
