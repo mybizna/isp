@@ -20,28 +20,27 @@
             <td>{{ item.slug }}</td>
             <td>{{ item.billing_cycle_id }}</td>
             <td>
-                {{ item.speed }} {{ (item.speed_type == 'gigabyte') ? 'GBps' : ((item.speed_type == 'megabyte') ? 'MBps' :
-                    'KBps') }}
+                <template v-if="item.bundle">
+                    {{ item.speed }} {{ (item.speed_type == 'gigabyte') ? 'GBps' : ((item.speed_type == 'megabyte') ? 'MBps'
+                        :
+                        'KBps') }}
+                </template>
             </td>
             <td>
-                {{ item.bundle }} {{ (item.bundle_type == 'gigabyte') ? 'GBps' : ((item.bundle_type == 'megabyte') ? 'MBps'
-                    : 'KBps') }}
+                <template v-if="item.bundle">
+                    {{ item.bundle }} {{ (item.bundle_type == 'gigabyte') ? 'GB' : ((item.bundle_type == 'megabyte') ? 'MB'
+                        : 'KB') }}
+                </template>
             </td>
             <td>{{ item.amount }}</td>
-            <td>
-                {{ item.is_hidden }}
-                <i v-if="item.is_hidden" class="fa fa-check-circle text-xl text-red-600"></i>
-                <i v-else class="fa fa-times-circle text-xl text-green-600"></i>
+            <td class="text-center">
+                <btn-status :status="item.is_hidden"></btn-status>
             </td>
-            <td>
-                {{ item.featured }}
-                <i v-if="item.featured" class="fa fa-check-circle text-xl text-red-600"></i>
-                <i v-else class="fa fa-times-circle text-xl text-green-600"></i>
+            <td class="text-center">
+                <btn-status :status="item.featured"></btn-status>
             </td>
-            <td>
-                {{ item.published }}
-                <i v-if="item.published" class="fa fa-check-circle text-xl text-red-600"></i>
-                <i v-else class="fa fa-times-circle text-xl text-green-600"></i>
+            <td class="text-center">
+                <btn-status :status="item.published"></btn-status>
             </td>
         </template>
 
@@ -51,10 +50,6 @@
 <script>
 
 export default {
-    components: {
-        TableList: window.$func.fetchComponent("components/common/TableList.vue"),
-        ThRender: window.$func.fetchComponent("components/widgets/ThRender.vue"),
-    },
     data() {
         return {
             model: {
@@ -92,7 +87,7 @@ export default {
                 { text: "Featured", prop: "featured", align: "center", is_boolean: true, name: "featured", },
                 { text: "Published", prop: "published", align: "center", is_boolean: true, name: "published", },
             ],
-            
+
             /*
             table_fields: [
                 'title', 'slug', 'billing_cycle_id', 'speed', 'speed_type', 'bundle', 'bundle_type',

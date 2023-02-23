@@ -5,11 +5,6 @@
 
 <script>
 export default {
-    components: {
-        TableList: window.$func.fetchComponent(
-            "components/common/TableList.vue"
-        ),
-    },
     data () {
         return {
             path_param: ["isp", "payment_charge_rate"],
