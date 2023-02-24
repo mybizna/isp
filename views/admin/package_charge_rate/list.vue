@@ -11,7 +11,9 @@
         <template #body="{ item }">
             <td>{{ item.package_charge_id }}</td>
             <td>{{ item.rate_id }}</td>
-            <td>{{ item.published }}</td>
+            <td class="text-center">
+                <btn-status :status="item.published"></btn-status>
+            </td>
         </template>
 
     </table-render>

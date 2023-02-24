@@ -10,14 +10,16 @@
             <th-render>Price</th-render>
             <th-render>Published</th-render>
         </template>
-        
+
         <template #body="{ item }">
             <td>{{ item.title }}</td>
             <td>{{ item.package_id }}</td>
             <td>{{ item.ledger_id }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.price }}</td>
-            <td>{{ item.published }}</td>
+            <td class="text-center">
+                <btn-status :status="item.published"></btn-status>
+            </td>
         </template>
 
     </table-render>
@@ -28,7 +30,7 @@
 export default {
     data() {
         return {
-            table_fields: ['title','package_id','ledger_id','quantity','price','published'],
+            table_fields: ['title', 'package_id', 'ledger_id', 'quantity', 'price', 'published'],
         };
     }
 };

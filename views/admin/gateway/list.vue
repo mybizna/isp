@@ -20,7 +20,9 @@
             <td>{{ item.ip_address }}</td>
             <td>{{ item.port }}</td>
             <td>{{ item.type }}</td>
-            <td>{{ item.published }}</td>
+            <td class="text-center">
+                <btn-status :status="item.is_fetched"></btn-status>
+            </td>
         </template>
 
     </table-render>

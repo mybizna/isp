@@ -14,7 +14,9 @@
             <td>{{ item.description }}</td>
             <td>{{ item.duration }}</td>
             <td>{{ item.duration_type }}</td>
-            <td>{{ item.published }}</td>
+            <td class="text-center">
+                <btn-status :status="item.published"></btn-status>
+            </td>
         </template>
 
     </table-render>
