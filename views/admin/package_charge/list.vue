@@ -1,6 +1,6 @@
 
 <template>
-    <table-render :path_param="['isp', 'package_setup_item']" title="Isp Package Setup Item" :table_fields="table_fields">
+    <table-render :path_param="['isp', 'package_charge']" title="Isp Package Charge" :table_fields="table_fields">
 
         <template #header>
             <th-render>Title</th-render>
@@ -13,10 +13,10 @@
 
         <template #body="{ item }">
             <td>{{ item.title }}</td>
-            <td>{{ item.package_id }}</td>
-            <td>{{ item.ledger_id }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.package_title }}</td>
+            <td>{{ item.ledger_name }}</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-right">{{ item.price }}</td>
             <td class="text-center">
                 <btn-status :status="item.published"></btn-status>
             </td>
@@ -30,7 +30,11 @@
 export default {
     data() {
         return {
-            table_fields: ['title', 'package_id', 'ledger_id', 'quantity', 'price', 'published'],
+            table_fields: [
+                
+            'title', 'quantity', 'price', 'published',
+            'package_id__isp_package__title as package_title', 'ledger_id__account_ledger__name as ledger_name',
+        ],
         };
     }
 };
