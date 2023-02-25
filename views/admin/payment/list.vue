@@ -15,9 +15,9 @@
             <td>{{ item.invoice_id__account_invoice__title }}</td>
             <td>
                 {{ item.subscription_id__isp_subscription___subscriber_id__isp_subscriber__username }}
-                {{ item.subscription_id__isp_subscription___package_id__isp_package__title }}
-                {{ item.subscription_id__isp_subscription___package_id__isp_package__speed }}
-                {{ item.subscription_id__isp_subscription___package_id__isp_package__speed_type }}
+                {{ item.isp_package_title }}
+                {{ item.isp_package_speed }}
+                {{ item.isp_package_speed_type }}
 
             </td>
             <td class="text-center">
