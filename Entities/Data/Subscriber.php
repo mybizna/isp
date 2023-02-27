@@ -15,42 +15,42 @@ class Subscriber
 
         $datasetter->add_data('core', 'notification', 'slug', [
             "slug" => "isp_subscriber_add",
-            "short" => "Your subscriber account [{{ username }}] has been added.",
-            "medium" => "Your subscriber account [{{ username }}] has been added.",
+            "short" => 'Your subscriber account [{{ $username }}] has been added.',
+            "medium" => 'Your subscriber account [{{ $username }}] has been added.',
             "enable_short" => true,
             "enable_medium" => true,
             "enable_lengthy" => true,
             "published" => true,
-            "lengthy" => "
-            Hi {{ partner_name }},
+            "lengthy" => '
+            Hi {{ $partner_name }},
             <br><br>
-            <h3> Subscriber Account: {{ username }} .</h3>
+            <h3> Subscriber Account: {{ $username }} .</h3>
             <br><br>
-            Your subscriber account [{{ username }}] has been added.
+            Your subscriber account [{{ $username }}] has been added.
             <br><br> 
             If you need any help, please let us know so that we can assist you.
             <br><br>
-            Thanks,",
+            Thanks,',
         ]);
   
         $datasetter->add_data('core', 'notification', 'slug', [
             "slug" => "isp_subscriber_save",
-            "short" => "Your subscriber account [{{ username }}] has been saved.",
-            "medium" => "Your subscriber account [{{ username }}] has been saved.",
+            "short" => 'Your subscriber account [{{ $username }}] has been saved.',
+            "medium" => 'Your subscriber account [{{ $username }}] has been saved.',
             "enable_short" => true,
             "enable_medium" => true,
             "enable_lengthy" => true,
             "published" => true,
-            "lengthy" => "
-            Hi {{ partner_name }},
+            "lengthy" => '
+            Hi {{ $partner_name }},
             <br><br>
-            <h3> Subscriber Account: {{ username }} .</h3>
+            <h3> Subscriber Account: {{ $username }} .</h3>
             <br><br>
-            Your subscriber account [{{ username }}] has been saved.
+            Your subscriber account [{{ $username }}] has been saved.
             <br><br> 
             If you need any help, please let us know so that we can assist you.
             <br><br>
-            Thanks,",
+            Thanks,',
         ]);
     }
 }
