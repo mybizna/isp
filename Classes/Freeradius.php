@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Modules\Isp\Entities\Gateway;
+use Modules\Isp\Entities\Package;
 use Modules\Isp\Entities\Subscriber;
+use Modules\Isp\Entities\Subscription;
 
 class Freeradius
 {
     public $subscription;
 
     public function __construct($subscription)
-    { 
+    {
         $this->subscription = $subscription;
 
         $gateway = Gateway::where(['type' => 'freeradius', 'published' => true])->first();
@@ -21,7 +23,6 @@ class Freeradius
         if (!$gateway) {
             throw new \Exception("No Freeradius gateway set.", 1);
         }
-
 
         // Erase the connection forcing Laravel to get the default values all over again.
         DB::purge('freeradius');
@@ -41,20 +42,12 @@ class Freeradius
 
     }
 
-    public function setUser($package)
+    public function setSubscriber($subscriber)
     {
         $db_freeradius = DB::connection('freeradius');
 
-        $subscriber = Subscriber::where(['id' => $this->subscription->subscriber_id])->first();
-
-        $speed_type = $package->speed_type[0] ?? null;
-        $speed_type = ($speed_type == 'm' || $speed_type == 'g') ? strtoupper($speed_type) : $speed_type;
-
-        $speed = $package->speed . $speed_type;
-
-        $profile = $speed . '_Profile';
-
         $passcheck = $db_freeradius->select('select * from radcheck where username = ? and attribute = ?', [$subscriber->username, 'Cleartext-Password']);
+
         if (!empty($passcheck)) {
             $db_freeradius->update(
                 'update radcheck set value = ? where username = ? and attribute = ?',
@@ -63,6 +56,30 @@ class Freeradius
         } else {
             $db_freeradius->insert('insert into radcheck (username,attribute,op,value) values (?, ?, ?, ?)', [$subscriber->username, "Cleartext-Password", ":=", $subscriber->password]);
         }
+
+        $subscription_count = Subscription::where('id', $subscriber->id)->count();
+
+        if ($subscription_count) {
+
+            $package = Package::where('slug', 'free')->first();
+
+            if ($subscriber->had_trail) {
+                $package = Package::where('slug', 'trail')->first();
+            }
+
+            $this->setSubscriberPackage($subscriber->username, $package);
+        }
+
+    }
+
+    public function setSubscriberPackage($username, $package)
+    {
+        $speed_type = $package->speed_type[0] ?? null;
+        $speed_type = ($speed_type == 'm' || $speed_type == 'g') ? strtoupper($speed_type) : $speed_type;
+
+        $speed = $package->speed . $speed_type;
+
+        $profile = $speed . '_Profile';
 
         $profilecheck = $db_freeradius->select('select * from radcheck where username = ? and attribute = ?', [$subscriber->username, 'User-Profile']);
         if (!empty($profilecheck)) {
@@ -73,8 +90,9 @@ class Freeradius
         } else {
             $db_freeradius->insert('insert into radcheck (username,attribute,op,value) values (?, ?, ?, ?)', [$subscriber->username, "User-Profile", ":=", $profile]);
         }
-
     }
+
+ 
 
     public function setPackage($package)
     {

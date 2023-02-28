@@ -2,14 +2,18 @@
 
 namespace Modules\Isp\Entities;
 
-use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
+use Modules\Base\Entities\BaseModel;
 
 class Package extends BaseModel
 {
 
-    protected $fillable = ['title', 'slug', 'description', 'gateway_id', 'billing_cycle_id', 'speed', 'speed_type', 'published', 'amount'];
+    protected $fillable = [
+        'title', 'slug', 'description', 'gateway_id', 'billing_cycle_id',
+        'speed', 'speed_type', 'bundle', 'bundle_type', 'published',
+        'featured', 'default', 'is_unlimited', 'is_hidden', 'amount',
+    ];
     public $migrationDependancy = ['isp_billing_cycle'];
     protected $table = "isp_package";
 
@@ -30,13 +34,14 @@ class Package extends BaseModel
         $table->integer('gateway_id')->unsigned()->nullable();
 
         $table->string('speed')->nullable();
-        $table->enum('speed_type', ['gigabyte','kilobyte', 'megabyte'])->default('megabyte')->nullable();
-        
+        $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
+
         $table->string('bundle')->nullable();
-        $table->enum('bundle_type', ['gigabyte','kilobyte', 'megabyte'])->default('megabyte')->nullable();
-     
+        $table->enum('bundle_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
+
         $table->boolean('published')->default(true)->nullable();
         $table->boolean('featured')->default(false)->nullable();
+        $table->boolean('default')->default(false)->nullable();
         $table->boolean('is_unlimited')->default(false)->nullable();
         $table->boolean('is_hidden')->default(false)->nullable();
         $table->double('amount', 8, 2)->nullable();
@@ -47,7 +52,7 @@ class Package extends BaseModel
         if (Migration::checkKeyExist('isp_package', 'billing_cycle_id')) {
             $table->foreign('billing_cycle_id')->references('id')->on('isp_billing_cycle')->nullOnDelete();
         }
-        
+
         if (Migration::checkKeyExist('isp_package', 'gateway_id')) {
             $table->foreign('gateway_id')->references('id')->on('isp_gateway')->nullOnDelete();
         }

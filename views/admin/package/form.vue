@@ -17,7 +17,7 @@
                 <FormKit v-model="model.published"  label="Published" id="published" type="switch" validation="required" />
                 <FormKit v-model="model.is_hidden"  label="Hidden in Portal" id="is_hidden" type="switch" validation="required" />
                 <FormKit v-model="model.featured"  label="Featured" id="featured" type="switch" validation="required" />
-
+                <FormKit v-model="model.default"  label="Default" id="default" type="switch" validation="required" />
             </div>
         </div>
 

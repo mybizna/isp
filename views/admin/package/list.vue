@@ -10,16 +10,17 @@
             <th-render>Bundle</th-render>
             <th-render>Amount</th-render>
             <th-render>Hidden in Portal</th-render>
-            <th-render>Featured</th-render>
+            <th-render>Default</th-render>
             <th-render>Published</th-render>
+            <th-render>Sync</th-render>
         </template>
 
         <template #body="{ item }">
             <td>{{ item.title }}</td>
             <td>{{ item.slug }}</td>
-            <td>{{ item.billing_cycle_id }}</td>
+            <td>{{ item.billing_cycle_id__isp_billing_cycle__title }}</td>
             <td>
-                <template v-if="item.bundle">
+                <template v-if="item.speed">
                     {{ item.speed }} {{ (item.speed_type == 'gigabyte') ? 'GBps' : ((item.speed_type == 'megabyte') ? 'MBps'
                         :
                         'KBps') }}
@@ -36,10 +37,17 @@
                 <btn-status :status="item.is_hidden"></btn-status>
             </td>
             <td class="text-center">
-                <btn-status :status="item.featured"></btn-status>
+                <btn-status :status="item.default"></btn-status>
             </td>
             <td class="text-center">
                 <btn-status :status="item.published"></btn-status>
+            </td>
+            <td class="text-center mt-1">
+                <a
+                    class="text-blue-700 rounded cursor-pointer whitespace-nowrap text-sm py-1 px-2 text-center">
+                    <i class="fas fa-cog"></i>
+                    Sync
+                </a>
             </td>
         </template>
 
@@ -52,8 +60,8 @@ export default {
     data() {
         return {
             table_fields: [
-                'title', 'slug', 'billing_cycle_id', 'speed', 'speed_type', 'bundle', 'bundle_type',
-                'amount', 'is_hidden', 'featured', 'published'
+                'title', 'slug', 'billing_cycle_id__isp_billing_cycle__title', 'speed', 'speed_type', 'bundle', 'bundle_type',
+                'amount', 'is_hidden', 'default', 'published'
             ]
         };
     }

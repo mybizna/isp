@@ -13,8 +13,44 @@ class Package
     public function data(Datasetter $datasetter)
     {
         $gateway_id = DB::table('isp_gateway')->where('type', 'freeradius')->value('id');
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '10-minute')->value('id');
+
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "Trial",
+            "slug" => "trail",
+            "description" => "Trial",
+            "gateway_id" => $gateway_id ,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 0,
+            "speed" => "1",
+            "speed_type" => "megabyte",
+            "bundle" => "10",
+            "bundle_type" => "gigabyte",
+            "published" => true,
+            "featured" => 0,
+            "is_hidden" => 1,
+        ]);
+
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
-        
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "Free",
+            "slug" => "free",
+            "description" => "Free",
+            "gateway_id" => $gateway_id ,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 0,
+            "speed" => "32",
+            "speed_type" => "kilobyte",
+            "bundle" => "2",
+            "bundle_type" => "gigabyte",
+            "published" => true,
+            "default" => 1,
+            "featured" => 0,
+            "is_hidden" => 1,
+        ]);
+
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
+
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "1M Hotspot",
             "slug" => "1m-hotspot",
@@ -26,7 +62,7 @@ class Package
             "speed_type" => "megabyte",
             "published" => true,
             "featured" => 0,
-            "hidden" => 0,
+            "is_hidden" => 0,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -40,7 +76,7 @@ class Package
             "speed_type" => "megabyte",
             "published" => true,
             "featured" => 1,
-            "hidden" => 0,
+            "is_hidden" => 0,
         ]);    
         
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -54,7 +90,7 @@ class Package
             "speed_type" => "megabyte",
             "published" => true,
             "featured" => 0,
-            "hidden" => 1,
+            "is_hidden" => 1,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -68,7 +104,7 @@ class Package
             "speed_type" => "megabyte",
             "published" => true,
             "featured" => 0,
-            "hidden" => 1,
+            "is_hidden" => 1,
         ]);  
 
     }

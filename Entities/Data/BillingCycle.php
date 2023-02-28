@@ -49,6 +49,15 @@ class BillingCycle
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
+            "title" => "3 Hour",
+            "description" => "3 Hour",
+            "slug" => "3-hour",
+            "duration_type" => "hour",
+            "duration" => 3,
+            "published" => true
+        ]);
+
+        $datasetter->add_data('isp', 'billing_cycle', 'slug', [
             "title" => "6 Hour",
             "description" => "6 Hour",
             "slug" => "6-hour",
