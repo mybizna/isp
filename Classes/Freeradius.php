@@ -14,10 +14,8 @@ class Freeradius
 {
     public $subscription;
 
-    public function __construct($subscription)
+    public function __construct()
     {
-        $this->subscription = $subscription;
-
         $gateway = Gateway::where(['type' => 'freeradius', 'published' => true])->first();
 
         if (!$gateway) {
@@ -41,6 +39,9 @@ class Freeradius
         Schema::connection('freeradius')->getConnection()->reconnect();
 
     }
+
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // Manage Subscriber
 
     public function setSubscriber($subscriber)
     {
@@ -72,27 +73,81 @@ class Freeradius
 
     }
 
+    public function deleteSubscriber($username)
+    {
+        $db_freeradius = DB::connection('freeradius');
+        
+        $db_freeradius->delete('delete from radcheck where username = ?', [$username]);
+        $db_freeradius->delete('delete from radusergroup where username = ?', [$username]);
+    }
+
     public function setSubscriberPackage($username, $package)
     {
+        $db_freeradius = DB::connection('freeradius');
+
         $speed_type = $package->speed_type[0] ?? null;
         $speed_type = ($speed_type == 'm' || $speed_type == 'g') ? strtoupper($speed_type) : $speed_type;
 
+        $groupname = $this->getGroupName($package->slug);
         $speed = $package->speed . $speed_type;
 
-        $profile = $speed . '_Profile';
+        $speed_profile = $groupname . '_Profile';
 
-        $profilecheck = $db_freeradius->select('select * from radcheck where username = ? and attribute = ?', [$subscriber->username, 'User-Profile']);
+        $profilecheck = $db_freeradius->select('select * from radcheck where username = ? and attribute = ?', [$username, 'User-Profile']);
         if (!empty($profilecheck)) {
             $db_freeradius->update(
                 'update radcheck set value = ? where username = ? and attribute = ?',
-                [$profile, $subscriber->username, 'User-Profile']
+                [$speed_profile, $username, 'User-Profile']
             );
         } else {
-            $db_freeradius->insert('insert into radcheck (username,attribute,op,value) values (?, ?, ?, ?)', [$subscriber->username, "User-Profile", ":=", $profile]);
+            $db_freeradius->insert('insert into radcheck (username,attribute,op,value) values (?, ?, ?, ?)', [$username, "User-Profile", ":=", $speed_profile]);
+        }
+
+        $profilecheck = $db_freeradius->select('select * from radusergroup where username = ? and groupname = ?',
+            [$username, $groupname]);
+        if (!empty($profilecheck)) {
+            $db_freeradius->update(
+                'update radusergroup set priority = ? where username = ? and groupname = ?',
+                [10, $username, $groupname]
+            );
+        } else {
+            $db_freeradius->insert('insert into radusergroup (username,groupname,priority) values (?, ?, ?)',
+                [$username, $groupname, 10]);
         }
     }
 
- 
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // Manage Subscription
+
+    public function setSubscription($subscription)
+    {
+        $db_freeradius = DB::connection('freeradius');
+
+        $subscriber = Subscriber::where('id', $subscription->subscriber_id)->first();
+        $package = Package::where('id', $subscription->package_id)->first();
+
+        $this->setSubscriberPackage($subscriber->username, $package);
+    }
+
+    public function deleteSubscription($username)
+    {
+        $db_freeradius->delete('delete from radusergroup where username = ?', [$username]);
+    }
+
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // Manage Package
+    public function setPackages()
+    {
+        $packages = DB::table('isp_package AS p')
+            ->select('p.*', 'b.title as package_title', 'b.duration_type', 'b.duration')
+            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
+            ->where(['p.published' => true])
+            ->get();
+
+        foreach ($packages as $key => $package) {
+            $this->setPackage($package);
+        }
+    }
 
     public function setPackage($package)
     {
@@ -101,14 +156,14 @@ class Freeradius
         $speed_type = $package->speed_type[0] ?? null;
         $speed_type = ($speed_type == 'm' || $speed_type == 'g') ? strtoupper($speed_type) : $speed_type;
 
+        $groupname = $this->getGroupName($package->slug);
         $speed = $package->speed . $speed_type;
         $double_speed = ($package->speed * 2) . $speed_type;
 
         $microtik_limit = '' . $speed . '/' . $speed . ' ' . $double_speed . '/' . $double_speed . ' ' . $speed . '/' . $speed . ' 40/40';
 
-        $groupname = $speed;
-        $speed_pool = $speed . '_pool';
-        $speed_profile = $speed . '_Profile';
+        $speed_pool = $groupname . '_pool';
+        $speed_profile = $groupname . '_Profile';
 
         $checker = $db_freeradius->select('select * from radgroupcheck where groupname = ? and attribute = ?',
             [$groupname, 'Framed-Protocol']);
@@ -118,7 +173,7 @@ class Freeradius
                 ['PPP', $groupname, 'Framed-Protocol']
             );
         } else {
-            $db_freeradius->insert('insert into radgroupcheck (username,attribute,op,value) values (?, ?, ?, ?)',
+            $db_freeradius->insert('insert into radgroupcheck (groupname,attribute,op,value) values (?, ?, ?, ?)',
                 [$groupname, "Framed-Protocol", "==", 'PPP']);
         }
 
@@ -130,7 +185,7 @@ class Freeradius
                 [$speed_pool, $groupname, 'Framed-Pool']
             );
         } else {
-            $db_freeradius->insert('insert into radgroupreply (username,attribute,op,value) values (?, ?, ?, ?)',
+            $db_freeradius->insert('insert into radgroupreply (groupname,attribute,op,value) values (?, ?, ?, ?)',
                 [$groupname, "Framed-Pool", "=", $speed_pool]);
         }
 
@@ -142,35 +197,35 @@ class Freeradius
                 [$microtik_limit, $groupname, 'Mikrotik-Rate-Limit']
             );
         } else {
-            $db_freeradius->insert('insert into radgroupreply (username,attribute,op,value) values (?, ?, ?, ?)',
+            $db_freeradius->insert('insert into radgroupreply (groupname,attribute,op,value) values (?, ?, ?, ?)',
                 [$groupname, "Mikrotik-Rate-Limit", "=", $microtik_limit]);
-        }
-
-        $checker = $db_freeradius->select('select * from radusergroup where username = ? and groupname = ?',
-            [$speed_profile, $groupname]);
-        if (!empty($checker)) {
-            $db_freeradius->update(
-                'update radusergroup set priority = ? where username = ? and groupname = ?',
-                [10, $speed_profile, $groupname]
-            );
-        } else {
-            $db_freeradius->insert('insert into radusergroup (username,groupname,priority) values (?, ?, ?, ?)',
-                [$speed_profile, $groupname, 10]);
         }
 
     }
 
-    public function setPackages()
+    public function deletePackage($package)
     {
-        $packages = DB::table('isp_package AS p')
-            ->select('p.*', 'b.title as package_title', 'b.duration_type', 'b.duration')
-            ->leftJoin('isp_billing_cycle AS b', 'b.id', '=', 'p.billing_cycle_id')
-            ->where(['p.is_hidden' => false])
-            ->get();
+        $db_freeradius = DB::connection('freeradius');
 
-        foreach ($packages as $key => $package) {
-            $this->setPackage($package);
-        }
+        $groupname = $this->getGroupName($package->slug);
+
+        $db_freeradius->delete('delete from radgroupcheck where groupname = ?', [$groupname]);
+        $db_freeradius->delete('delete from radgroupreply where groupname = ?', [$groupname]);
+    }
+
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // Generic
+
+    public function getGroupName($group_name)
+    {
+
+        $group_name = preg_replace('/\s+/', ' ', $group_name);
+
+        $group_name = preg_replace('/[^A-Za-z0-9\-]/', '', $group_name);
+
+        $group_name = str_replace(' ', '_', $group_name);
+
+        return strtolower($group_name);
     }
 }
 

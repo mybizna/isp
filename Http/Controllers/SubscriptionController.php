@@ -102,7 +102,6 @@ class SubscriptionController extends BaseController
         return view('isp::access-canceled', $data);
     }
 
-
     public function thankyou(Request $request)
     {
 
@@ -135,5 +134,42 @@ class SubscriptionController extends BaseController
         ];
 
         return view('isp::access-mikrotik-login', $data);
+    }
+
+    public function billingCycleSelect(Request $request)
+    {
+
+        $type = $request->get('type');
+
+        $result = [
+            'module' => 'isp',
+            'model' => 'billing_cycle',
+            'status' => 0,
+            'total' => 0,
+            'error' => 1,
+            'records' => [],
+            'message' => 'No Records',
+        ];
+
+        $query = DB::table('isp_billing_cycle');
+
+        try {
+            $records = $query->get();
+            $list = collect();
+            $list->push(['value' => '', 'label' => '--- Please Select ---']);
+
+            foreach ($records as $key => $record) {
+                $list->push(['value' => $record->id, 'label' => $record->title]);
+            }
+
+            $result['error'] = 0;
+            $result['status'] = 1;
+            $result['records'] = $list;
+            $result['message'] = 'Records Found Successfully.';
+        } catch (\Throwable$th) {
+            //throw $th;
+        }
+
+        return response()->json($result);
     }
 }

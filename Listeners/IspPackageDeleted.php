@@ -2,6 +2,8 @@
 
 namespace Modules\Isp\Listeners;
 
+use Modules\Isp\Classes\Freeradius;
+
 class IspPackageDeleted
 {
     /**
@@ -22,12 +24,13 @@ class IspPackageDeleted
      */
     public function handle($event)
     {
+        $freeradius = new Freeradius();
+        
         $table_name = $event->table_name;
 
         if ($table_name == 'isp_package') {
-            
             $model = $event->model;
-
+            $freeradius->deletePackage($model);
         }
 
     }
