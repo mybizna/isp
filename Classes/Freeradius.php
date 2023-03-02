@@ -221,9 +221,9 @@ class Freeradius
 
         $group_name = preg_replace('/\s+/', ' ', $group_name);
 
-        $group_name = preg_replace('/[^A-Za-z0-9\-]/', '', $group_name);
-
         $group_name = str_replace(' ', '_', $group_name);
+
+        $group_name = preg_replace('/[^A-Za-z0-9\-\_]/', '', $group_name);
 
         return strtolower($group_name);
     }
