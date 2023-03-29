@@ -31,7 +31,7 @@ class IspUsernameResolver
 
         if ($allow_partner_lookup) {
             $subscriber = Subscriber::where('username', $username)->first();
-            
+
             if ($subscriber) {
                 return $username;
             }

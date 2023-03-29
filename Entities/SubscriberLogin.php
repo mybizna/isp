@@ -23,7 +23,7 @@ class SubscriberLogin extends BaseModel
     {
 
         $table->increments('id');
-        $table->integer('subscriber_id')->unsigned();
+        $table->integer('subscriber_id')->nullable()->unsigned();
         $table->string('mac')->nullable();
         $table->string('ip')->nullable();
         $table->string('username')->nullable();
