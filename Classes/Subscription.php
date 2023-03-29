@@ -2,13 +2,12 @@
 
 namespace Modules\Isp\Classes;
 
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Classes\Freeradius;
+use Modules\Isp\Entities\MacAddress;
 use Modules\Isp\Entities\Subscriber;
 use Modules\Isp\Entities\SubscriberLogin;
 use Modules\Isp\Entities\Subscription as DBSubscription;
@@ -27,35 +26,32 @@ class Subscription
         return $data;
     }
 
-    public function getSubscriber($user_id = '')
+    public function getSubscriber($data)
     {
-        $partner_cls = new PartnerCls();
-
-        $user = Auth::user();
-
-        if ($user_id) {
-            $user = User::where(['id' => $user_id])->first();
-        }
-
-        $subscriber = Subscriber::where(['username' => $user->username])->first();
-
-        $partner = $partner_cls->getPartner($user->username);
-
-        if (!$subscriber) {
-            $partner = $this->addPartner($user);
-
-            if ($partner) {
-                $subscriber = $this->addSubscriber($partner, $user);
+        if (isset($data['username']) && $data['username'] != '') {
+            $subscriber = Subscriber::where(['username' => $data['username']])->first();
+            if ($subscriber) {
+                return $subscriber;
             }
-        } else {
-            if ($partner->id != $subscriber->partner_id) {
-                $subscriber->partner_id = $partner->id;
-                $subscriber->save();
+        } else if (isset($data['mac']) && $data['mac'] != '') {
+            $mac_address = MacAddress::where(['mac' => $data['mac']])->first();
+
+            if ($mac_address) {
+                $subscriber = Subscriber::where(['id' => $mac_address->subscriber_id])->first();
+                if ($subscriber) {
+                    return $subscriber;
+                }
             }
         }
 
-        return $subscriber;
+        return false;
 
+    }
+
+    public function getSubscriberbyMac($mac = '')
+    {
+
+        return false;
     }
 
     public function addSubscriber($partner, $user)

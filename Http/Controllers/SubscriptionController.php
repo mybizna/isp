@@ -9,6 +9,7 @@ use Modules\Account\Classes\Ledger;
 use Modules\Base\Http\Controllers\BaseController;
 use Modules\Isp\Classes\Subscription;
 use Modules\Isp\Entities\SubscriberLogin;
+use Session;
 
 class SubscriptionController extends BaseController
 {
@@ -29,17 +30,20 @@ class SubscriptionController extends BaseController
         $ledger = new Ledger();
         $invoice = new Invoice();
 
-        $user = Auth::user();
-        $subscriber = $subscription->getSubscriber();
-        $packages = $subscription->getPackages();
-        $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
-        $featured_package = $current_package = $packages[0];
+        $data = Session::get('subscription_data');
 
-        $wallet = $ledger->getAccountBalance($subscriber->partner_id);
+        $subscriber = $subscription->getSubscriber($data);
+        $packages = $subscription->getPackages();
+        $featured_package = $current_package = $packages[0];
+        $invoices=collect([]);
+        $wallet=collect([]);
+
+        if(isset($subscriber->partner_id) && $subscriber->partner_id){
+            $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
+            $wallet = $ledger->getAccountBalance($subscriber->partner_id);
+        }
 
         $current_package->expiry_date = date(DATE_ATOM, mktime(23, 59, 0, date('m'), date('d'), date('Y')));
-
-        //$featured_package=$current_package='';
 
         $data = [
             'subscriber' => $subscriber,
@@ -47,7 +51,6 @@ class SubscriptionController extends BaseController
             'featured_package' => $featured_package,
             'current_package' => $current_package,
             'invoices' => $invoices,
-            'user' => $user,
             'wallet' => $wallet,
         ];
 

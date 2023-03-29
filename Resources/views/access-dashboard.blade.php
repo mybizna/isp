@@ -116,14 +116,14 @@
                                     <div class="border-b border-b-blue-100	">
 
                                         <p class=" font-semibold whitespace-nowrap">
-                                            @if ($user->name)
+                                            @if (isset($user->name) && $user->name)
                                                 {{ $user->name }}
                                             @endif
                                         </p>
 
                                         <p class="whitespace-nowrap">
                                             <i class="fa-solid fa-user"></i>: &nbsp;
-                                            @if ($user->username)
+                                            @if (isset($user->username) && $user->username)
                                                 {{ $user->username }}
                                             @else
                                                 -
@@ -132,7 +132,7 @@
 
                                         <p class="whitespace-nowrap">
                                             <i class="fa-solid fa-envelope"></i>: &nbsp;
-                                            @if ($user->email)
+                                            @if (isset($user->email) && $user->email)
                                                 {{ $user->email }}
                                             @else
                                                 -
@@ -141,7 +141,7 @@
 
                                         <p class="whitespace-nowrap">
                                             <i class="fa-solid fa-phone"></i>: &nbsp;
-                                            @if ($user->phone)
+                                            @if (isset($user->phone) && $user->phone)
                                                 {{ $user->phone }}
                                             @else
                                                 -
@@ -154,7 +154,11 @@
                             <div class="flex">
                                 <div class="flex-auto">
                                     <small class="font-sm">BALANCE:</small><br>
-                                    <span class="font-bold text-xl">{{ $wallet['balance'] }} KES</span>
+                                    <span class="font-bold text-xl">
+                                     @if (isset($wallet['balance']))
+                                    {{ $wallet['balance'] }} 
+                                    @endif
+                                    KES</span>
                                 </div>
                                 <div class="flex-auto text-center">
                                     <small class="font-sm"> UNPAID INVOICES:</small><br>

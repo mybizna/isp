@@ -10,7 +10,7 @@ class SubscriberLogin extends BaseModel
 {
 
     protected $fillable = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', 'mac_esc'];
-    public $migrationDependancy = ['isp_subscriber', 'isp_subscription'];
+    public $migrationDependancy = [];
     protected $table = "isp_subscriber_login";
 
     /**
@@ -23,7 +23,6 @@ class SubscriberLogin extends BaseModel
     {
 
         $table->increments('id');
-        $table->integer('subscriber_id')->nullable()->unsigned();
         $table->string('mac')->nullable();
         $table->string('ip')->nullable();
         $table->string('username')->nullable();
@@ -35,13 +34,6 @@ class SubscriberLogin extends BaseModel
         $table->string('link_login_id')->nullable();
         $table->string('link_orig_esc')->nullable();
         $table->string('mac_esc')->nullable();
-    }
-
-    public function post_migration(Blueprint $table)
-    {
-        if (Migration::checkKeyExist('isp_subscription', 'subscriber_id')) {
-            $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->nullOnDelete();
-        }
     }
 
 }

@@ -9,7 +9,7 @@ use Modules\Base\Classes\Migration;
 class Subscriber extends BaseModel
 {
 
-    protected $fillable = ['username', 'password', 'partner_id'];
+    protected $fillable = ['username', 'password','had_trail', 'partner_id'];
     public $migrationDependancy = [];
     protected $table = "isp_subscriber";
 
