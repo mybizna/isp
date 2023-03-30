@@ -8,6 +8,7 @@ use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
 use Modules\Isp\Classes\Freeradius;
 use Modules\Isp\Entities\MacAddress;
+use Modules\Isp\Entities\Package;
 use Modules\Isp\Entities\Subscriber;
 use Modules\Isp\Entities\SubscriberLogin;
 use Modules\Isp\Entities\Subscription as DBSubscription;
@@ -48,8 +49,63 @@ class Subscription
 
     }
 
-    public function getSubscriberbyMac($mac = '')
+    public function saveSubcriber($data)
     {
+
+        $password = $username = $this->generatePassword();
+
+        $data['username'] = $username;
+        $data['password'] = $password;
+
+        $mac_address = MacAddress::where(['mac' => $data['mac']])->first();
+
+        $partner = $this->addPartner($data);
+
+        $item_subscriber = Subscriber::where(['partner_id' => $partner->id])->first();
+        if (!$item_subscriber) {
+            $item_subscriber = Subscriber::updateOrCreate([
+                'username' => $username,
+                'password' => $password,
+                'partner_id' => $partner->id,
+            ]);
+        }
+
+        $mac_address = MacAddress::where(['subscriber_id' => $item_subscriber->id])->first();
+        if (!$mac_address) {
+            $mac_address = MacAddress::updateOrCreate([
+                'subscriber_id' => $item_subscriber->id,
+                'mac' => $data['mac'],
+            ]);
+        }
+
+        $invoice = $this->buyPackage($data['package_id'], $item_subscriber->id);
+
+        return $invoice;
+    }
+
+    public function getCurrentPackage($subscriber_id)
+    {
+        $subscription = DBSubscription::where('id', $subscriber_id)->orderBy('end_date')->first();
+
+        if ($subscription) {
+
+            $package = Package::where('id', $subscription->package_id)->first();
+
+            if ($package) {
+                return $package;
+            }
+        }
+
+        return false;
+    }
+
+    public function getPartner($partner_id)
+    {
+        $partner = Partner::where('id', $partner_id)->first();
+
+        if ($partner) {
+            return $partner;
+        }
 
         return false;
     }
@@ -124,22 +180,18 @@ class Subscription
 
     }
 
-    public function addPartner($user)
+    public function addPartner($data)
     {
         $partner_cls = new PartnerCls();
 
-        $name_arr = explode(' ', $user->name);
-
-        $partner = Partner::where('email', $user->email)
-            ->orWhere('phone', $user->phone)->first();
+        $partner = Partner::where('email', $data['email'] ?? '')
+            ->orWhere('phone', $data['phone'])->first();
 
         if (!$partner) {
             $partner = $partner_cls->createPartner([
-                'first_name' => (isset($name_arr[0])) ? $name_arr[0] : '',
-                'last_name' => (isset($name_arr[1])) ? $name_arr[1] : '',
-                'email' => $user->email,
-                'phone' => $user->phone,
-                'slugs' => [$user->username],
+                'email' => $data['email'] ?? '',
+                'phone' => $data['phone'] ?? '',
+                'slugs' => [$data['username'] ?? ''],
             ]);
         }
 
@@ -171,13 +223,13 @@ class Subscription
 
     }
 
-    public function buyPackage($id)
+    public function buyPackage($package_id, $subscriber_id)
     {
 
         $invoice = new Invoice();
 
-        $package = $this->getPackage($id);
-        $subscriber = $this->getSubscriber();
+        $package = $this->getPackage($package_id);
+        $subscriber = Subscriber::where('id', $subscriber_id)->first();
 
         $speed_type = $package->speed_type == 'kilobyte' ? 'KBps' : ($package->speed_type == 'megabyte' ? 'MBps' : 'GBps');
         $bundle_type = $package->bundle_type == 'kilobyte' ? 'KB' : ($package->bundle_type == 'megabyte' ? 'MB' : 'GB');
@@ -193,7 +245,7 @@ class Subscription
         $partner_id = $subscriber->partner_id;
         $amount = $package->amount;
 
-        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'item_id' => $id]];
+        $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'item_id' => $package_id]];
 
         $invoice = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
 

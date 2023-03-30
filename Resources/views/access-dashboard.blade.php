@@ -1,11 +1,8 @@
 @extends('base::app')
 
 @section('content')
-
-
     <section class="bg-blue-50 dark:bg-blue-900 h-full h-screen">
         <div class="w-full md:w-4/5 lg:w-2/4 mx-auto pt-10">
-
 
             <div
                 class="relative flex flex-col min-w-0 break-words bg-transparent border-0 border-transparent border-solid shadow-xl rounded-2xl bg-clip-border mx-1">
@@ -73,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="text-center pb-5">
+                            <div class="text-center pb-3">
                                 <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
                                     class="mb-1 bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Renew Package') }}</a>
                             </div>
@@ -97,77 +94,119 @@
                 </div>
             </div>
 
+            <div class=" shadow-xl rounded-md bg-white sm:mr-2 my-4 pt-2 p-2">
+                <div class="flex overflow-hidden">
+                    <div class="flex-none">
+                        <img width="100px" src="{{ asset('images/login.avif') }}" />
+                    </div>
+
+                    <div class="flex-auto">
+                        <div class="text-center">
+                            <p class="font-semibold text-lg">
+                                Access Pro account.
+                            </p>
+
+                            <p class=" text-sm text-gray-400 py-1">
+                                It supports multiple devices accessing internet with same login.
+                            </p>
+
+                            <a id='package' href=""
+                                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">LOGIN</a>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
 
             <div>
                 <div class="sm:flex">
-                    <div class="sm:flex-auto sm:w-1/2  my-5">
-                        <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
-                            <div class="flex overflow-hidden">
-                                <div class="flex-none">
-                                    <div class="grid h-full place-items-center mr-4">
-                                        <span class="fa-stack fa-2x text-gray-500" style="vertical-align: top;">
-                                            <i class="fa-regular fa-circle fa-stack-2x"></i>
-                                            <i class="fa-solid fa-user fa-stack-1x"></i>
+                    <div class="sm:flex-auto sm:w-1/2 @if (!$partner) hidden sm:block @endif">
+                        <div class="shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
+                            @if (!$partner)
+                                <div class="text-center">
+                                    <span class="fa-stack fa-2x text-gray-500 inline-block">
+                                        <i class="fa-regular fa-circle fa-stack-2x"></i>
+                                        <i class="fa-solid fa-network-wired fa-stack-1x"></i>
+                                    </span>
+                                    <h4 class="font-semibold text-lg">
+                                        Welcome to Our Network.
+                                    </h4>
+                                    <span class="text-gray-500">Buy your Internet bundle below.</span>
+                                </div>
+                            @else
+                                <div class="flex overflow-hidden">
+                                    <div class="flex-none">
+                                        <div class="grid h-full place-items-center mr-4">
+                                            <span class="fa-stack fa-2x text-gray-500" style="vertical-align: top;">
+                                                <i class="fa-regular fa-circle fa-stack-2x"></i>
+                                                <i class="fa-solid fa-user fa-stack-1x"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-auto">
+                                        <div class="border-b border-b-blue-100	">
+
+                                            <p class=" font-semibold whitespace-nowrap">
+                                                @if (isset($user->name) && $user->name)
+                                                    {{ $user->name }}
+                                                @endif
+                                            </p>
+
+                                            <p class="whitespace-nowrap">
+                                                <i class="fa-solid fa-user"></i>: &nbsp;
+                                                @if (isset($user->username) && $user->username)
+                                                    {{ $user->username }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </p>
+
+                                            <p class="whitespace-nowrap">
+                                                <i class="fa-solid fa-envelope"></i>: &nbsp;
+                                                @if (isset($user->email) && $user->email)
+                                                    {{ $user->email }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </p>
+
+                                            <p class="whitespace-nowrap">
+                                                <i class="fa-solid fa-phone"></i>: &nbsp;
+                                                @if (isset($user->phone) && $user->phone)
+                                                    {{ $user->phone }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-auto">
+                                        <small class="font-sm">BALANCE:</small><br>
+                                        <span class="font-bold text-xl">
+                                            @if (isset($wallet['balance']))
+                                                {{ $wallet['balance'] }}
+                                            @endif
+                                            KES
                                         </span>
                                     </div>
-                                </div>
-
-                                <div class="flex-auto">
-                                    <div class="border-b border-b-blue-100	">
-
-                                        <p class=" font-semibold whitespace-nowrap">
-                                            @if (isset($user->name) && $user->name)
-                                                {{ $user->name }}
-                                            @endif
-                                        </p>
-
-                                        <p class="whitespace-nowrap">
-                                            <i class="fa-solid fa-user"></i>: &nbsp;
-                                            @if (isset($user->username) && $user->username)
-                                                {{ $user->username }}
-                                            @else
-                                                -
-                                            @endif
-                                        </p>
-
-                                        <p class="whitespace-nowrap">
-                                            <i class="fa-solid fa-envelope"></i>: &nbsp;
-                                            @if (isset($user->email) && $user->email)
-                                                {{ $user->email }}
-                                            @else
-                                                -
-                                            @endif
-                                        </p>
-
-                                        <p class="whitespace-nowrap">
-                                            <i class="fa-solid fa-phone"></i>: &nbsp;
-                                            @if (isset($user->phone) && $user->phone)
-                                                {{ $user->phone }}
-                                            @else
-                                                -
-                                            @endif
-                                        </p>
-
+                                    <div class="flex-auto text-center">
+                                        <small class="font-sm"> UNPAID INVOICES:</small><br>
+                                        {{ $invoices->count() }}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex">
-                                <div class="flex-auto">
-                                    <small class="font-sm">BALANCE:</small><br>
-                                    <span class="font-bold text-xl">
-                                     @if (isset($wallet['balance']))
-                                    {{ $wallet['balance'] }} 
-                                    @endif
-                                    KES</span>
-                                </div>
-                                <div class="flex-auto text-center">
-                                    <small class="font-sm"> UNPAID INVOICES:</small><br>
-                                    {{ $invoices->count() }}
-                                </div>
-                            </div>
+                            @endif
+
+
                         </div>
                     </div>
-                    <div class="sm:flex-auto sm:w-1/2  my-5">
+                    <div class="sm:flex-auto sm:w-1/2">
                         <div
                             class=" shadow-xl rounded-md bg-gradient-to-br from-pink-500 via-red-900 to-pink-700 hover:from-pink-500  hover:via-red-900  hover:to-yellow-900 sm:ml-2 m-1">
 
@@ -325,7 +364,8 @@
                                     </p>
                                     <div>
                                         <a id='package'
-                                            href="{{ url(route('isp_access_buypackage', ['id' => $package->id])) }}"
+                                            @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id])) }}"
+                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id])) }}" @endif
                                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
                                     </div>
                                 </div>
@@ -337,6 +377,4 @@
             </div>
         </div>
     </section>
-
-
 @endsection

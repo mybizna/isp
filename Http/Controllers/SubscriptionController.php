@@ -3,7 +3,6 @@
 namespace Modules\Isp\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Classes\Ledger;
 use Modules\Base\Http\Controllers\BaseController;
@@ -32,18 +31,20 @@ class SubscriptionController extends BaseController
 
         $data = Session::get('subscription_data');
 
+        $partner = false;
         $subscriber = $subscription->getSubscriber($data);
         $packages = $subscription->getPackages();
-        $featured_package = $current_package = $packages[0];
-        $invoices=collect([]);
-        $wallet=collect([]);
+        $featured_package = $packages[0];
+        $current_package = false;
+        $invoices = collect([]);
+        $wallet = collect([]);
 
-        if(isset($subscriber->partner_id) && $subscriber->partner_id){
+        if (isset($subscriber->partner_id) && $subscriber->partner_id) {
             $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
             $wallet = $ledger->getAccountBalance($subscriber->partner_id);
+            $partner = $subscription->getPartner($data);
+            $current_package = $subscription->getCurrentPackage($subscriber->id);
         }
-
-        $current_package->expiry_date = date(DATE_ATOM, mktime(23, 59, 0, date('m'), date('d'), date('Y')));
 
         $data = [
             'subscriber' => $subscriber,
@@ -52,6 +53,7 @@ class SubscriptionController extends BaseController
             'current_package' => $current_package,
             'invoices' => $invoices,
             'wallet' => $wallet,
+            'partner' => $partner,
         ];
 
         return view('isp::access-dashboard', $data);
@@ -105,6 +107,15 @@ class SubscriptionController extends BaseController
         return view('isp::access-canceled', $data);
     }
 
+    public function error(Request $request)
+    {
+        $r_data = $request->all();
+        $s_data = Session::get('subscription_data');
+        $data = array_merge($r_data, $s_data);
+
+        return view('isp::access-error', $data);
+    }
+
     public function thankyou(Request $request)
     {
 
@@ -122,9 +133,52 @@ class SubscriptionController extends BaseController
         return view('isp::access-thankyou', $data);
     }
 
+    public function buyform(Request $request)
+    {
+        $error = false;
+        $message = '';
+
+        $r_data = $request->all();
+        $s_data = Session::get('subscription_data');
+        $data = array_merge($r_data, $s_data);
+
+        if (!$data['package_id']) {
+            $error = true;
+            $message = $message . 'Package Id not Found. ';
+        }
+
+        if ((!isset($data['mac']) || $data['mac'] == '')) {
+            $error = true;
+            $message = $message . 'Mac address was not found. Please disable and enable your wifi.';
+        }
+
+        if ($error) {
+            return redirect()->route('isp_access_error', ['message' => $message]);
+        } else {
+            return view('isp::access-buyform', $data);
+        }
+
+    }
+    public function savebuyform(Request $request)
+    {
+        $subscription = new Subscription();
+
+        $r_data = $request->all();
+        $s_data = Session::get('subscription_data');
+        $data = array_merge($r_data, $s_data);
+
+        $invoice = $subscription->saveSubcriber($data);
+
+        if ($invoice->status == 'paid') {
+            return redirect()->route('isp_access');
+        } else {
+            return redirect()->route('account_payment', ['invoice_id' => $invoice->id]);
+        }
+
+    }
+
     public function mikrotiklogin(Request $request)
     {
-
         $subscription = new Subscription();
 
         $subscriber = $subscription->getSubscriber();
