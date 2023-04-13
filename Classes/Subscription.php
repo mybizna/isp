@@ -18,6 +18,55 @@ use Session;
 
 class Subscription
 {
+    public function summary($data = [])
+    {
+        $start = new \DateTime('now - 1 year');
+        $end = new \DateTime();
+
+        $interval = new \DateInterval('P1M');
+        $period = new \DatePeriod($start, $interval, $end);
+
+        $start_date = $start->modify('first day of this month')->format('Y-m-d 00:00:00');
+        $end_date = $end->modify('last day of this month')->format('Y-m-d 23.59.59');
+
+        $featured_package = Package::where('featured', true)->first();
+        $packages = Package::where('published', true)->orderBy('featured', 'DESC')->get();
+
+        foreach ($packages as $key => $package) {
+
+            $labels = [];
+            $r_data = [];
+            foreach ($period as $dt) {
+                $start_date = $dt->modify('first day of this month')->format('Y-m-d 00:00:00');
+                $end_date = $dt->modify('last day of this month')->format('Y-m-d 23.59.59');
+
+                $tmp_result = DBSubscription::where('package_id', $package->id)
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
+
+                $labels[] = $dt->format('m/y');
+                $r_data[] = $tmp_result;
+            }
+
+            $start_date = $end->modify('first day of this month')->format('Y-m-d 00:00:00');
+            $end_date = $end->modify('last day of this month')->format('Y-m-d 23.59.59');
+
+            $cur_result = DBSubscription::where('package_id', $package->id)
+                ->whereBetween('created_at', [$start_date, $end_date])
+                ->count();
+
+            $labels[] = $end->format('m/y');
+            $r_data[] = $cur_result;
+
+            $package->labels = $labels;
+            $package->data = $r_data;
+
+        }
+
+        $package = Package::where('featured', true)->first();
+
+        return ['packages' => $packages, 'featured_package' => $featured_package];
+    }
     public function processData($data = [])
     {
         Session::put('subscription_data', $data);

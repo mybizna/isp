@@ -11,125 +11,121 @@
                     </h3>
 
                     <p class="text-white pb-2">
-                        {{ featured_package.speed }}
-                        {{ featured_package.speed_type == 'kilobyte' ? 'KB' : (featured_package.speed_type == 'megabyte' ?
-                            'MB'
-                            : 'GB') }}
 
-                        for {{ featured_package.duration }} {{ featured_package.duration_type }}
+                        <template v-if="featured_package.speed">
+                            {{ featured_package.speed }}
+                            {{ featured_package.speed_type == 'kilobyte' ? 'KB' : (featured_package.speed_type == 'megabyte'
+                                ?
+                                'MB'
+                                : 'GB') }}
+                            for {{ featured_package.duration }} {{ featured_package.duration_type }}
+                        </template>
                     </p>
 
                 </div>
                 <div class="flex-auto text-right pr-4">
                     <h4 class="text-2xl text-white py-5 h-18">
-                        {{ featured_package.amount }} KES
+                        <template v-if="featured_package.amount">
+                            {{ featured_package.amount }} KES
+                        </template>
                     </h4>
                 </div>
             </div>
 
-            <apexchart width="100%" height="50px" type="area" :options="options" :series="series"></apexchart>
 
         </div>
         <div class="bg-white pb-1">
-            <div v-for="tmp_package in packages" class="mb-2">
-                <div role="listitem" class="relative bg-white shadow ring-1 ring-red-200 rounded m-1">
-
-                    <div class="items-center justify-between flex">
-
-                        <div class="mb-1 ">
-                            <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center">
-                                {{ tmp_package.title }}
-                            </h2>
-
-                            <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                {{ tmp_package.description }}, Package: {{ tmp_package.package_title }},
-                                Speed:
-                                {{ tmp_package.speed }}
-                                {{ tmp_package.speed_type == 'kilobyte' ? 'KB' : (tmp_package.speed_type == 'megabyte' ?
-                                    'MB' :
-                                    'GB') }}
-                            </small>
-                        </div>
-
-                        <div>
-                            <p class="text-2xl text-center font-semibold leading-6 text-gray-800 dark:text-white md:mt-0 pr-2">
-                                {{ tmp_package.amount }}
-                                <span class="text-base font-normal">KES</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <apexchart width="100%" height="20px" type="area" :options="options" :series="series"></apexchart>
-
-
-                </div>
-            </div>
+            <apexchart width="100%" height="300px" type="bar" :options="options" :series="series"></apexchart>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    created() {
+        var t = this;
+
+        var labels = [];
+        var datas = [];
+
+        window.axios
+            .get("/isp/summary")
+            .then((response) => {
+
+                response.data.packages.forEach(tmp_package => {
+                    labels = tmp_package.labels;
+                    datas.push(
+                        {
+                            name: tmp_package.title,
+                            data: tmp_package.data,
+                        }
+                    );
+                });
+
+                this.featured_package = response.data.featured_package;
+
+                this.options = {
+                    labels: labels
+                };
+
+                this.series = datas;
+            })
+            .catch((response) => {
+            });
+    },
     data() {
         return {
             id: null,
             featured_package: {
                 'id': 1,
-                'title': 'Sample',
-                'description': 'Sample',
-                'speed': 1,
-                'speed_type': 'megabyte',
-                'duration': 1,
-                'duration_type': "Month",
-                'amount': 100,
+                'title': '',
+                'description': '',
+                'speed': '',
+                'speed_type': '',
+                'duration': '',
+                'duration_type': "",
+                'amount': '',
             },
-            packages: [{
-                'id': 1,
-                'title': 'Sample',
-                'description': 'Sample',
-                'package_title': 'Sample',
-                'speed': 1,
-                'speed_type': 'megabyte',
-                'duration': 1,
-                'duration_type': "Month",
-                'amount': 100,
-            }, {
-                'id': 2,
-                'title': 'Sample',
-                'description': 'Sample',
-                'package_title': 'Sample',
-                'speed': 1,
-                'speed_type': 'megabyte',
-                'duration': 1,
-                'duration_type': "Month",
-                'amount': 100,
-            }],
+            packages: [],
             options: {
                 chart: {
-                    id: 'vuechart-profit',
-                    sparkline: {
-                        enabled: true
-                    },
+                    id: 'vuechart-stacked',
+                    stacked: true,
                 },
-                stroke: {
-                    curve: 'straight'
+                plotOptions: {
+                    bar: {
+                        //columnWidth: '45%',
+                    }
                 },
-                fill: {
-                    opacity: 1,
-                },
-                labels: [...Array(11).keys()].map(n => `2023-09-0${n + 1}`),
+                colors: ['#00D8B6', '#008FFB', '#FEB019', '#FF4560', '#775DD0', '#ef9745', '#efdb45', '#45efe1', '#4553ef'],
+                labels: ['0', '1', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
                 yaxis: {
-                    min: 0
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    labels: {
+                        style: {
+                            colors: '#78909c'
+                        }
+                    }
                 },
-                xaxis: {
-                    type: 'datetime',
-                },
-                colors: ['#f87171'],
+                title: {
+                    text: 'Monthly ISP Subscription',
+                    align: 'left',
+                    style: {
+                        fontSize: '18px'
+                    }
+                }
             },
-            series: [{
-                name: 'Profit',
-                data: [70, 30, 40, 45, 50, 49, 600, 70, 91, 20, 30]
-            }]
+            series: [
+                {
+                    name: "Loading",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                }
+            ]
         }
     }
 }

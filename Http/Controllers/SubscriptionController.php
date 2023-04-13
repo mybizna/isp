@@ -12,6 +12,16 @@ use Session;
 
 class SubscriptionController extends BaseController
 {
+    public function summary(Request $request)
+    {
+        $subscription = new Subscription();
+
+        $data = $request->all();
+
+        $result = $subscription->summary($data);
+
+        return response()->json($result);
+    }
     public function access(Request $request)
     {
         $subscription = new Subscription();
