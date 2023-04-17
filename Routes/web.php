@@ -11,7 +11,7 @@ Route::get('isp/access/error', 'SubscriptionController@error')->name('isp_access
 Route::get('isp/access/canceled', 'SubscriptionController@canceled')->name('isp_access_canceled')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 Route::get('isp/access/thankyou', 'SubscriptionController@thankyou')->name('isp_access_thankyou')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 Route::get('isp/access/buyform', 'SubscriptionController@buyform')->name('isp_access_buyform')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-Route::post('isp/access/savebuyform', 'SubscriptionController@savebuyform')->name('isp_access_savebuyform')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+Route::match(['get', 'post'],'isp/access/savebuyform', 'SubscriptionController@savebuyform')->name('isp_access_savebuyform')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::get('isp/access/mikrotiklogin', 'SubscriptionController@mikrotikLogin')->name('isp_access_mikrotik_login')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 

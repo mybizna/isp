@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Entities\Invoice as DBInvoice;
+use Modules\Account\Entities\InvoiceItem as DBInvoiceItem;
 use Modules\Isp\Classes\Freeradius;
 use Modules\Isp\Entities\MacAddress;
 use Modules\Isp\Entities\Package;
@@ -14,12 +15,12 @@ use Modules\Isp\Entities\SubscriberLogin;
 use Modules\Isp\Entities\Subscription as DBSubscription;
 use Modules\Partner\Classes\Partner as PartnerCls;
 use Modules\Partner\Entities\Partner;
-use Session;
 
 class Subscription
 {
     public function summary($data = [])
     {
+
         $start = new \DateTime('now - 1 year');
         $end = new \DateTime();
 
@@ -69,7 +70,15 @@ class Subscription
     }
     public function processData($data = [])
     {
-        Session::put('subscription_data', $data);
+        $router_ip_arr = explode('.', $data['ip']);
+
+        $router_ip_arr[3]=1;
+        
+        $router_ip  = implode('.',$router_ip_arr);
+        
+        $data['link_login'] = $data['link_login'] ?? $router_ip;
+        $data['link_login_only'] = $data['link_login_only'] ?? $router_ip;
+        $data['link_orig'] = $data['link_orig'] ?? $router_ip;
 
         SubscriberLogin::create($data);
 
@@ -100,6 +109,9 @@ class Subscription
 
     public function saveSubcriber($data)
     {
+        if (isset($data['subscriber_id']) && isset($data['package_id']) && $data['subscriber_id'] && $data['package_id']) {
+            return $this->buyPackage($data['package_id'], $data['subscriber_id']);
+        }
 
         $password = $username = $this->generatePassword();
 
@@ -108,15 +120,32 @@ class Subscription
 
         $mac_address = MacAddress::where(['mac' => $data['mac']])->first();
 
-        $partner = $this->addPartner($data);
+        if ($mac_address) {
+            $subscriber = Subscriber::where(['id' => $mac_address->subscriber_id])->first();
+            $data['subscriber_id'] = $subscriber->id;
+            $data['partner_id'] = $subscriber->partner_id;
+        }
 
-        $item_subscriber = Subscriber::where(['partner_id' => $partner->id])->first();
+        if (!isset($data['partner_id'])) {
+            $partner = $this->addPartner($data);
+            $data['partner_id'] = $partner->id;
+        }
+
+        $item_subscriber = Subscriber::where(['partner_id' => $data['partner_id']])->first();
         if (!$item_subscriber) {
             $item_subscriber = Subscriber::updateOrCreate([
                 'username' => $username,
                 'password' => $password,
-                'partner_id' => $partner->id,
+                'partner_id' => $data['partner_id'],
             ]);
+
+            $data['subscriber_id'] = $item_subscriber->id;
+            $data['partner_id'] = $item_subscriber->partner_id;
+        } else {
+            $data['username'] = $item_subscriber->username;
+            $data['password'] = $item_subscriber->password;
+            $data['subscriber_id'] = $item_subscriber->id;
+            $data['partner_id'] = $item_subscriber->partner_id;
         }
 
         $mac_address = MacAddress::where(['subscriber_id' => $item_subscriber->id])->first();
@@ -233,8 +262,9 @@ class Subscription
     {
         $partner_cls = new PartnerCls();
 
-        $partner = Partner::where('email', $data['email'] ?? '')
-            ->orWhere('phone', $data['phone'])->first();
+        $partner_qry = Partner;
+        where('email', $data['email'] ?? '')
+            ->orWhere('phone', $data['phone'] ?? '')->first();
 
         if (!$partner) {
             $partner = $partner_cls->createPartner([
@@ -296,9 +326,17 @@ class Subscription
 
         $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'item_id' => $package_id]];
 
-        $invoice = $invoice->generateInvoice($title, $partner_id, $items, description:$title);
+        $invoiceitem = DBInvoiceItem::from('account_invoice_item as aii')
+            ->select('aii.*')
+            ->leftJoin('account_invoice AS ai', 'ai.id', '=', 'aii.invoice_id')
+            ->where(['ai.partner_id' => $partner_id, 'aii.item_id' => $package_id, 'aii.module' => 'Isp'])
+            ->first();
 
-        return $invoice;
+        if ($invoiceitem) {
+            return $this->getInvoice($invoiceitem->invoice_id);
+        } else {
+            return $invoice->generateInvoice($title, $partner_id, $items, description:$title);
+        }
     }
 
     public function getInvoices($subscriber)
