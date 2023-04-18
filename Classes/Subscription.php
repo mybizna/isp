@@ -72,14 +72,19 @@ class Subscription
     {
         $router_ip_arr = explode('.', $data['ip']);
 
-        $router_ip_arr[3]=1;
-        
-        $router_ip  = implode('.',$router_ip_arr);
-        
-        $data['link_login'] = $data['link_login'] ?? $router_ip;
-        $data['link_login_only'] = $data['link_login_only'] ?? $router_ip;
-        $data['link_orig'] = $data['link_orig'] ?? $router_ip;
+        $router_ip_arr[3] = 1;
 
+        $router_ip = implode('.', $router_ip_arr);
+        $router_ip_http = 'http://' . $router_ip;
+
+        $data['link_login'] = $data['link_login'] ?? $router_ip_http;
+        $data['link_login_only'] = $data['link_login_only'] ?? $router_ip_http;
+        $data['link_orig'] = $data['link_orig'] ?? $router_ip_http;
+        
+        $data['link_login'] = (strpos($data['link_login'], 'http') !== false) ? $data['link_login'] : 'http://' . $data['link_login'];
+        $data['link_login_only'] = (strpos($data['link_login_only'], 'http') !== false) ? $data['link_login_only'] : 'http://' . $data['link_login_only'];
+        $data['link_orig'] = (strpos($data['link_orig'], 'http') !== false) ? $data['link_orig'] : 'http://' . $data['link_orig'];
+        
         SubscriberLogin::create($data);
 
         return $data;
@@ -304,12 +309,11 @@ class Subscription
 
     public function buyPackage($package_id, $subscriber_id)
     {
-
         $invoice = new Invoice();
 
         $package = $this->getPackage($package_id);
         $subscriber = Subscriber::where('id', $subscriber_id)->first();
-
+        
         $speed_type = $package->speed_type == 'kilobyte' ? 'KBps' : ($package->speed_type == 'megabyte' ? 'MBps' : 'GBps');
         $bundle_type = $package->bundle_type == 'kilobyte' ? 'KB' : ($package->bundle_type == 'megabyte' ? 'MB' : 'GB');
 
@@ -325,13 +329,13 @@ class Subscription
         $amount = $package->amount;
 
         $items = [['title' => $title, 'price' => $amount, 'total' => $amount, 'module' => 'Isp', 'model' => 'package', 'item_id' => $package_id]];
-
+        
         $invoiceitem = DBInvoiceItem::from('account_invoice_item as aii')
             ->select('aii.*')
             ->leftJoin('account_invoice AS ai', 'ai.id', '=', 'aii.invoice_id')
             ->where(['ai.partner_id' => $partner_id, 'aii.item_id' => $package_id, 'aii.module' => 'Isp'])
             ->first();
-
+            
         if ($invoiceitem) {
             return $this->getInvoice($invoiceitem->invoice_id);
         } else {
@@ -351,7 +355,7 @@ class Subscription
     public function getInvoice($id)
     {
         $invoice = DBInvoice::where(['id' => $id])->first();
-
+        
         if ($invoice === null) {
             return false;
         }

@@ -27,12 +27,13 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $r_data = $request->all();
-        $s_data = $request->session()->get('subscription_data');
+        $s_data = [];
+        //$s_data = $request->session()->get('subscription_data', []);
 
         $data = array_merge($r_data, $s_data);
-
+        
         $data = $subscription->processData($data);
-
+        
         $request->session()->put('subscription_data', $data);
 
         return redirect()->route('isp_profile');
@@ -44,7 +45,7 @@ class SubscriptionController extends BaseController
         $ledger = new Ledger();
         $invoice = new Invoice();
 
-        $data = $request->session()->get('subscription_data');
+        $data = $request->session()->get('subscription_data', []);
 
         $partner = false;
         $subscriber = $subscription->getSubscriber($data);
@@ -96,7 +97,7 @@ class SubscriptionController extends BaseController
     {
         $subscription = new Subscription();
 
-        $data = $request->session()->get('subscription_data');
+        $data = $request->session()->get('subscription_data', []);
 
         $subscriber = $subscription->getSubscriber($data);
         $invoice = $subscription->buyPackage($id, $subscriber->id);
@@ -110,7 +111,7 @@ class SubscriptionController extends BaseController
 
     public function canceled(Request $request)
     {
-        $data = $request->session()->get('subscription_data');
+        $data = $request->session()->get('subscription_data', []);
 
         $subscription = new Subscription();
 
@@ -124,7 +125,7 @@ class SubscriptionController extends BaseController
     public function error(Request $request)
     {
         $r_data = $request->all();
-        $s_data = $request->session()->get('subscription_data');
+        $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
 
         return view('isp::access-error', $data);
@@ -133,7 +134,7 @@ class SubscriptionController extends BaseController
     public function thankyou(Request $request)
     {
 
-        $data = $request->session()->get('subscription_data');
+        $data = $request->session()->get('subscription_data', []);
 
         $subscription = new Subscription();
 
@@ -152,10 +153,8 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $r_data = $request->all();
-        $s_data = $request->session()->get('subscription_data');
+        $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
-
-        //print_r($data); exit;
 
         if (!$data['package_id']) {
             $error = true;
@@ -166,13 +165,14 @@ class SubscriptionController extends BaseController
             $error = true;
             $message = $message . 'Mac address was not found. Please disable and enable your wifi.';
         }
-
+        
         $request->session()->put('subscription_data', $data);
 
         if ($error) {
             return redirect()->route('isp_access_error', ['message' => $message]);
         } else {
             $subscriber = $subscription->getSubscriber($data);
+            
             if ($subscriber) {
                 return redirect()->route('isp_access_savebuyform', [
                     'package_id' => $data['package_id'],
@@ -189,11 +189,11 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
 
         $r_data = $request->all();
-        $s_data = $request->session()->get('subscription_data');
+        $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
-
+        
         $invoice = $subscription->saveSubcriber($data);
-
+     
         if ($invoice->status == 'paid') {
             return redirect()->route('isp_access_mikrotik_login');
         } else {
@@ -204,13 +204,13 @@ class SubscriptionController extends BaseController
 
     public function mikrotiklogin(Request $request)
     {
-        $data = $request->session()->get('subscription_data');
-
+        $data = $request->session()->get('subscription_data', []);
+       
         $subscription = new Subscription();
 
         $subscriber = $subscription->getSubscriber($data);
         $subscriber_login = SubscriberLogin::where('mac', $data['mac'])->first();
-
+        
         $data = [
             'subscriber' => $subscriber,
             'subscriber_login' => $subscriber_login,

@@ -6,9 +6,9 @@
 
             <div class="sm:flex">
                 <div class="sm:flex-auto sm:w-1/2  my-5">
-                    <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
+                    <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2">
 
-                        <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-4">
+                        <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-2">
                             - LOGGING IN -
                         </h3>
 
@@ -27,13 +27,14 @@
                             </div>
 
                             @if ($subscriber_login)
-                                <form name="login" action="{{ $subscriber_login->link_login }}" method="post">
+                                <form id="mikrotik_login" name="login" action="{{ $subscriber_login->link_login }}"
+                                    method="post">
                                     <input type="hidden" name="username" value="{{ $subscriber->username }}">
                                     <input type="hidden" name="password" value="{{ $subscriber->password }}">
                                     <input type="hidden" name="domain" value="">
                                     <input type="hidden" name="dst" value="{{ $subscriber_login->link_orig_esc }}">
 
-                                    <p style="text-align:center;" class="p-4">
+                                    <p style="text-align:center;" class="p-1">
                                         <button id='register' type="submit" name="view" value="register"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                             Access Internet
@@ -62,4 +63,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var auto_refresh = setInterval(submitform, 1000);
+
+        function submitform() {
+            document.getElementById("mikrotik_login").submit();
+        }
+    </script>
 @endsection
