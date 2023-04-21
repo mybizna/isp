@@ -191,7 +191,7 @@ class SubscriptionController extends BaseController
         $r_data = $request->all();
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
-        
+
         $invoice = $subscription->saveSubcriber($data);
      
         if ($invoice->status == 'paid') {
