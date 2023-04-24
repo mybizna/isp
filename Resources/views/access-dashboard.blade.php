@@ -63,7 +63,7 @@
                                         <div class="flex-auto w-1/2 sm:w-1/4 p-2">
                                             <p class="mb-0 leading-normal text-white text-sm">EXPIRE</p>
                                             <p class="mb-0 text-white text-xs">
-                                                {{ date('d/m/y H:i', strtotime($current_package->expiry_date)) }}
+                                                {{ date('d/m/y H:i', strtotime($current_package->end_date)) }}
                                             </p>
                                         </div>
                                     </div>

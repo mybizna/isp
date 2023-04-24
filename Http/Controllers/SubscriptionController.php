@@ -63,7 +63,7 @@ class SubscriptionController extends BaseController
         }
 
         $data = [
-            'return_url' => base64_encode(url(route('isp_access'))),
+            'return_url' => base64_encode(url(route('isp_access_thankyou'))),
             'subscriber' => $subscriber,
             'packages' => $packages,
             'featured_package' => $featured_package,
@@ -72,8 +72,6 @@ class SubscriptionController extends BaseController
             'wallet' => $wallet,
             'partner' => $partner,
         ];
-
-        //print_r(json_encode($data));exit;
 
         return view('isp::access-dashboard', $data);
     }
