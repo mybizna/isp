@@ -31,9 +31,9 @@ class SubscriptionController extends BaseController
         //$s_data = $request->session()->get('subscription_data', []);
 
         $data = array_merge($r_data, $s_data);
-        
+
         $data = $subscription->processData($data);
-        
+
         $request->session()->put('subscription_data', $data);
 
         return redirect()->route('isp_profile');
@@ -58,11 +58,12 @@ class SubscriptionController extends BaseController
         if (isset($subscriber->partner_id) && $subscriber->partner_id) {
             $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
             $wallet = $ledger->getAccountBalance($subscriber->partner_id);
-            $partner = $subscription->getPartner($data);
+            $partner = $subscription->getPartner($subscriber->partner_id);
             $current_package = $subscription->getCurrentPackage($subscriber->id);
         }
 
         $data = [
+            'return_url' => base64_encode(url(route('isp_access'))),
             'subscriber' => $subscriber,
             'packages' => $packages,
             'featured_package' => $featured_package,
@@ -71,6 +72,8 @@ class SubscriptionController extends BaseController
             'wallet' => $wallet,
             'partner' => $partner,
         ];
+
+        //print_r(json_encode($data));exit;
 
         return view('isp::access-dashboard', $data);
     }
@@ -103,7 +106,7 @@ class SubscriptionController extends BaseController
         $invoice = $subscription->buyPackage($id, $subscriber->id);
 
         if ($invoice->status == 'paid') {
-            return redirect()->route('isp_access');
+            return redirect()->route('isp_access_thankyou');
         } else {
             return redirect()->route('account_payment', ['invoice_id' => $invoice->id]);
         }
@@ -165,14 +168,14 @@ class SubscriptionController extends BaseController
             $error = true;
             $message = $message . 'Mac address was not found. Please disable and enable your wifi.';
         }
-        
+
         $request->session()->put('subscription_data', $data);
 
         if ($error) {
             return redirect()->route('isp_access_error', ['message' => $message]);
         } else {
             $subscriber = $subscription->getSubscriber($data);
-            
+
             if ($subscriber) {
                 return redirect()->route('isp_access_savebuyform', [
                     'package_id' => $data['package_id'],
@@ -193,7 +196,7 @@ class SubscriptionController extends BaseController
         $data = array_merge($r_data, $s_data);
 
         $invoice = $subscription->saveSubcriber($data);
-     
+
         if ($invoice->status == 'paid') {
             return redirect()->route('isp_access_mikrotik_login');
         } else {
@@ -205,12 +208,12 @@ class SubscriptionController extends BaseController
     public function mikrotiklogin(Request $request)
     {
         $data = $request->session()->get('subscription_data', []);
-       
+
         $subscription = new Subscription();
 
         $subscriber = $subscription->getSubscriber($data);
         $subscriber_login = SubscriberLogin::where('mac', $data['mac'])->first();
-        
+
         $data = [
             'subscriber' => $subscriber,
             'subscriber_login' => $subscriber_login,

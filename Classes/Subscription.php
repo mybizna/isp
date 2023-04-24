@@ -169,18 +169,18 @@ class Subscription
 
     public function getCurrentPackage($subscriber_id)
     {
-        $subscription = DBSubscription::where('id', $subscriber_id)->orderBy('end_date')->first();
+        $package = DBSubscription::select('ipg.*')
+            ->from('isp_subscription AS isub')
+            ->leftJoin('isp_package AS ipg', 'ipg.id', '=', 'isub.package_id')
+            ->where('isub.subscriber_id', $subscriber_id)
+            ->orderBy('isub.end_date')->first();
 
-        if ($subscription) {
-
-            $package = Package::where('id', $subscription->package_id)->first();
-
-            if ($package) {
-                return $package;
-            }
+        if ($package) {
+            return $package;
         }
 
         return false;
+
     }
 
     public function getPartner($partner_id)
@@ -257,9 +257,9 @@ class Subscription
         $subscription = DBSubscription::create($input);
 
         if ($subscription) {
-            $freeradius = new Freeradius($subscription);
+            $freeradius = new Freeradius();
             $freeradius->setPackages();
-            $freeradius->setUser($package);
+            $freeradius->setSubscription($subscription);
         }
 
     }
@@ -341,7 +341,7 @@ class Subscription
             ->leftJoin('account_invoice AS ai', 'ai.id', '=', 'aii.invoice_id')
             ->where([['ai.status', '<>', 'paid'], 'ai.partner_id' => $partner_id, 'aii.item_id' => $package_id, 'aii.module' => 'Isp'])
             ->first();
-         
+
         if ($invoiceitem) {
             $invoice->reconcileInvoices($partner_id);
             return $this->getInvoice($invoiceitem->invoice_id);

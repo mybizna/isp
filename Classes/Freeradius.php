@@ -131,6 +131,8 @@ class Freeradius
 
     public function deleteSubscription($username)
     {
+        $db_freeradius = DB::connection('freeradius');
+        
         $db_freeradius->delete('delete from radusergroup where username = ?', [$username]);
     }
 

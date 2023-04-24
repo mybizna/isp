@@ -101,20 +101,35 @@
                     </div>
 
                     <div class="flex-auto">
-                        <div class="text-center">
-                            <p class="font-semibold text-lg">
-                                Access Pro account.
-                            </p>
+                        @if ($subscriber)
+                            <div class="text-center">
+                                <p class="font-semibold">
+                                    Your username is shown below;
+                                </p>
 
-                            <p class=" text-sm text-gray-400 py-1">
-                                It supports multiple devices accessing internet with same login.
-                            </p>
+                                <p class=" text-sm text-gray-600 py-1">
+                                    Please save it incase you would like to login or share with another device.
+                                </p>
 
-                            <a id='package' href=""
-                                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">LOGIN</a>
+                                <p class="font-bold text-xl text-center">
+                                    {{ $subscriber->username }}
+                                </p>
+                            </div>
+                        @else
+                            <div class="text-center">
+                                <p class="font-semibold text-lg">
+                                    Access Pro account.
+                                </p>
 
-                        </div>
+                                <p class=" text-sm text-gray-400 py-1">
+                                    It supports multiple devices accessing internet with same login.
+                                </p>
 
+                                <a id='package' href=""
+                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">LOGIN</a>
+
+                            </div>
+                        @endif
 
                     </div>
                 </div>
@@ -150,38 +165,29 @@
                                     <div class="flex-auto">
                                         <div class="border-b border-b-blue-100	">
 
-                                            <p class=" font-semibold whitespace-nowrap">
-                                                @if (isset($user->name) && $user->name)
-                                                    {{ $user->name }}
-                                                @endif
-                                            </p>
-
-                                            <p class="whitespace-nowrap">
+                                            <p class="font-semibold whitespace-nowrap">
                                                 <i class="fa-solid fa-user"></i>: &nbsp;
-                                                @if (isset($user->username) && $user->username)
-                                                    {{ $user->username }}
-                                                @else
-                                                    -
+                                                @if (isset($partner->first_name) && $partner->first_name)
+                                                    {{ $partner->first_name }}
+                                                @elseif (isset($subscriber->username) && $subscriber->username)
+                                                    {{ $subscriber->username }}
                                                 @endif
                                             </p>
 
-                                            <p class="whitespace-nowrap">
-                                                <i class="fa-solid fa-envelope"></i>: &nbsp;
-                                                @if (isset($user->email) && $user->email)
-                                                    {{ $user->email }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </p>
 
-                                            <p class="whitespace-nowrap">
-                                                <i class="fa-solid fa-phone"></i>: &nbsp;
-                                                @if (isset($user->phone) && $user->phone)
-                                                    {{ $user->phone }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </p>
+                                            @if (isset($partner->email) && $partner->email)
+                                                <p class="whitespace-nowrap">
+                                                    <i class="fa-solid fa-envelope"></i>: &nbsp;
+                                                    {{ $partner->email }}
+                                                </p>
+                                            @endif
+
+                                            @if (isset($partner->phone) && $partner->phone)
+                                                <p class="whitespace-nowrap">
+                                                    <i class="fa-solid fa-phone"></i>: &nbsp;
+                                                    {{ $partner->phone }}
+                                                </p>
+                                            @endif
 
                                         </div>
                                     </div>
@@ -189,7 +195,7 @@
                                 <div class="flex">
                                     <div class="flex-auto">
                                         <small class="font-sm">BALANCE:</small><br>
-                                        <span class="font-bold text-xl">
+                                        <span class="font-bold">
                                             @if (isset($wallet['balance']))
                                                 {{ $wallet['balance'] }}
                                             @endif
@@ -325,10 +331,10 @@
                                 </p>
                                 <div>
                                     <a id='invoice-cancel'
-                                        href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id])) }}"
+                                        href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id, 'return_url' => $return_url])) }}"
                                         class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
                                     <a id='invoice-complete'
-                                        href="{{ url(route('account_payment', ['invoice_id' => $invoice->id])) }}"
+                                        href="{{ url(route('account_payment', ['invoice_id' => $invoice->id, 'return_url' => $return_url])) }}"
                                         class="ml-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Payment</a>
                                 </div>
                             </div>
@@ -362,8 +368,8 @@
                                     </p>
                                     <div>
                                         <a id='package'
-                                            @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id])) }}"
-                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id])) }}" @endif
+                                            @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id, 'return_url' => $return_url])) }}"
+                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id, 'return_url' => $return_url])) }}" @endif
                                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
                                     </div>
                                 </div>
