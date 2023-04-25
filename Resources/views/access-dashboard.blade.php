@@ -1,8 +1,8 @@
 @extends('base::app')
 
 @section('content')
-    <section class="bg-blue-50 dark:bg-blue-900 h-full h-screen">
-        <div class="w-full md:w-4/5 lg:w-2/4 mx-auto pt-10">
+    <section class="bg-blue-50 h-full h-screen">
+        <div class="w-full md:w-4/5 lg:w-2/3 mx-auto pt-5">
 
             @if ($partner)
                 <div
@@ -25,7 +25,7 @@
 
                                     <div class="flex-auto">
                                         <div class="flex flex-wrap">
-                                            <div class="flex-auto w-1/2 sm:w-1/4 p-2">
+                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">PACKAGE</p>
                                                 <p class="mb-0 text-white text-xs">
                                                     @if ($current_package)
@@ -34,48 +34,44 @@
                                                 </p>
                                             </div>
 
-                                            @if ($current_package->bundle)
-                                                <div class="flex-auto w-1/2 sm:w-1/4 p-2">
-                                                    <p class="mb-0 leading-normal text-white text-sm">Bundle</p>
-                                                    <p class="mb-0 text-white text-xs">
-                                                        {{ $current_package->bundle }}
-                                                        {{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
-                                                    </p>
-                                                </div>
-                                            @else
-                                                <div class="flex-auto w-1/2 sm:w-1/4 p-2">
-                                                    <p class="mb-0 leading-normal text-white text-sm">SPEED</p>
-                                                    <p class="mb-0 text-white text-xs">
-                                                        {{ $current_package->speed }}
-                                                        {{ $current_package->speed_type == 'kilobyte' ? 'KB' : ($current_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
-                                                    </p>
-                                                </div>
-                                            @endif
+                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                                <p class="mb-0 leading-normal text-white text-sm">LIMITS</p>
+                                                @if ($current_package->bundle)
+                                                    <span class="mb-0 text-white text-xs">
+                                                        {{ $current_package->bundle }}{{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                    </span>
+                                                @endif
 
-                                            <div class="flex-auto w-1/2 sm:w-1/4 p-2">
-                                                <p class="mb-0 leading-normal text-white text-sm">DURATION</p>
-                                                <p class="mb-0 text-white text-xs">
-                                                    @if ($current_package)
-                                                        {{ $current_package->duration }}
-                                                        {{ $current_package->duration_type }}
-                                                    @endif
-                                                </p>
+                                                @if ($current_package->speed)
+                                                    <span class="mb-0 text-white text-xs">
+                                                        @
+                                                        {{ $current_package->speed }}
+                                                        {{ $current_package->speed_type == 'kilobyte' ? 'KBps' : ($current_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') }}
+                                                    </span>
+                                                @endif
+
+
                                             </div>
 
-                                            <div class="flex-auto w-1/2 sm:w-1/4 p-2">
+                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">EXPIRE
                                                 </p>
-                                                
+
                                                 <span class="mb-0 text-white text-xs">
                                                     {{ date('d/m/y H:i', strtotime($current_package->end_date)) }}
                                                 </span>
+                                            </div>
 
-                                                <span>
-                                                    <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
-                                                        class="text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
-                                                        {{ __('Renew') }}
-                                                    </a>
-                                                </span>
+                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                                @if ($current_package->duration)
+                                                    <p class="mb-0 text-white text-xs">
+                                                        ({{ $current_package->duration }}{{ $current_package->duration_type }})
+                                                    </p>
+                                                @endif
+                                                <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
+                                                    class="inline-block mt-1 text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center">
+                                                    {{ __('Renew') }}
+                                                </a>
 
                                             </div>
                                         </div>
@@ -113,9 +109,9 @@
                                                     NAME
                                                 </th>
                                                 <th scope="col" class="py-2 text-white text-center">
-                                                    DURATION, SPEED & BUNDLE
+                                                    LIMITS
                                                 </th>
-                                                <th scope="col" class="py-2 text-white text-center">
+                                                <th colspan="2" scope="col" class="py-2 text-white text-center">
                                                     EXPIRE
                                                 </th>
                                             </tr>
@@ -125,44 +121,42 @@
                                                 @if ($current_package->subscription_id != $user_package->subscription_id)
                                                     <tr class="bg-transparent border-b border-b-blue-300/40">
                                                         <th scope="row"
-                                                            class="py-2 font-medium text-white text-center whitespace-nowrap">
-                                                            <p>
-                                                                @if ($user_package)
-                                                                    {{ $user_package->title }}
-                                                                @endif
-                                                            </p>
+                                                            class="py-2 text-xs font-medium text-white text-center whitespace-nowrap">
+                                                            @if ($user_package)
+                                                                {{ $user_package->title }}
+                                                            @endif
                                                         </th>
 
-                                                        <td class="py-2 text-white text-center">
+                                                        <td class="py-2 text-xs text-white text-center">
                                                             @if ($user_package->bundle)
                                                                 <span>
-                                                                    {{ $user_package->bundle }}
-                                                                    {{ $user_package->bundle_type == 'kilobyte' ? 'KB' : ($user_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                                    {{ $user_package->bundle }}{{ $user_package->bundle_type == 'kilobyte' ? 'KB' : ($user_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
                                                                 </span>
                                                             @endif
+
                                                             @if ($user_package->speed)
                                                                 <span>
-                                                                    {{ $user_package->speed }}
-                                                                    {{ $user_package->speed_type == 'kilobyte' ? 'KB' : ($user_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                                    @
+                                                                    {{ $user_package->speed }}{{ $user_package->speed_type == 'kilobyte' ? 'KBps' : ($user_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') }}
                                                                 </span>
                                                             @endif
+
                                                             <span>
                                                                 @if ($user_package->duration)
-                                                                    {{ $user_package->duration }}
-                                                                    {{ $user_package->duration_type }}
+                                                                    {{ $user_package->duration }}{{ $user_package->duration_type }}
                                                                 @endif
                                                             </span>
                                                         </td>
+                                                        <td class="py-2 text-xs text-white text-center">
+                                                            {{ date('d/m/y H:i', strtotime($user_package->end_date)) }}
+                                                        </td>
                                                         <td class="py-2 text-white text-center">
-                                                            <p>
-                                                                {{ date('d/m/y H:i', strtotime($user_package->end_date)) }}
-                                                                <span>
-                                                                    <a href="{{ url(route('isp_access_buypackage', ['id' => $user_package->id])) }}"
-                                                                        class="text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
-                                                                        {{ __('Renew') }}
-                                                                    </a>
-                                                                </span>
-                                                            </p>
+                                                            <span>
+                                                                <a href="{{ url(route('isp_access_buypackage', ['id' => $user_package->id])) }}"
+                                                                    class="text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
+                                                                    {{ __('Renew') }}
+                                                                </a>
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 @endif
