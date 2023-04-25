@@ -167,9 +167,26 @@ class Subscription
         return $invoice;
     }
 
+    public function getUserPackages($subscriber_id)
+    {
+        $packages = DBSubscription::select('ipg.*', 'isub.id AS subscription_id', 'isub.start_date', 'isub.end_date', 'ibc.duration', 'ibc.duration_type')
+            ->from('isp_subscription AS isub')
+            ->leftJoin('isp_package AS ipg', 'ipg.id', '=', 'isub.package_id')
+            ->leftJoin('isp_billing_cycle AS ibc', 'ibc.id', '=', 'ipg.billing_cycle_id')
+            ->where('isub.subscriber_id', $subscriber_id)
+            ->orderBy('isub.end_date')->get();
+
+        if ($packages) {
+            return $packages;
+        }
+
+        return false;
+
+    }
+
     public function getCurrentPackage($subscriber_id)
     {
-        $package = DBSubscription::select('ipg.*', 'isub.start_date', 'isub.end_date', 'ibc.duration', 'ibc.duration_type')
+        $package = DBSubscription::select('ipg.*', 'isub.id AS subscription_id', 'isub.start_date', 'isub.end_date', 'ibc.duration', 'ibc.duration_type')
             ->from('isp_subscription AS isub')
             ->leftJoin('isp_package AS ipg', 'ipg.id', '=', 'isub.package_id')
             ->leftJoin('isp_billing_cycle AS ibc', 'ibc.id', '=', 'ipg.billing_cycle_id')

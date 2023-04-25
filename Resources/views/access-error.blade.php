@@ -10,7 +10,9 @@
 
                         <i class="far fa-times-circle text-5xl text-red-700"></i>
 
-                        <h3 class="pt-3 text-2xl font-semibold leading-6 text-red-700 dark:text-white text-center"> - Error:  {{ $message }} - </h3>
+                        <h3 class="pt-3 text-2xl font-semibold leading-6 text-red-700 dark:text-white text-center">
+                            ERROR:  <br><br><span class="text-lg"> {{ $message }}</span>
+                             </h3>
 
                         <div class="bg-white mb-4 text-center">
 

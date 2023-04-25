@@ -8,6 +8,7 @@ use Modules\Account\Classes\Ledger;
 use Modules\Base\Http\Controllers\BaseController;
 use Modules\Isp\Classes\Subscription;
 use Modules\Isp\Entities\SubscriberLogin;
+use Modules\Isp\Entities\Subscription as DBSubscription;
 use Session;
 
 class SubscriptionController extends BaseController
@@ -51,23 +52,27 @@ class SubscriptionController extends BaseController
         $subscriber = $subscription->getSubscriber($data);
         $packages = $subscription->getPackages();
         $featured_package = $packages[0];
+        $user_packages = [];
         $current_package = false;
         $invoices = collect([]);
         $wallet = collect([]);
-
+        
         if (isset($subscriber->partner_id) && $subscriber->partner_id) {
             $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
             $wallet = $ledger->getAccountBalance($subscriber->partner_id);
             $partner = $subscription->getPartner($subscriber->partner_id);
+            $user_packages = $subscription->getUserPackages($subscriber->id);
             $current_package = $subscription->getCurrentPackage($subscriber->id);
         }
 
         $data = [
             'return_url' => base64_encode(url(route('isp_access_thankyou'))),
+            'profile_return_url' => base64_encode(url(route('isp_profile'))),
             'subscriber' => $subscriber,
             'packages' => $packages,
             'featured_package' => $featured_package,
             'current_package' => $current_package,
+            'user_packages' => $user_packages,
             'invoices' => $invoices,
             'wallet' => $wallet,
             'partner' => $partner,
@@ -146,6 +151,51 @@ class SubscriptionController extends BaseController
         return view('isp::access-thankyou', $data);
     }
 
+    public function login(Request $request)
+    {
+        $r_data = $request->all();
+        $s_data = $request->session()->get('subscription_data', []);
+        $data = array_merge($r_data, $s_data);
+
+        $data['message'] = $request->query('message', '');
+
+        return view('isp::access-login', $data);
+    }
+
+    public function savelogin(Request $request)
+    {
+        $subscription = new Subscription();
+
+        $r_data = $request->all();
+        $s_data = $request->session()->get('subscription_data', []);
+        $data = array_merge($r_data, $s_data);
+
+        $username = $data['username'];
+        $phone = substr($data['phone'], -9);
+
+        $subscriber = DBSubscription::from('isp_subscriber as iser')
+            ->select('iser.*')
+            ->leftJoin('partner AS p', 'p.id', '=', 'iser.partner_id')
+            ->where('iser.username', $username)
+            ->where(function ($query) use ($phone) {
+                $query->orWhere('p.phone', 'LIKE', '%' . $phone . '%');
+                $query->orWhere('p.mobile', 'LIKE', '%' . $phone . '%');
+            })
+            ->first();
+
+        if ($subscriber) {
+            $data['subscriber_id'] = $subscriber->id;
+            $data['partner_id'] = $subscriber->partner_id;
+
+            $request->session()->put('subscription_data', $data);
+
+            return redirect()->route('isp_profile');
+        } else {
+            $message = "No account that has phone " . $data['phone'] . " and username " . $data['username'];
+            return redirect()->route('isp_access_login', ['message' => $message]);
+        }
+
+    }
     public function buyform(Request $request)
     {
         $error = false;
@@ -162,9 +212,10 @@ class SubscriptionController extends BaseController
             $message = $message . 'Package Id not Found. ';
         }
 
-        if ((!isset($data['mac']) || $data['mac'] == '')) {
+        if ((!isset($data['mac']) || $data['mac'] == '') && (!isset($data['partner_id']) || $data['partner_id'] == '')) {
             $error = true;
-            $message = $message . 'Mac address was not found. Please disable and enable your wifi.';
+            $return_url = base64_encode(url(route('isp_access_thankyou')));
+            return redirect()->route('isp_access_login', ['message' => $message, 'return_url' => $return_url]);
         }
 
         $request->session()->put('subscription_data', $data);
