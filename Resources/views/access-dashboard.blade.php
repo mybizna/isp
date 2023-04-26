@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="bg-blue-50 h-full h-screen">
-        <div class="w-full md:w-4/5 lg:w-2/3 mx-auto pt-5">
+        <div class="w-full md:w-4/5 lg:w-1/2 mx-auto pt-5">
 
             @if ($partner)
                 <div

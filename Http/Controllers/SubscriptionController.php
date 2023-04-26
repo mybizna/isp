@@ -56,7 +56,7 @@ class SubscriptionController extends BaseController
         $current_package = false;
         $invoices = collect([]);
         $wallet = collect([]);
-        
+
         if (isset($subscriber->partner_id) && $subscriber->partner_id) {
             $invoices = $invoice->getPartnerInvoices($subscriber->partner_id);
             $wallet = $ledger->getAccountBalance($subscriber->partner_id);
@@ -168,7 +168,7 @@ class SubscriptionController extends BaseController
 
         $r_data = $request->all();
         $s_data = $request->session()->get('subscription_data', []);
-        $data = array_merge($r_data, $s_data);
+        $data = array_merge($s_data, $r_data);
 
         $username = $data['username'];
         $phone = substr($data['phone'], -9);
@@ -191,7 +191,10 @@ class SubscriptionController extends BaseController
 
             return redirect()->route('isp_profile');
         } else {
+            $request->session()->put('subscription_data', $data);
+
             $message = "No account that has phone " . $data['phone'] . " and username " . $data['username'];
+
             return redirect()->route('isp_access_login', ['message' => $message]);
         }
 
