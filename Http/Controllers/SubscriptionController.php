@@ -21,7 +21,10 @@ class SubscriptionController extends BaseController
 
         $result = $subscription->summary($data);
 
-        return response()->json($result);
+        return response()
+            ->json($result)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
     public function access(Request $request)
     {
@@ -37,7 +40,10 @@ class SubscriptionController extends BaseController
 
         $request->session()->put('subscription_data', $data);
 
-        return redirect()->route('isp_profile');
+        return redirect()
+            ->route('isp_profile')
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function profile(Request $request)
@@ -78,7 +84,10 @@ class SubscriptionController extends BaseController
             'partner' => $partner,
         ];
 
-        return view('isp::access-dashboard', $data);
+        return response()
+            ->view('isp::access-dashboard', $data)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
     public function autosubscribe(Request $request)
     {
@@ -96,7 +105,10 @@ class SubscriptionController extends BaseController
             'message' => 'Auto Subscribed Successfully.',
         ];
 
-        return response()->json($result);
+        return response()
+            ->json($result)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
 
     }
     public function buyPackage(Request $request, $id)
@@ -109,9 +121,15 @@ class SubscriptionController extends BaseController
         $invoice = $subscription->buyPackage($id, $subscriber->id);
 
         if ($invoice->status == 'paid') {
-            return redirect()->route('isp_access_thankyou');
+            return redirect()
+                ->route('isp_access_thankyou')
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         } else {
-            return redirect()->route('account_payment', ['invoice_id' => $invoice->id]);
+            return redirect()
+                ->route('account_payment', ['invoice_id' => $invoice->id])
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         }
     }
 
@@ -125,7 +143,10 @@ class SubscriptionController extends BaseController
 
         $data['subscriber'] = $subscriber;
 
-        return view('isp::access-canceled', $data);
+        return response()
+            ->view('isp::access-canceled', $data)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function error(Request $request)
@@ -134,7 +155,10 @@ class SubscriptionController extends BaseController
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
 
-        return view('isp::access-error', $data);
+        return response()
+            ->view('isp::access-error', $data)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function thankyou(Request $request)
@@ -148,7 +172,10 @@ class SubscriptionController extends BaseController
 
         $data['subscriber'] = $subscriber;
 
-        return view('isp::access-thankyou', $data);
+        return response()
+            ->view('isp::access-thankyou', $data)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function login(Request $request)
@@ -159,7 +186,11 @@ class SubscriptionController extends BaseController
 
         $data['message'] = $request->query('message', '');
 
-        return view('isp::access-login', $data);
+        return response()
+            ->view('isp::access-login', $data)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+
     }
 
     public function savelogin(Request $request)
@@ -189,13 +220,19 @@ class SubscriptionController extends BaseController
 
             $request->session()->put('subscription_data', $data);
 
-            return redirect()->route('isp_profile');
+            return redirect()
+                ->route('isp_profile')
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         } else {
             $request->session()->put('subscription_data', $data);
 
             $message = "No account that has phone " . $data['phone'] . " and username " . $data['username'];
 
-            return redirect()->route('isp_access_login', ['message' => $message]);
+            return redirect()
+                ->route('isp_access_login', ['message' => $message])
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         }
 
     }
@@ -218,24 +255,39 @@ class SubscriptionController extends BaseController
         if ((!isset($data['mac']) || $data['mac'] == '') && (!isset($data['partner_id']) || $data['partner_id'] == '')) {
             $error = true;
             $return_url = base64_encode(url(route('isp_access_thankyou')));
-            return redirect()->route('isp_access_login', ['message' => $message, 'return_url' => $return_url]);
+            return redirect()
+                ->route('isp_access_login', ['message' => $message, 'return_url' => $return_url])
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+
         }
 
         $request->session()->put('subscription_data', $data);
 
         if ($error) {
-            return redirect()->route('isp_access_error', ['message' => $message]);
+            return redirect()
+                ->route('isp_access_error', ['message' => $message])
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+
         } else {
             $subscriber = $subscription->getSubscriber($data);
 
             if ($subscriber) {
-                return redirect()->route('isp_access_savebuyform', [
-                    'package_id' => $data['package_id'],
-                    'subscriber_id' => $subscriber->id,
-                ]);
+                return redirect()
+                    ->route('isp_access_savebuyform', [
+                        'package_id' => $data['package_id'],
+                        'subscriber_id' => $subscriber->id,
+                    ])
+                    ->header('pragma', 'no-cache')
+                    ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+
             }
 
-            return view('isp::access-buyform', $data);
+            return response()
+                ->view('isp::access-buyform', $data, 200)
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         }
 
     }
@@ -250,9 +302,15 @@ class SubscriptionController extends BaseController
         $invoice = $subscription->saveSubcriber($data);
 
         if ($invoice->status == 'paid') {
-            return redirect()->route('isp_access_mikrotik_login');
+            return redirect()
+                ->route('isp_access_mikrotik_login')
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         } else {
-            return redirect()->route('account_payment', ['invoice_id' => $invoice->id]);
+            return redirect()
+                ->route('account_payment', ['invoice_id' => $invoice->id])
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
         }
 
     }
@@ -271,7 +329,10 @@ class SubscriptionController extends BaseController
             'subscriber_login' => $subscriber_login,
         ];
 
-        return view('isp::access-mikrotik-login', $data);
+        return response()
+            ->view('isp::access-mikrotik-login', $data, 200)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function billingCycleSelect(Request $request)
@@ -304,10 +365,13 @@ class SubscriptionController extends BaseController
             $result['status'] = 1;
             $result['records'] = $list;
             $result['message'] = 'Records Found Successfully.';
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             //throw $th;
         }
 
-        return response()->json($result);
+        return response()
+            ->json($result)
+            ->header('pragma', 'no-cache')
+            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 }
