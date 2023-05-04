@@ -286,8 +286,7 @@ class Subscription
     {
         $partner_cls = new PartnerCls();
 
-        $partner_qry = Partner;
-        where('email', $data['email'] ?? '')
+        $partner = Partner::where('email', $data['email'] ?? '')
             ->orWhere('phone', $data['phone'] ?? '')->first();
 
         if (!$partner) {
