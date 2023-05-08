@@ -7,20 +7,22 @@
             <div class="sm:flex">
                 <div class="sm:flex-auto sm:w-1/2  my-3">
                     <div class="text-center shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-5 p-2 ">
-                        
+
                         <i class="far fa-check-circle text-5xl text-green-700"></i>
-                       
-                        <h3 class="pt-3 text-2xl font-semibold leading-6 text-green-700 dark:text-white text-center"> - Thank You
-                            for your Payment - </h3>
+
+                        <h3 class="pt-3 text-2xl font-semibold leading-6 text-green-700 dark:text-white text-center">
+                            - {{ __('isp-access-thankyou-title') }} - </h3>
 
                         <div class="bg-white mb-4 text-center">
 
                             <p style="text-align:center; padding:20px;">
-                               Click the button <b>Access Internet</b> to proceed to Internet.
+                                {{ __('isp-access-thankyou-instruction') }}
                             </p>
 
                             <a id='package' href="{{ url(route('isp_access_mikrotik_login')) }}"
-                                class="inline-block px-6 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Access Internet</a>
+                                class="inline-block px-6 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                {{ __('isp-access-thankyou-button') }}
+                            </a>
 
                         </div>
                     </div>
@@ -36,7 +38,7 @@
             <div class="w-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
-                    &copy;2022-2023. All rights reserved.
+                    &copy;2022 - {{  date('Y') }}. {{ __('isp-copy-right') }}
                 </p>
             </div>
         </div>

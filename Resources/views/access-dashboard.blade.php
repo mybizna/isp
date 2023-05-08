@@ -14,7 +14,7 @@
 
                             @if (isset($current_package->id))
                                 <div class="text-center text-white">
-                                    <small>CURRENT ACTIVE PACKAGE</small>
+                                    <small>{{ __('isp-access-dashboard-current-active-package') }}</small>
                                 </div>
                                 <div class="flex">
                                     <div class="flex-none w-14 sm:w-20">
@@ -26,7 +26,9 @@
                                     <div class="flex-auto">
                                         <div class="flex flex-wrap">
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
-                                                <p class="mb-0 leading-normal text-white text-sm">PACKAGE</p>
+                                                <p class="mb-0 leading-normal text-white text-sm">
+                                                    {{ __('isp-access-dashboard-current-active-package-package') }}
+                                                </p>
                                                 <p class="mb-0 text-white text-xs">
                                                     @if ($current_package)
                                                         ({{ $current_package->title }})
@@ -35,7 +37,9 @@
                                             </div>
 
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
-                                                <p class="mb-0 leading-normal text-white text-sm">LIMITS</p>
+                                                <p class="mb-0 leading-normal text-white text-sm">
+                                                    {{ __('isp-access-dashboard-current-active-package-limits') }}
+                                                </p>
                                                 @if ($current_package->bundle)
                                                     <span class="mb-0 text-white text-xs">
                                                         {{ $current_package->bundle }}{{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
@@ -54,7 +58,8 @@
                                             </div>
 
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
-                                                <p class="mb-0 leading-normal text-white text-sm">EXPIRE
+                                                <p class="mb-0 leading-normal text-white text-sm">
+                                                    {{ __('isp-access-dashboard-current-active-package-expire') }}
                                                 </p>
 
                                                 <span class="mb-0 text-white text-xs">
@@ -70,7 +75,7 @@
                                                 @endif
                                                 <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
                                                     class="inline-block mt-1 text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center">
-                                                    {{ __('Renew') }}
+                                                    {{ __('isp-access-dashboard-renew') }}
                                                 </a>
 
                                             </div>
@@ -87,17 +92,18 @@
                                     </div>
                                     <div class="flex-auto text-center p-2">
                                         <h3 class="text-4xl text-white">
-                                            No Package
+                                            {{ __('isp-access-dashboard-no-package') }}
                                         </h3>
-                                        <small class="text-xs text-white">Please Select Preferred package listed
-                                            below.</small>
+                                        <small class="text-xs text-white">
+                                            {{ __('isp-access-dashboard-no-package-instruction') }}
+                                        </small>
                                     </div>
                                 </div>
                             @endif
 
                             @if (count($user_packages) > 1)
                                 <div class="text-center text-white">
-                                    <small>OTHER ACTIVE PACKAGE</small>
+                                    <small>{{ __('isp-access-dashboard-active-package') }}</small>
                                 </div>
 
                                 <div class="relative overflow-x-auto px-2">
@@ -106,13 +112,13 @@
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50/30">
                                             <tr>
                                                 <th scope="col" class="py-2 text-white text-center">
-                                                    NAME
+                                                    {{ __('isp-access-dashboard-active-package-name') }}
                                                 </th>
                                                 <th scope="col" class="py-2 text-white text-center">
-                                                    LIMITS
+                                                    {{ __('isp-access-dashboard-active-package-limits') }}
                                                 </th>
                                                 <th colspan="2" scope="col" class="py-2 text-white text-center">
-                                                    EXPIRE
+                                                    {{ __('isp-access-dashboard-active-package-expire') }}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -154,7 +160,7 @@
                                                             <span>
                                                                 <a href="{{ url(route('isp_access_buypackage', ['id' => $user_package->id])) }}"
                                                                     class="text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
-                                                                    {{ __('Renew') }}
+                                                                    {{ __('isp-access-dashboard-renew') }}
                                                                 </a>
                                                             </span>
                                                         </td>
@@ -184,11 +190,11 @@
                         @if ($subscriber)
                             <div class="text-center">
                                 <p class="font-semibold">
-                                    Your username is shown below;
+                                    {{ __('isp-access-dashboard-logged-in-title') }}
                                 </p>
 
                                 <p class=" text-sm text-gray-600 py-1">
-                                    Please save it incase you would like to login or share with another device.
+                                    {{ __('isp-access-dashboard-logged-in-instruction') }}
                                 </p>
 
                                 <p class="font-bold text-xl text-center">
@@ -198,16 +204,18 @@
                         @else
                             <div class="text-center">
                                 <p class="font-semibold text-lg">
-                                    Access Pro account.
+                                    {{ __('isp-access-dashboard-login-title') }}
                                 </p>
 
                                 <p class=" text-sm text-gray-400 py-1">
-                                    We couldn't autoassociate your account with any user. Please click login button below.
+                                    {{ __('isp-access-dashboard-login-instruction') }}
                                 </p>
 
                                 <a id='package'
                                     href="{{ url(route('isp_access_login', ['return_url' => $profile_return_url])) }}"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">LOGIN</a>
+                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                    {{ __('isp-access-dashboard-login-button') }}
+                                </a>
 
                             </div>
                         @endif
@@ -228,9 +236,11 @@
                                         <i class="fa-solid fa-network-wired fa-stack-1x"></i>
                                     </span>
                                     <h4 class="font-semibold text-lg">
-                                        Welcome to Our Network.
+                                        {{ __('isp-access-dashboard-account-title') }}
                                     </h4>
-                                    <span class="text-gray-500">Buy your Internet bundle below.</span>
+                                    <span class="text-gray-500">
+                                        {{ __('isp-access-dashboard-account-instruction') }}
+                                    </span>
                                 </div>
                             @else
                                 <div class="flex overflow-hidden">
@@ -275,7 +285,8 @@
                                 </div>
                                 <div class="flex">
                                     <div class="flex-auto">
-                                        <small class="font-sm">BALANCE:</small><br>
+                                        <small
+                                            class="font-sm">{{ __('isp-access-dashboard-account-balance') }}:</small><br>
                                         <span class="font-bold">
                                             @if (isset($wallet['balance']))
                                                 {{ $wallet['balance'] }}
@@ -284,7 +295,7 @@
                                         </span>
                                     </div>
                                     <div class="flex-auto text-center">
-                                        <small class="font-sm"> UNPAID INVOICES:</small><br>
+                                        <small class="font-sm">{{ __('isp-access-dashboard-account-unpaid') }}:</small><br>
                                         {{ $invoices->count() }}
                                     </div>
                                 </div>
@@ -318,7 +329,9 @@
                                         </div>
                                         <div class="flex-auto text-right pr-4">
                                             <a href="{{ url(route('isp_access_buypackage', ['id' => $featured_package->id])) }}"
-                                                class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Buy') }}</a>
+                                                class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                {{ __('isp-access-dashboard-buy-button') }}
+                                            </a>
                                         </div>
                                     </div>
 
@@ -326,9 +339,11 @@
                             @else
                                 <div class="grid h-40 place-items-center">
                                     <h3 class="text-4xl text-white text-center">
-                                        No Featured
+                                        {{ __('isp-access-dashboard-nofeatured-title') }}
                                         <br>
-                                        <small class="text-xs"> There is no featured package set.</small>
+                                        <small class="text-xs">
+                                            {{ __('isp-access-dashboard-nofeatured-instruction') }}
+                                        </small>
                                     </h3>
                                 </div>
                             @endif
@@ -339,7 +354,9 @@
             </div>
 
             @if (false)
-                <h3 class="text-center font-normal italic text-lg">Quick Links</h3>
+                <h3 class="text-center font-normal italic text-lg">
+                    {{ __('isp-access-dashboard-quick-links') }}
+                </h3>
                 <div class="grid grid-cols-4 gap-4 mt-2 my-4">
                     <div class="text-center rounded shadow sm:p-2 bg-white">
                         <a class="inline-block px-3 py-2 sm:px-8 sm:py-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
@@ -350,7 +367,10 @@
                             </svg>
                         </a>
                         <br>
-                        <small class="text-xs">Google</small>
+                        <small class="text-xs">
+                            {{ __('isp-access-dashboard-quick-links-google') }}
+
+                        </small>
                     </div>
                     <div class="text-center rounded shadow sm:p-2 bg-white">
                         <a class="inline-block px-3 py-2 sm:px-8 sm:py-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
@@ -361,7 +381,10 @@
                             </svg>
                         </a>
                         <br>
-                        <small class="text-xs">Youtube</small>
+                        <small class="text-xs">
+                            {{ __('isp-access-dashboard-quick-links-youtube') }}
+                        </small>
+
                     </div>
                     <div class="text-center rounded shadow sm:p-2 bg-white">
                         <a class="inline-block px-3 py-2 sm:px-8 sm:py-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
@@ -372,7 +395,9 @@
                             </svg>
                         </a>
                         <br>
-                        <small class="text-xs">Facebook</small>
+                        <small class="text-xs">
+                            {{ __('isp-access-dashboard-quick-links-facebook') }}
+                        </small>
                     </div>
                     <div class="text-center rounded shadow sm:p-2 bg-white">
                         <a class="inline-block px-3 py-2 sm:px-8 sm:py-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
@@ -383,7 +408,9 @@
                             </svg>
                         </a>
                         <br>
-                        <small class="text-xs">Twitter</small>
+                        <small class="text-xs">
+                            {{ __('isp-access-dashboard-quick-links-twitter') }}
+                        </small>
 
                     </div>
                 </div>
@@ -393,7 +420,9 @@
             <div class="relative overflow-hidden mb-8">
 
                 @if ($invoices->count() > 0)
-                    <h3 class="text-center font-normal italic text-lg">Past Purchase Request</h3>
+                    <h3 class="text-center font-normal italic text-lg">
+                        {{ __('isp-access-dashboard-purchase-request') }}
+                    </h3>
                     @foreach ($invoices as $invoice)
                         <div role="listitem" class="text-center bg-white p-2 shadow ring-1 ring-gray-900/5 rounded m-2">
                             <h2 class="text-lg font-semibold leading-6 text-gray-800 dark:text-white pb-3 p-3">
@@ -402,8 +431,10 @@
                             </h2>
 
                             <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                <b>Date:</b> {{ date('d/m/y H:i', strtotime($invoice->created_at)) }},
-                                <b>Status:</b> <span class="uppercase">{{ $invoice->status }}</span>
+                                <b>{{ __('isp-access-dashboard-purchase-request-date') }}:</b>
+                                {{ date('d/m/y H:i', strtotime($invoice->created_at)) }},
+                                <b>{{ __('isp-access-dashboard-purchase-request-status') }}:</b> <span
+                                    class="uppercase">{{ $invoice->status }}</span>
                             </small>
                             <div class="items-center justify-between flex">
                                 <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
@@ -413,10 +444,14 @@
                                 <div>
                                     <a id='invoice-cancel'
                                         href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id, 'return_url' => $return_url])) }}"
-                                        class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Cancel</a>
+                                        class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                        {{ __('isp-access-dashboard-purchase-request-cancel') }}
+                                    </a>
                                     <a id='invoice-complete'
                                         href="{{ url(route('account_payment', ['invoice_id' => $invoice->id, 'return_url' => $return_url])) }}"
-                                        class="ml-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Payment</a>
+                                        class="ml-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                        {{ __('isp-access-dashboard-purchase-request-payment') }}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -424,7 +459,8 @@
                 @endif
 
                 @if ($packages->count() > 0)
-                    <h3 class="text-center font-normal italic text-lg"> Package </h3>
+                    <h3 class="text-center font-normal italic text-lg"> {{ __('isp-access-dashboard-package-title') }}
+                    </h3>
                     @foreach ($packages as $package)
                         <div class="mb-5">
                             <div role="listitem" class="relative bg-white p-3 shadow ring-1 ring-gray-900/5 rounded m-2">
@@ -435,8 +471,9 @@
                                     </h2>
 
                                     <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                        {{ $package->description }}, Package: {{ $package->package_title }},
-                                        Speed:
+                                        {{ $package->description }}, {{ __('isp-access-dashboard-package-package') }}:
+                                        {{ $package->package_title }},
+                                        {{ __('isp-access-dashboard-package-speed') }}:
                                         {{ $package->speed }}
                                         {{ $package->speed_type == 'kilobyte' ? 'KB' : ($package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
                                     </small>
@@ -451,7 +488,10 @@
                                         <a id='package'
                                             @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id, 'return_url' => $return_url])) }}"
                                             @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id, 'return_url' => $return_url])) }}" @endif
-                                            class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Buy</a>
+                                            class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                            Buy
+                                            {{ __('isp-access-dashboard-package-button') }}
+                                        </a>
                                     </div>
                                 </div>
 
@@ -462,4 +502,15 @@
             </div>
         </div>
     </section>
+    
+    <div class="relative overflow-hidden mb-8">
+        <div class="overflow-hidden px-3 py-10 flex justify-center">
+            <div class="w-full max-w-xs login-card">
+
+                <p class="text-center text-gray-500 text-xs">
+                    &copy;2022 - {{ date('Y') }}. {{ __('isp-copy-right') }}
+                </p>
+            </div>
+        </div>
+    </div>
 @endsection
