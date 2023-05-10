@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Classes\Ledger;
 use Modules\Base\Http\Controllers\BaseController;
+use Modules\Core\Classes\Currency;
 use Modules\Isp\Classes\Subscription;
 use Modules\Isp\Entities\SubscriberLogin;
 use Modules\Isp\Entities\Subscription as DBSubscription;
@@ -19,6 +20,9 @@ class SubscriptionController extends BaseController
 
         $data = $request->all();
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         $result = $subscription->summary($data);
 
         return response()
@@ -29,12 +33,16 @@ class SubscriptionController extends BaseController
     public function access(Request $request)
     {
         $subscription = new Subscription();
+        $currency = new Currency();
 
         $r_data = $request->all();
         $s_data = [];
         //$s_data = $request->session()->get('subscription_data', []);
 
         $data = array_merge($r_data, $s_data);
+
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
 
         $data = $subscription->processData($data);
 
@@ -84,6 +92,9 @@ class SubscriptionController extends BaseController
             'partner' => $partner,
         ];
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         return response()
             ->view('isp::access-dashboard', $data)
             ->header('pragma', 'no-cache')
@@ -117,6 +128,9 @@ class SubscriptionController extends BaseController
 
         $data = $request->session()->get('subscription_data', []);
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         $subscriber = $subscription->getSubscriber($data);
         $invoice = $subscription->buyPackage($id, $subscriber->id);
 
@@ -137,6 +151,9 @@ class SubscriptionController extends BaseController
     {
         $data = $request->session()->get('subscription_data', []);
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         $subscription = new Subscription();
 
         $subscriber = $subscription->getSubscriber($data);
@@ -155,6 +172,9 @@ class SubscriptionController extends BaseController
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         return response()
             ->view('isp::access-error', $data)
             ->header('pragma', 'no-cache')
@@ -165,6 +185,9 @@ class SubscriptionController extends BaseController
     {
 
         $data = $request->session()->get('subscription_data', []);
+
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
 
         $subscription = new Subscription();
 
@@ -184,6 +207,9 @@ class SubscriptionController extends BaseController
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         $data['message'] = $request->query('message', '');
 
         return response()
@@ -200,6 +226,9 @@ class SubscriptionController extends BaseController
         $r_data = $request->all();
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($s_data, $r_data);
+
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
 
         $username = $data['username'];
         $phone = substr($data['phone'], -9);
@@ -246,6 +275,9 @@ class SubscriptionController extends BaseController
         $r_data = $request->all();
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
+
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
 
         if (!$data['package_id']) {
             $error = true;
@@ -299,6 +331,9 @@ class SubscriptionController extends BaseController
         $s_data = $request->session()->get('subscription_data', []);
         $data = array_merge($r_data, $s_data);
 
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
+
         $invoice = $subscription->saveSubcriber($data);
 
         if ($invoice->status == 'paid') {
@@ -318,6 +353,9 @@ class SubscriptionController extends BaseController
     public function mikrotiklogin(Request $request)
     {
         $data = $request->session()->get('subscription_data', []);
+
+        $currency = new Currency();
+        $data['currency'] = $currency->getDefaultCurrency();
 
         $subscription = new Subscription();
 

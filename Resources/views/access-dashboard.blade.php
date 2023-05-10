@@ -1,7 +1,7 @@
 @extends('base::app')
 
 @section('content')
-    <section class="bg-blue-50 h-full h-screen">
+    <section class="bg-blue-50">
         <div class="w-full md:w-4/5 lg:w-1/2 mx-auto pt-5">
 
             @if ($partner)
@@ -289,9 +289,9 @@
                                             class="font-sm">{{ ___('isp-access-dashboard-account-balance') }}:</small><br>
                                         <span class="font-bold">
                                             @if (isset($wallet['balance']))
-                                                {{ $wallet['balance'] }}
+                                                {{ number_format($wallet['balance']) }}
                                             @endif
-                                            KES
+                                            {{ $currency->code }}
                                         </span>
                                     </div>
                                     <div class="flex-auto text-center">
@@ -324,7 +324,7 @@
                                     <div class="flex p-1">
                                         <div class="flex-none w-28">
                                             <h4 class="text-2xl text-white">
-                                                {{ $featured_package->amount }} KES
+                                                {{ number_format($featured_package->amount) }} {{ $currency->code }}
                                             </h4>
                                         </div>
                                         <div class="flex-auto text-right pr-4">
@@ -438,8 +438,8 @@
                             </small>
                             <div class="items-center justify-between flex">
                                 <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                    {{ $invoice->total }}
-                                    <span class="text-base font-normal">KES</span>
+                                    {{ number_format($invoice->total) }}
+                                    <span class="text-base font-normal">{{ $currency->code }}</span>
                                 </p>
                                 <div>
                                     <a id='invoice-cancel'
@@ -481,8 +481,8 @@
 
                                 <div class="items-center justify-between flex">
                                     <p class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                        {{ $package->amount }}
-                                        <span class="text-base font-normal">KES</span>
+                                        {{ number_format($package->amount) }}
+                                        <span class="text-base font-normal"> {{ $currency->code }} </span>
                                     </p>
                                     <div>
                                         <a id='package'
