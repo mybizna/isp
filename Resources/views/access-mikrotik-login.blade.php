@@ -9,7 +9,7 @@
                     <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2">
 
                         <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-2">
-                            - {{ __('isp-access-mikrotik-login-title') }} -
+                            - {{ ___('isp-access-mikrotik-login-title') }} -
                         </h3>
 
                         <div class="bg-white mb-4">
@@ -18,7 +18,7 @@
 
                             <div class="text-center text-green-400">
                                 <p class="pt-4">
-                                    {{ __('isp-access-mikrotik-login-wait') }}
+                                    {{ ___('isp-access-mikrotik-login-wait') }}
                                 </p>
 
                                 <div class="fa-3x">
@@ -37,7 +37,7 @@
                                     <p style="text-align:center;" class="p-1">
                                         <button id='register' type="submit" name="view" value="register"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                            {{ __('isp-access-mikrotik-login-button') }}
+                                            {{ ___('isp-access-mikrotik-login-button') }}
                                         </button>
                                     </p>
                                 </form>
@@ -58,7 +58,7 @@
             <div class="w-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
-                    &copy;2022 - {{  date('Y') }}. {{ __('isp-copy-right') }}
+                    &copy;2022 - {{  date('Y') }}. {{ ___('isp-copy-right') }}
                 </p>
             </div>
         </div>
