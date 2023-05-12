@@ -5,6 +5,7 @@
         <template #header>
             <th-render>Title</th-render>
             <th-render>Slug</th-render>
+            <th-render>Pool</th-render>
             <th>Billing Cycle</th>
             <th-render>Speed</th-render>
             <th-render>Bundle</th-render>
@@ -15,9 +16,10 @@
             <th-render>Sync</th-render>
         </template>
 
-        <template #body="{ item }">
-            <td>{{ item.title }}</td>
+        <template #body="{ item }" >
+            <td>{{ item.title }} </td>
             <td>{{ item.slug }}</td>
+            <td>{{ item.pool }}</td>
             <td>{{ item.billing_cycle_id__isp_billing_cycle__title }}</td>
             <td>
                 <template v-if="item.speed">
@@ -60,7 +62,7 @@ export default {
     data() {
         return {
             table_fields: [
-                'title', 'slug', 'billing_cycle_id__isp_billing_cycle__title', 'speed', 'speed_type', 'bundle', 'bundle_type',
+                'title', 'slug', 'pool', 'billing_cycle_id__isp_billing_cycle__title', 'speed', 'speed_type', 'bundle', 'bundle_type',
                 'amount', 'is_hidden', 'default', 'published'
             ]
         };

@@ -10,7 +10,7 @@ class Package extends BaseModel
 {
 
     protected $fillable = [
-        'title', 'slug', 'description', 'gateway_id', 'billing_cycle_id',
+        'title', 'slug', 'pool', 'description', 'billing_cycle_id', 'gateway_id',
         'speed', 'speed_type', 'bundle', 'bundle_type', 'published',
         'featured', 'default', 'is_unlimited', 'is_hidden', 'amount',
     ];
@@ -28,6 +28,7 @@ class Package extends BaseModel
         $table->increments('id');
         $table->string('title');
         $table->string('slug');
+        $table->string('pool');
         $table->string('description')->nullable();
 
         $table->integer('billing_cycle_id')->unsigned()->nullable();

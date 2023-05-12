@@ -1,5 +1,5 @@
 <template>
-    <edit-render :path_param="['isp', 'package']" :model="model">
+    <edit-render :path_param="['isp', 'package']" :model="model" >
 
         <div class="row">
             <div class="col-md-6">
@@ -7,6 +7,8 @@
                 <FormKit v-model="model.id" label="Id" id="id" type="hidden" validation="required" />
                 <FormKit v-model="model.title" label="Title" id="title" type="text" validation="required" />
                 <FormKit v-model="model.slug" label="Slug" id="slug" type="text" validation="required" />
+                <FormKit v-model="model.pool" label="Pool" id="pool" type="text" validation="required" />
+                
                 <FormKit v-model="model.billing_cycle_id" label="Billing Cycle" id="billing_cycle_id"
                     :setting="setting.billing_cycle_id" type="recordselect" validation="required" />
 
@@ -76,6 +78,7 @@ export default {
                 id: "",
                 title: "",
                 slug: "",
+                pool: "",
                 description: "",
                 billing_cycle_id: "",
                 speed: "",

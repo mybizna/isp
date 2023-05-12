@@ -27,7 +27,7 @@ class IspPackageCreated
         $freeradius = new Freeradius();
 
         $table_name = $event->table_name;
-        
+
         if ($table_name == 'isp_package') {
             $freeradius->setPackages();
         }

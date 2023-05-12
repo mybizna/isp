@@ -12,12 +12,13 @@ class Package
 
     public function data(Datasetter $datasetter)
     {
-        $gateway_id = DB::table('isp_gateway')->where('type', 'freeradius')->value('id');
+        $gateway_id = DB::table('isp_gateway')->where( 'type', 'freeradius')->value('id');
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '10-minute')->value('id');
 
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "Trial",
             "slug" => "trail",
+            "pool" => "dhcp",
             "description" => "Trial",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
@@ -35,6 +36,7 @@ class Package
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "Free",
             "slug" => "free",
+            "pool" => "dhcp",
             "description" => "Free",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
@@ -54,6 +56,7 @@ class Package
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "1M Hotspot",
             "slug" => "1m-hotspot",
+            "pool" => "dhcp",
             "description" => "1M Hotspot",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
@@ -68,6 +71,7 @@ class Package
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "2M Hotspot",
             "slug" => "2m-hotspot",
+            "pool" => "dhcp",
             "description" => "2M Hotspot",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
@@ -82,6 +86,7 @@ class Package
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "1M-PPP",
             "slug" => "1m-ppp",
+            "pool" => "dhcp",
             "description" => "1M-PPP",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
@@ -96,6 +101,7 @@ class Package
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "2M-PPP",
             "slug" => "2m-ppp",
+            "pool" => "dhcp",
             "description" => "2M-PPP",
             "gateway_id" => $gateway_id ,
             "billing_cycle_id" => $billing_cycle_id,
