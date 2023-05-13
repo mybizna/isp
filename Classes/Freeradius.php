@@ -163,9 +163,11 @@ class Freeradius
         $double_speed = ($package->speed * 2) . $speed_type;
 
         $microtik_limit = '' . $speed . '/' . $speed . ' ' . $double_speed . '/' . $double_speed . ' ' . $speed . '/' . $speed . ' 40/40';
-
-        $speed_pool = $groupname . '_pool';
+       
+        $speed_pool = $package->pool;
         $speed_profile = $groupname . '_Profile';
+
+        //print_r($packages); exit;
 
         $checker = $db_freeradius->select('select * from radgroupcheck where groupname = ? and attribute = ?',
             [$groupname, 'Framed-Protocol']);
