@@ -100,6 +100,7 @@ class SubscriptionController extends BaseController
             ->header('pragma', 'no-cache')
             ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
+    
     public function autosubscribe(Request $request)
     {
 

@@ -10,15 +10,17 @@ class LanguageTranslation
 
     public function data(Datasetter $datasetter)
     {
+        $language_id = DB::table('core_language')->where('slug', 'en-us')->value('id');
+
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-buyform-phone-label",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Please Enter Your Phone",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-buyform-button-label",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Proceed",
         ]);
 
@@ -26,19 +28,19 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-canceled-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Payment was Canceled.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-canceled-instructions",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Click the button <b>Profile</b> to try again.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-canceled-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Profile",
         ]);
 
@@ -46,222 +48,222 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-current-active-package",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "CURRENT ACTIVE PACKAGE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-current-active-package-package",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "PACKAGE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-current-active-package-limits",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "LIMITS",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-current-active-package-expire",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "EXPIRE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-renew",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Renew",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-no-package",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "No Package",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-no-package-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Please Select Preferred package listed below.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-active-package",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "OTHER ACTIVE PACKAGE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-active-package-name",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "NAME",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-active-package-limits",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "LIMITS",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-active-package-expire",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "EXPIRE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-logged-in-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Your username is shown below;",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-logged-in-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Please save it incase you would like to login or share with another device.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-login-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Access Pro account.",
         ]);
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-login-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "We couldn't autoassociate your account with any user. Please click login button below.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-login-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "LOGIN",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-account-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Welcome to Our Network.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-account-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Buy your Internet bundle below.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-account-balance",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "BALANCE",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-account-unpaid",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "UNPAID INVOICES",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-buy-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "BUY",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-nofeatured-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "No Featured",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-nofeatured-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "There is no featured package set.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-quick-links",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Quick Links",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-quick-links-google",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Google",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-quick-links-youtube",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Youtube",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-quick-links-facebook",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Facebook",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-quick-links-twitter",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Twitter",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-purchase-request",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Past Purchase Request",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-purchase-request-date",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Date",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-purchase-request-status",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Status",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-purchase-request-cancel",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Cancel",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-purchase-request-payment",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Payment",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-package-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Package",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-package-package",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Package",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-package-speed",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Speed",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-dashboard-package-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Buy",
         ]);
 
@@ -269,19 +271,19 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-error-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "ERROR",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-error-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Click the button <b>Profile</b> to try again.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-error-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Profile",
         ]);
 
@@ -289,25 +291,25 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-login-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Login Form",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-login-username",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Username",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-login-phone",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Phone",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-login-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "LOGIN",
         ]);
 
@@ -315,19 +317,19 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-mikrotik-login-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "LOGGING IN",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-mikrotik-login-wait",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Please Wait...",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-mikrotik-login-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Access Internet",
         ]);
 
@@ -335,55 +337,55 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "REGISTER",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-name",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Name",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-username",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Username",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-password",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Password",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-password-label",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Please choose a password.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-phone",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Phone",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-email",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Email",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Register",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-register-back-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Back to Login",
         ]);
 
@@ -391,25 +393,25 @@ class LanguageTranslation
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-thankyou-title",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Thank You for your Payment",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-thankyou-instruction",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "Click the button <b>Access Internet</b> to proceed to Internet.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-thankyou-button",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => " Access Internet",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-copy-right",
-            "language" => "en-us",
+            "language_id" => $language_id,
             "phrase" => "All rights reserved.",
         ]);
 
