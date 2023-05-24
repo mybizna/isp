@@ -3,6 +3,7 @@
 namespace Modules\Isp\Entities\Data;
 
 use Modules\Base\Classes\Datasetter;
+use DB;
 
 class LanguageTranslation
 {
