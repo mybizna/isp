@@ -29,7 +29,7 @@ class MacAddress extends BaseModel
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_subscription', 'subscriber_id')) {
+        if (Migration::checkKeyExist('isp_mac_address', 'subscriber_id')) {
             $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->nullOnDelete();
         }
     }
