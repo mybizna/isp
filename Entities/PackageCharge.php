@@ -24,9 +24,9 @@ class PackageCharge extends BaseModel
         $table->increments('id');
         $table->string('title');
         $table->string('slug');
-        $table->integer('package_id')->unsigned();
-        $table->integer('ledger_id')->unsigned();
-        $table->integer('quantity')->unsigned()->default(1);
+        $table->foreignId('package_id');
+        $table->foreignId('ledger_id');
+        $table->tinyInteger('quantity')->default(1);
         $table->string('description')->nullable();
         $table->double('price', 8, 2)->nullable();
         $table->boolean('published')->default(true)->nullable();
@@ -34,11 +34,7 @@ class PackageCharge extends BaseModel
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_package_charge', 'package_id')) {
-            $table->foreign('package_id')->references('id')->on('isp_package')->nullOnDelete();
-        }
-        if (Migration::checkKeyExist('isp_package_charge', 'ledger_id')) {
-            $table->foreign('ledger_id')->references('id')->on('account_ledger')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_package', 'package_id');
+        Migration::addForeign($table, 'account_ledger', 'ledger_id');
     }
 }

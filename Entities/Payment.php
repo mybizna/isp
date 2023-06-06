@@ -23,8 +23,8 @@ class Payment extends BaseModel
     {
         $table->increments('id');
         $table->string('title');
-        $table->integer('subscription_id')->unsigned()->nullable();
-        $table->integer('invoice_id')->unsigned()->nullable();
+        $table->foreignId('subscription_id')->nullable();
+        $table->foreignId('invoice_id')->nullable();
         $table->string('description')->nullable();
         $table->boolean('is_paid')->default(false)->nullable();
         $table->boolean('completed')->default(false)->nullable();
@@ -33,12 +33,7 @@ class Payment extends BaseModel
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_payment', 'subscription_id')) {
-            $table->foreign('subscription_id')->references('id')->on('isp_subscription')->nullOnDelete();
-        }
-
-        if (Migration::checkKeyExist('isp_payment', 'invoice_id')) {
-            $table->foreign('invoice_id')->references('id')->on('account_invoice')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_subscription', 'subscription_id');
+        Migration::addForeign($table, 'account_invoice', 'invoice_id');
     }
 }

@@ -22,18 +22,14 @@ class PackageChargeRate extends BaseModel
     public function migration(Blueprint $table)
     {
         $table->increments('id');
-        $table->integer('package_charge_id')->unsigned();
-        $table->integer('rate_id')->unsigned();
+        $table->foreignId('package_charge_id');
+        $table->foreignId('rate_id');
         $table->boolean('published')->default(true)->nullable();
     }
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_package_charge', 'package_charge_id')) {
-            $table->foreign('package_charge_id')->references('id')->on('isp_package_charge')->nullOnDelete();
-        }
-        if (Migration::checkKeyExist('isp_package_charge', 'rate_id')) {
-            $table->foreign('rate_id')->references('id')->on('account_rate')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_package_charge', 'package_charge_id');
+        Migration::addForeign($table, 'account_rate', 'rate_id');
     }
 }

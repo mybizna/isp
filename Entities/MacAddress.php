@@ -23,15 +23,13 @@ class MacAddress extends BaseModel
     {
 
         $table->increments('id');
-        $table->integer('subscriber_id')->nullable()->unsigned();
+        $table->foreignId('subscriber_id')->nullable();
         $table->string('mac')->nullable();
     }
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_mac_address', 'subscriber_id')) {
-            $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_subscriber', 'subscriber_id');
     }
 
 }

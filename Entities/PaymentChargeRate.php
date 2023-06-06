@@ -22,18 +22,13 @@ class PaymentChargeRate extends BaseModel
     public function migration(Blueprint $table)
     {
         $table->increments('id');
-        $table->integer('payment_charge_id')->unsigned();
-        $table->integer('rate_id')->unsigned();
+        $table->foreignId('payment_charge_id');
+        $table->foreignId('rate_id');
     }
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_payment_charge_rate', 'payment_charge_id')) {
-            $table->foreign('payment_charge_id')->references('id')->on('isp_payment_charge')->nullOnDelete();
-        }
-        
-        if (Migration::checkKeyExist('isp_payment_charge_rate', 'rate_id')) {
-            $table->foreign('rate_id')->references('id')->on('account_rate')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_payment_charge', 'payment_charge_id');
+        Migration::addForeign($table, 'account_rate', 'rate_id');
     }
 }

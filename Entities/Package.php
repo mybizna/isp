@@ -31,8 +31,8 @@ class Package extends BaseModel
         $table->string('pool');
         $table->string('description')->nullable();
 
-        $table->integer('billing_cycle_id')->unsigned()->nullable();
-        $table->integer('gateway_id')->unsigned()->nullable();
+        $table->foreignId('billing_cycle_id')->nullable();
+        $table->foreignId('gateway_id')->nullable();
 
         $table->string('speed')->nullable();
         $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
@@ -50,12 +50,7 @@ class Package extends BaseModel
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_package', 'billing_cycle_id')) {
-            $table->foreign('billing_cycle_id')->references('id')->on('isp_billing_cycle')->nullOnDelete();
-        }
-
-        if (Migration::checkKeyExist('isp_package', 'gateway_id')) {
-            $table->foreign('gateway_id')->references('id')->on('isp_gateway')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_billing_cycle', 'billing_cycle_id');
+        Migration::addForeign($table, 'isp_gateway', 'gateway_id');
     }
 }

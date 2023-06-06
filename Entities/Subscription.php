@@ -22,20 +22,15 @@ class Subscription extends BaseModel
     public function migration(Blueprint $table)
     {
         $table->increments('id');
-        $table->integer('subscriber_id')->unsigned();
-        $table->integer('package_id')->unsigned();
+        $table->foreignId('subscriber_id');
+        $table->foreignId('package_id');
         $table->datetime('start_date');
         $table->datetime('end_date');
     }
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_subscription', 'subscriber_id')) {
-            $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->nullOnDelete();
-        }
-
-        if (Migration::checkKeyExist('isp_subscription', 'package_id')) {
-            $table->foreign('package_id')->references('id')->on('isp_package')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'isp_subscriber', 'subscriber_id');
+        Migration::addForeign($table, 'isp_package', 'package_id');
     }
 }

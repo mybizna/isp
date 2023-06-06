@@ -25,13 +25,11 @@ class Subscriber extends BaseModel
         $table->string('username')->unique();
         $table->string('password');
         $table->boolean('had_trail')->default(false)->nullable();
-        $table->integer('partner_id')->unsigned()->nullable();
+        $table->foreignId('partner_id')->nullable();
     }
 
     public function post_migration(Blueprint $table)
     {
-        if (Migration::checkKeyExist('isp_subscriber', 'partner_id')) {
-            $table->foreign('partner_id')->references('id')->on('partner')->nullOnDelete();
-        }
+        Migration::addForeign($table, 'partner', 'partner_id');
     }
 }
