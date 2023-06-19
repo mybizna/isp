@@ -93,6 +93,7 @@ class Subscription
 
     public function getSubscriber($data)
     {
+        
         if (isset($data['username']) && $data['username'] != '') {
             $subscriber = Subscriber::where(['username' => $data['username']])->first();
             if ($subscriber) {
@@ -100,7 +101,7 @@ class Subscription
             }
         } else if (isset($data['mac']) && $data['mac'] != '') {
             $mac_address = MacAddress::where(['mac' => $data['mac']])->first();
-
+            
             if ($mac_address) {
                 $subscriber = Subscriber::where(['id' => $mac_address->subscriber_id])->first();
                 if ($subscriber) {
@@ -131,13 +132,17 @@ class Subscription
             $data['subscriber_id'] = $subscriber->id;
             $data['partner_id'] = $subscriber->partner_id;
         }
-
+          
+        
         if (!isset($data['partner_id'])) {
             $partner = $this->addPartner($data);
+            print_r($partner); exit;
             $data['partner_id'] = $partner->id;
         }
 
         $item_subscriber = Subscriber::where(['partner_id' => $data['partner_id']])->first();
+      
+        print_r($item_subscriber); exit;
         if (!$item_subscriber) {
             $item_subscriber = Subscriber::updateOrCreate([
                 'username' => $username,
@@ -155,14 +160,20 @@ class Subscription
         }
 
         $mac_address = MacAddress::where(['subscriber_id' => $item_subscriber->id])->first();
+
+       
         if (!$mac_address) {
             $mac_address = MacAddress::updateOrCreate([
                 'subscriber_id' => $item_subscriber->id,
                 'mac' => $data['mac'],
             ]);
         }
-
+        
         $invoice = $this->buyPackage($data['package_id'], $item_subscriber->id);
+
+        $data['invoice_id'] =$invoice->id;
+
+        $request->session()->put('subscription_data', $data);
 
         return $invoice;
     }

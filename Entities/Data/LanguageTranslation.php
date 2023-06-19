@@ -325,7 +325,7 @@ class LanguageTranslation
         $datasetter->add_data('core', 'language_translation', 'slug', [
             "slug" => "isp-access-mikrotik-login-wait",
             "language_id" => $language_id,
-            "phrase" => "Please Wait...",
+            "phrase" => "Please Wait for the system to open internet access automatically or Click the button below.",
         ]);
 
         $datasetter->add_data('core', 'language_translation', 'slug', [

@@ -14,8 +14,6 @@
 
                         <div class="bg-white mb-4">
 
-
-
                             <div class="text-center text-green-400">
                                 <p class="pt-4">
                                     {{ ___('isp-access-mikrotik-login-wait') }}
@@ -27,20 +25,29 @@
                             </div>
 
                             @if ($subscriber_login)
-                                <form id="mikrotik_login" name="login" action="{{ $subscriber_login->link_login }}"
-                                    method="post">
-                                    <input type="hidden" name="username" value="{{ $subscriber->username }}">
-                                    <input type="hidden" name="password" value="{{ $subscriber->password }}">
-                                    <input type="hidden" name="domain" value="">
-                                    <input type="hidden" name="dst" value="{{ $subscriber_login->link_orig_esc }}">
+                                @if ($subscriber_login->link_login)
+                                    <form id="mikrotik_login" name="login" action="{{ $subscriber_login->link_login }}"
+                                        method="post">
+                                        <input type="hidden" name="username" value="{{ $subscriber->username }}">
+                                        <input type="hidden" name="password" value="{{ $subscriber->password }}">
+                                        <input type="hidden" name="domain" value="">
+                                        <input type="hidden" name="dst" value="{{ $subscriber_login->link_orig_esc }}">
 
-                                    <p style="text-align:center;" class="p-1">
-                                        <button id='register' type="submit" name="view" value="register"
+                                        <p style="text-align:center;" class="p-1">
+                                            <button id='register' type="submit" name="view" value="register"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                                {{ ___('isp-access-mikrotik-login-button') }}
+                                            </button>
+                                        </p>
+                                    </form>
+                                @else
+                                    <div class="text-center text-red-400">
+                                        <a href="https://www.google.com"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                             {{ ___('isp-access-mikrotik-login-button') }}
-                                        </button>
-                                    </p>
-                                </form>
+                                        </a>
+                                    </div>
+                                @endif
                             @endif
 
                         </div>
@@ -58,7 +65,7 @@
             <div class="w-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
-                    &copy;2022 - {{  date('Y') }}. {{ ___('isp-copy-right') }}
+                    &copy;2022 - {{ date('Y') }}. {{ ___('isp-copy-right') }}
                 </p>
             </div>
         </div>

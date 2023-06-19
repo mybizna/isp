@@ -295,7 +295,8 @@
                                         </span>
                                     </div>
                                     <div class="flex-auto text-center">
-                                        <small class="font-sm">{{ ___('isp-access-dashboard-account-unpaid') }}:</small><br>
+                                        <small
+                                            class="font-sm">{{ ___('isp-access-dashboard-account-unpaid') }}:</small><br>
                                         {{ $invoices->count() }}
                                     </div>
                                 </div>
@@ -328,7 +329,8 @@
                                             </h4>
                                         </div>
                                         <div class="flex-auto text-right pr-4">
-                                            <a href="{{ url(route('isp_access_buypackage', ['id' => $featured_package->id])) }}"
+                                            <a @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $featured_package->id, 'return_url' => $return_url])) }}"
+                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $featured_package->id, 'return_url' => $return_url])) }}" @endif
                                                 class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 {{ ___('isp-access-dashboard-buy-button') }}
                                             </a>
@@ -489,7 +491,6 @@
                                             @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id, 'return_url' => $return_url])) }}"
                                             @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id, 'return_url' => $return_url])) }}" @endif
                                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                            Buy
                                             {{ ___('isp-access-dashboard-package-button') }}
                                         </a>
                                     </div>
@@ -502,7 +503,7 @@
             </div>
         </div>
     </section>
-    
+
     <div class="relative overflow-hidden mb-8">
         <div class="overflow-hidden px-3 py-10 flex justify-center">
             <div class="w-full max-w-xs login-card">

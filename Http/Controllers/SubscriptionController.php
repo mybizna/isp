@@ -79,7 +79,8 @@ class SubscriptionController extends BaseController
             $current_package = $subscription->getCurrentPackage($subscriber->id);
         }
 
-        $data = [
+        $result = [
+            'mac' => $data['mac'] ?? '',
             'return_url' => base64_encode(url(route('isp_access_thankyou'))),
             'profile_return_url' => base64_encode(url(route('isp_profile'))),
             'subscriber' => $subscriber,
@@ -93,14 +94,23 @@ class SubscriptionController extends BaseController
         ];
 
         $currency = new Currency();
-        $data['currency'] = $currency->getDefaultCurrency();
+        $result['currency'] = $currency->getDefaultCurrency();
 
-        return response()
-            ->view('isp::access-dashboard', $data)
-            ->header('pragma', 'no-cache')
-            ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+        if (isset($data['mac']) && $data['mac'] != '' && count($user_packages) > 0) {
+            return redirect()
+                ->route('isp_access_mikrotik_login')
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+        } else {
+            return response()
+                ->view('isp::access-dashboard', $result)
+                ->header('pragma', 'no-cache')
+                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+
+        }
+
     }
-    
+
     public function autosubscribe(Request $request)
     {
 
@@ -133,6 +143,7 @@ class SubscriptionController extends BaseController
         $data['currency'] = $currency->getDefaultCurrency();
 
         $subscriber = $subscription->getSubscriber($data);
+
         $invoice = $subscription->buyPackage($id, $subscriber->id);
 
         if ($invoice->status == 'paid') {
@@ -363,13 +374,13 @@ class SubscriptionController extends BaseController
         $subscriber = $subscription->getSubscriber($data);
         $subscriber_login = SubscriberLogin::where('mac', $data['mac'])->first();
 
-        $data = [
+        $result = [
             'subscriber' => $subscriber,
             'subscriber_login' => $subscriber_login,
         ];
 
         return response()
-            ->view('isp::access-mikrotik-login', $data, 200)
+            ->view('isp::access-mikrotik-login', $result, 200)
             ->header('pragma', 'no-cache')
             ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
     }
