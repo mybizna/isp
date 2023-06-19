@@ -10,6 +10,7 @@ class Billing
     public function generateInvoice($billing)
     {
         $invoices = new Invoices();
+        
 
         $partner_id = 1;
         $user_id = 1;
