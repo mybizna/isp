@@ -35,18 +35,15 @@ class SubscriptionController extends BaseController
         $subscription = new Subscription();
         $currency = new Currency();
 
-        $r_data = $request->all();
-        $s_data = [];
-        //$s_data = $request->session()->get('subscription_data', []);
+        $data = $request->all();
 
-        $data = array_merge($r_data, $s_data);
+        if (!empty($data)) {
+            $data['currency'] = $currency->getDefaultCurrency();
 
-        $currency = new Currency();
-        $data['currency'] = $currency->getDefaultCurrency();
+            $data = $subscription->processData($data);
 
-        $data = $subscription->processData($data);
-
-        $request->session()->put('subscription_data', $data);
+            $request->session()->put('subscription_data', $data);
+        }
 
         return redirect()
             ->route('isp_profile')
@@ -135,27 +132,41 @@ class SubscriptionController extends BaseController
     }
     public function buyPackage(Request $request, $id)
     {
+        $invoice = null;
+
+        $currency = new Currency();
         $subscription = new Subscription();
 
         $data = $request->session()->get('subscription_data', []);
 
-        $currency = new Currency();
+        $data['package_id'] = $id;
+        $data['return_url'] = $request->get('return_url');
         $data['currency'] = $currency->getDefaultCurrency();
+
+       
 
         $subscriber = $subscription->getSubscriber($data);
 
-        $invoice = $subscription->buyPackage($id, $subscriber->id);
-
-        if ($invoice->status == 'paid') {
-            return redirect()
-                ->route('isp_access_thankyou')
-                ->header('pragma', 'no-cache')
-                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+        if ($subscriber) {
+            $invoice = $subscription->buyPackage($id, $subscriber->id);
         } else {
-            return redirect()
-                ->route('account_payment', ['invoice_id' => $invoice->id])
-                ->header('pragma', 'no-cache')
-                ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+            $invoice = $subscription->saveSubcriber($request, $data);
+        }
+       
+        $request->session()->put('subscription_data', $data);
+
+        if ($invoice) {
+            if ($invoice->status == 'paid') {
+                return redirect()
+                    ->route('isp_access_thankyou')
+                    ->header('pragma', 'no-cache')
+                    ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+            } else {
+                return redirect()
+                    ->route('account_payment', ['invoice_id' => $invoice->id,'return_url' => $data['return_url']])
+                    ->header('pragma', 'no-cache')
+                    ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
+            }
         }
     }
 
@@ -277,6 +288,7 @@ class SubscriptionController extends BaseController
         }
 
     }
+
     public function buyform(Request $request)
     {
         $error = false;
@@ -346,7 +358,7 @@ class SubscriptionController extends BaseController
         $currency = new Currency();
         $data['currency'] = $currency->getDefaultCurrency();
 
-        $invoice = $subscription->saveSubcriber($data);
+        $invoice = $subscription->saveSubcriber($request, $data);
 
         if ($invoice->status == 'paid') {
             return redirect()

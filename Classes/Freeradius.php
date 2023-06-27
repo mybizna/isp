@@ -167,8 +167,6 @@ class Freeradius
         $speed_pool = $package->pool;
         $speed_profile = $groupname . '_Profile';
 
-        //print_r($packages); exit;
-
         $checker = $db_freeradius->select('select * from radgroupcheck where groupname = ? and attribute = ?',
             [$groupname, 'Framed-Protocol']);
         if (!empty($checker)) {

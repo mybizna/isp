@@ -40,11 +40,11 @@ class Package extends BaseModel
         $table->string('bundle')->nullable();
         $table->enum('bundle_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
 
-        $table->boolean('published')->default(true)->nullable();
-        $table->boolean('featured')->default(false)->nullable();
-        $table->boolean('default')->default(false)->nullable();
-        $table->boolean('is_unlimited')->default(false)->nullable();
-        $table->boolean('is_hidden')->default(false)->nullable();
+        $table->boolean('published')->default(1)->nullable();
+        $table->boolean('featured')->default(0)->nullable();
+        $table->boolean('default')->default(0)->nullable();
+        $table->boolean('is_unlimited')->default(0)->nullable();
+        $table->boolean('is_hidden')->default(0)->nullable();
         $table->double('amount', 8, 2)->nullable();
     }
 

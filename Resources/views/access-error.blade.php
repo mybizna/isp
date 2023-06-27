@@ -11,18 +11,18 @@
                         <i class="far fa-times-circle text-5xl text-red-700"></i>
 
                         <h3 class="pt-3 text-2xl font-semibold leading-6 text-red-700 dark:text-white text-center">
-                            {{ ___('isp-access-error-title') }}: <br><br><span class="text-lg"> {{ $message }}</span>
+                            {!! ___('isp-access-error-title') !!}: <br><br><span class="text-lg"> {!! $message !!}</span>
                         </h3>
 
                         <div class="bg-white mb-4 text-center">
 
                             <p style="text-align:center; padding:20px;">
-                                {{ ___('isp-access-error-instruction') }}
+                                {!! ___('isp-access-error-instruction') !!}
                             </p>
 
-                            <a id='package' href="{{ url(route('isp_profile')) }}"
+                            <a id='package' href="{!! url(route('isp_profile')) !!}"
                                 class="inline-block px-6 py-2.5 bg-red-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                {{ ___('isp-access-error-button') }}
+                                {!! ___('isp-access-error-button') !!}
                             </a>
 
                         </div>
@@ -40,7 +40,7 @@
             <div class="w-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
-                    &copy;2022 - {{  date('Y') }}. {{ ___('isp-copy-right') }}
+                    &copy;2022 - {!!  date('Y') !!}. {!! ___('isp-copy-right') !!}
                 </p>
             </div>
         </div>

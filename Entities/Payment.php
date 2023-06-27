@@ -26,9 +26,9 @@ class Payment extends BaseModel
         $table->foreignId('subscription_id')->nullable();
         $table->foreignId('invoice_id')->nullable();
         $table->string('description')->nullable();
-        $table->boolean('is_paid')->default(false)->nullable();
-        $table->boolean('completed')->default(false)->nullable();
-        $table->boolean('successful')->default(false)->nullable();
+        $table->boolean('is_paid')->default(0)->nullable();
+        $table->boolean('completed')->default(0)->nullable();
+        $table->boolean('successful')->default(0)->nullable();
     }
 
     public function post_migration(Blueprint $table)

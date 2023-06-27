@@ -24,7 +24,7 @@ class Subscriber extends BaseModel
         $table->increments('id');
         $table->string('username')->unique();
         $table->string('password');
-        $table->boolean('had_trail')->default(false)->nullable();
+        $table->boolean('had_trail')->default(0)->nullable();
         $table->foreignId('partner_id')->nullable();
     }
 

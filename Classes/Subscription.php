@@ -22,11 +22,11 @@ class Subscription
     public function summary($data = [])
     {
 
-        $start = new \DateTime('now - 1 year');
-        $end = new \DateTime();
+        $start = new \DateTime ('now - 1 year');
+        $end = new \DateTime ();
 
-        $interval = new \DateInterval('P1M');
-        $period = new \DatePeriod($start, $interval, $end);
+        $interval = new \DateInterval ('P1M');
+        $period = new \DatePeriod ($start, $interval, $end);
 
         $start_date = $start->modify('first day of this month')->format('Y-m-d 00:00:00');
         $end_date = $end->modify('last day of this month')->format('Y-m-d 23.59.59');
@@ -93,7 +93,7 @@ class Subscription
 
     public function getSubscriber($data)
     {
-        
+
         if (isset($data['username']) && $data['username'] != '') {
             $subscriber = Subscriber::where(['username' => $data['username']])->first();
             if ($subscriber) {
@@ -101,7 +101,7 @@ class Subscription
             }
         } else if (isset($data['mac']) && $data['mac'] != '') {
             $mac_address = MacAddress::where(['mac' => $data['mac']])->first();
-            
+
             if ($mac_address) {
                 $subscriber = Subscriber::where(['id' => $mac_address->subscriber_id])->first();
                 if ($subscriber) {
@@ -114,7 +114,7 @@ class Subscription
 
     }
 
-    public function saveSubcriber($data)
+    public function saveSubcriber($request, $data)
     {
         if (isset($data['subscriber_id']) && isset($data['package_id']) && $data['subscriber_id'] && $data['package_id']) {
             return $this->buyPackage($data['package_id'], $data['subscriber_id']);
@@ -132,17 +132,14 @@ class Subscription
             $data['subscriber_id'] = $subscriber->id;
             $data['partner_id'] = $subscriber->partner_id;
         }
-          
-        
+
         if (!isset($data['partner_id'])) {
             $partner = $this->addPartner($data);
-            print_r($partner); exit;
             $data['partner_id'] = $partner->id;
         }
 
         $item_subscriber = Subscriber::where(['partner_id' => $data['partner_id']])->first();
-      
-        print_r($item_subscriber); exit;
+
         if (!$item_subscriber) {
             $item_subscriber = Subscriber::updateOrCreate([
                 'username' => $username,
@@ -160,18 +157,17 @@ class Subscription
         }
 
         $mac_address = MacAddress::where(['subscriber_id' => $item_subscriber->id])->first();
-
-       
+        
         if (!$mac_address) {
             $mac_address = MacAddress::updateOrCreate([
                 'subscriber_id' => $item_subscriber->id,
                 'mac' => $data['mac'],
             ]);
         }
-        
+
         $invoice = $this->buyPackage($data['package_id'], $item_subscriber->id);
 
-        $data['invoice_id'] =$invoice->id;
+        $data['invoice_id'] = $invoice->id;
 
         $request->session()->put('subscription_data', $data);
 
@@ -272,7 +268,7 @@ class Subscription
                 $date = ($package->duration) ? $date->addYears($package->duration) : $date->addYear();
                 break;
             default:
-                throw new \Exception("Package [$package->title] does not have correct Duration setting", 1);
+                throw new \Exception ("Package [$package->title] does not have correct Duration setting", 1);
                 break;
         }
 
@@ -297,11 +293,28 @@ class Subscription
     {
         $partner_cls = new PartnerCls();
 
-        $partner = Partner::where('email', $data['email'] ?? '')
-            ->orWhere('phone', $data['phone'] ?? '')->first();
+        $partner_qry = Partner::query();
+
+        $email = $data['email'] ?? '';
+        $phone = $data['phone'] ?? '';
+
+        if ($email != '' && $phone == '') {
+            $partner_qry->orWhere('email', $data['email']);
+        } elseif ($email == '' && $phone != '') {
+            $partner_qry->orWhere('phone', $data['phone']);
+        } elseif ($email != '' && $phone != '') {
+            $partner_qry->orWhere('email', $data['email']);
+            $partner_qry->orWhere('phone', $data['phone']);
+        } else {
+            $partner_qry->where('id', null);
+        }
+
+        $partner = $partner_qry->first();
+      
 
         if (!$partner) {
             $partner = $partner_cls->createPartner([
+                'first_name' => $data['username'] ?? '',
                 'email' => $data['email'] ?? '',
                 'phone' => $data['phone'] ?? '',
                 'slugs' => [$data['username'] ?? ''],

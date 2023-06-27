@@ -14,7 +14,7 @@
 
                             @if (isset($current_package->id))
                                 <div class="text-center text-white">
-                                    <small>{{ ___('isp-access-dashboard-current-active-package') }}</small>
+                                    <small>{!! ___('isp-access-dashboard-current-active-package') !!}</small>
                                 </div>
                                 <div class="flex">
                                     <div class="flex-none w-14 sm:w-20">
@@ -27,30 +27,30 @@
                                         <div class="flex flex-wrap">
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
-                                                    {{ ___('isp-access-dashboard-current-active-package-package') }}
+                                                    {!! ___('isp-access-dashboard-current-active-package-package') !!}
                                                 </p>
                                                 <p class="mb-0 text-white text-xs">
                                                     @if ($current_package)
-                                                        ({{ $current_package->title }})
+                                                        ({!! $current_package->title !!})
                                                     @endif
                                                 </p>
                                             </div>
 
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
-                                                    {{ ___('isp-access-dashboard-current-active-package-limits') }}
+                                                    {!! ___('isp-access-dashboard-current-active-package-limits') !!}
                                                 </p>
                                                 @if ($current_package->bundle)
                                                     <span class="mb-0 text-white text-xs">
-                                                        {{ $current_package->bundle }}{{ $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                        {!! $current_package->bundle !!}{!! $current_package->bundle_type == 'kilobyte' ? 'KB' : ($current_package->bundle_type == 'megabyte' ? 'MB' : 'GB') !!}
                                                     </span>
                                                 @endif
 
                                                 @if ($current_package->speed)
                                                     <span class="mb-0 text-white text-xs">
                                                         @
-                                                        {{ $current_package->speed }}
-                                                        {{ $current_package->speed_type == 'kilobyte' ? 'KBps' : ($current_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') }}
+                                                        {!! $current_package->speed !!}
+                                                        {!! $current_package->speed_type == 'kilobyte' ? 'KBps' : ($current_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') !!}
                                                     </span>
                                                 @endif
 
@@ -59,23 +59,23 @@
 
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
-                                                    {{ ___('isp-access-dashboard-current-active-package-expire') }}
+                                                    {!! ___('isp-access-dashboard-current-active-package-expire') !!}
                                                 </p>
 
                                                 <span class="mb-0 text-white text-xs">
-                                                    {{ date('d/m/y H:i', strtotime($current_package->end_date)) }}
+                                                    {!! date('d/m/y H:i', strtotime($current_package->end_date)) !!}
                                                 </span>
                                             </div>
 
                                             <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
                                                 @if ($current_package->duration)
                                                     <p class="mb-0 text-white text-xs">
-                                                        ({{ $current_package->duration }}{{ $current_package->duration_type }})
+                                                        ({!! $current_package->duration !!}{!! $current_package->duration_type !!})
                                                     </p>
                                                 @endif
-                                                <a href="{{ url(route('isp_access_buypackage', ['id' => $current_package->id])) }}"
+                                                <a href="{!! url(route('isp_access_buypackage', ['id' => $current_package->id])) !!}"
                                                     class="inline-block mt-1 text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center">
-                                                    {{ ___('isp-access-dashboard-renew') }}
+                                                    {!! ___('isp-access-dashboard-renew') !!}
                                                 </a>
 
                                             </div>
@@ -92,10 +92,10 @@
                                     </div>
                                     <div class="flex-auto text-center p-2">
                                         <h3 class="text-4xl text-white">
-                                            {{ ___('isp-access-dashboard-no-package') }}
+                                            {!! ___('isp-access-dashboard-no-package') !!}
                                         </h3>
                                         <small class="text-xs text-white">
-                                            {{ ___('isp-access-dashboard-no-package-instruction') }}
+                                            {!! ___('isp-access-dashboard-no-package-instruction') !!}
                                         </small>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
 
                             @if (count($user_packages) > 1)
                                 <div class="text-center text-white">
-                                    <small>{{ ___('isp-access-dashboard-active-package') }}</small>
+                                    <small>{!! ___('isp-access-dashboard-active-package') !!}</small>
                                 </div>
 
                                 <div class="relative overflow-x-auto px-2">
@@ -112,13 +112,13 @@
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50/30">
                                             <tr>
                                                 <th scope="col" class="py-2 text-white text-center">
-                                                    {{ ___('isp-access-dashboard-active-package-name') }}
+                                                    {!! ___('isp-access-dashboard-active-package-name') !!}
                                                 </th>
                                                 <th scope="col" class="py-2 text-white text-center">
-                                                    {{ ___('isp-access-dashboard-active-package-limits') }}
+                                                    {!! ___('isp-access-dashboard-active-package-limits') !!}
                                                 </th>
                                                 <th colspan="2" scope="col" class="py-2 text-white text-center">
-                                                    {{ ___('isp-access-dashboard-active-package-expire') }}
+                                                    {!! ___('isp-access-dashboard-active-package-expire') !!}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -129,38 +129,38 @@
                                                         <th scope="row"
                                                             class="py-2 text-xs font-medium text-white text-center whitespace-nowrap">
                                                             @if ($user_package)
-                                                                {{ $user_package->title }}
+                                                                {!! $user_package->title !!}
                                                             @endif
                                                         </th>
 
                                                         <td class="py-2 text-xs text-white text-center">
                                                             @if ($user_package->bundle)
                                                                 <span>
-                                                                    {{ $user_package->bundle }}{{ $user_package->bundle_type == 'kilobyte' ? 'KB' : ($user_package->bundle_type == 'megabyte' ? 'MB' : 'GB') }}
+                                                                    {!! $user_package->bundle !!}{!! $user_package->bundle_type == 'kilobyte' ? 'KB' : ($user_package->bundle_type == 'megabyte' ? 'MB' : 'GB') !!}
                                                                 </span>
                                                             @endif
 
                                                             @if ($user_package->speed)
                                                                 <span>
                                                                     @
-                                                                    {{ $user_package->speed }}{{ $user_package->speed_type == 'kilobyte' ? 'KBps' : ($user_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') }}
+                                                                    {!! $user_package->speed !!}{!! $user_package->speed_type == 'kilobyte' ? 'KBps' : ($user_package->speed_type == 'megabyte' ? 'MBps' : 'GBps') !!}
                                                                 </span>
                                                             @endif
 
                                                             <span>
                                                                 @if ($user_package->duration)
-                                                                    {{ $user_package->duration }}{{ $user_package->duration_type }}
+                                                                    {!! $user_package->duration !!}{!! $user_package->duration_type !!}
                                                                 @endif
                                                             </span>
                                                         </td>
                                                         <td class="py-2 text-xs text-white text-center">
-                                                            {{ date('d/m/y H:i', strtotime($user_package->end_date)) }}
+                                                            {!! date('d/m/y H:i', strtotime($user_package->end_date)) !!}
                                                         </td>
                                                         <td class="py-2 text-white text-center">
                                                             <span>
-                                                                <a href="{{ url(route('isp_access_buypackage', ['id' => $user_package->id])) }}"
+                                                                <a href="{!! url(route('isp_access_buypackage', ['id' => $user_package->id])) !!}"
                                                                     class="text-black bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
-                                                                    {{ ___('isp-access-dashboard-renew') }}
+                                                                    {!! ___('isp-access-dashboard-renew') !!}
                                                                 </a>
                                                             </span>
                                                         </td>
@@ -183,38 +183,38 @@
             <div class=" shadow-xl rounded-md bg-white sm:mr-2 my-4 pt-2 p-2">
                 <div class="flex overflow-hidden">
                     <div class="flex-none">
-                        <img width="100px" src="{{ asset('images/login.avif') }}" />
+                        <img width="100px" src="{!! asset('images/login.avif') !!}" />
                     </div>
 
                     <div class="flex-auto">
                         @if ($subscriber)
                             <div class="text-center">
                                 <p class="font-semibold">
-                                    {{ ___('isp-access-dashboard-logged-in-title') }}
+                                    {!! ___('isp-access-dashboard-logged-in-title') !!}
                                 </p>
 
                                 <p class=" text-sm text-gray-600 py-1">
-                                    {{ ___('isp-access-dashboard-logged-in-instruction') }}
+                                    {!! ___('isp-access-dashboard-logged-in-instruction') !!}
                                 </p>
 
                                 <p class="font-bold text-xl text-center">
-                                    {{ $subscriber->username }}
+                                    {!! $subscriber->username !!}
                                 </p>
                             </div>
                         @else
                             <div class="text-center">
                                 <p class="font-semibold text-lg">
-                                    {{ ___('isp-access-dashboard-login-title') }}
+                                    {!! ___('isp-access-dashboard-login-title') !!}
                                 </p>
 
                                 <p class=" text-sm text-gray-400 py-1">
-                                    {{ ___('isp-access-dashboard-login-instruction') }}
+                                    {!! ___('isp-access-dashboard-login-instruction') !!}
                                 </p>
 
                                 <a id='package'
-                                    href="{{ url(route('isp_access_login', ['return_url' => $profile_return_url])) }}"
+                                    href="{!! url(route('isp_access_login', ['return_url' => $profile_return_url])) !!}"
                                     class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                    {{ ___('isp-access-dashboard-login-button') }}
+                                    {!! ___('isp-access-dashboard-login-button') !!}
                                 </a>
 
                             </div>
@@ -236,10 +236,10 @@
                                         <i class="fa-solid fa-network-wired fa-stack-1x"></i>
                                     </span>
                                     <h4 class="font-semibold text-lg">
-                                        {{ ___('isp-access-dashboard-account-title') }}
+                                        {!! ___('isp-access-dashboard-account-title') !!}
                                     </h4>
                                     <span class="text-gray-500">
-                                        {{ ___('isp-access-dashboard-account-instruction') }}
+                                        {!! ___('isp-access-dashboard-account-instruction') !!}
                                     </span>
                                 </div>
                             @else
@@ -259,9 +259,9 @@
                                             <p class="font-semibold whitespace-nowrap">
                                                 <i class="fa-solid fa-user"></i>: &nbsp;
                                                 @if (isset($partner->first_name) && $partner->first_name)
-                                                    {{ $partner->first_name }}
+                                                    {!! $partner->first_name !!}
                                                 @elseif (isset($subscriber->username) && $subscriber->username)
-                                                    {{ $subscriber->username }}
+                                                    {!! $subscriber->username !!}
                                                 @endif
                                             </p>
 
@@ -269,14 +269,14 @@
                                             @if (isset($partner->email) && $partner->email)
                                                 <p class="whitespace-nowrap">
                                                     <i class="fa-solid fa-envelope"></i>: &nbsp;
-                                                    {{ $partner->email }}
+                                                    {!! $partner->email !!}
                                                 </p>
                                             @endif
 
                                             @if (isset($partner->phone) && $partner->phone)
                                                 <p class="whitespace-nowrap">
                                                     <i class="fa-solid fa-phone"></i>: &nbsp;
-                                                    {{ $partner->phone }}
+                                                    {!! $partner->phone !!}
                                                 </p>
                                             @endif
 
@@ -286,18 +286,18 @@
                                 <div class="flex">
                                     <div class="flex-auto">
                                         <small
-                                            class="font-sm">{{ ___('isp-access-dashboard-account-balance') }}:</small><br>
+                                            class="font-sm">{!! ___('isp-access-dashboard-account-balance') !!}:</small><br>
                                         <span class="font-bold">
                                             @if (isset($wallet['balance']))
-                                                {{ number_format($wallet['balance']) }}
+                                                {!! number_format($wallet['balance']) !!}
                                             @endif
-                                            {{ $currency->code }}
+                                            {!! $currency->code !!}
                                         </span>
                                     </div>
                                     <div class="flex-auto text-center">
                                         <small
-                                            class="font-sm">{{ ___('isp-access-dashboard-account-unpaid') }}:</small><br>
-                                        {{ $invoices->count() }}
+                                            class="font-sm">{!! ___('isp-access-dashboard-account-unpaid') !!}:</small><br>
+                                        {!! $invoices->count() !!}
                                     </div>
                                 </div>
                             @endif
@@ -312,27 +312,26 @@
                             @if (isset($featured_package->id))
                                 <div class="h-40">
                                     <h3 class="text-4xl text-white text-center py-2">
-                                        {{ $featured_package->title }}
+                                        {!! $featured_package->title !!}
                                     </h3>
 
                                     <p class="text-white text-center py-2">
-                                        {{ $featured_package->speed }}
-                                        {{ $featured_package->speed_type == 'kilobyte' ? 'KB' : ($featured_package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                        {!! $featured_package->speed !!}
+                                        {!! $featured_package->speed_type == 'kilobyte' ? 'KB' : ($featured_package->speed_type == 'megabyte' ? 'MB' : 'GB') !!}
 
-                                        for {{ $featured_package->duration }} {{ $featured_package->duration_type }}
+                                        for {!! $featured_package->duration !!} {!! $featured_package->duration_type !!}
                                     </p>
 
                                     <div class="flex p-1">
                                         <div class="flex-none w-28">
                                             <h4 class="text-2xl text-white">
-                                                {{ number_format($featured_package->amount) }} {{ $currency->code }}
+                                                {!! number_format($featured_package->amount) !!} {!! $currency->code !!}
                                             </h4>
                                         </div>
                                         <div class="flex-auto text-right pr-4">
-                                            <a @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $featured_package->id, 'return_url' => $return_url])) }}"
-                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $featured_package->id, 'return_url' => $return_url])) }}" @endif
+                                            <a href="{!! url(route('isp_access_buypackage', ['id' => $featured_package->id, 'return_url' => $return_url])) !!}"
                                                 class="bg-yellow-300 hover:bg-yellow-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                {{ ___('isp-access-dashboard-buy-button') }}
+                                                {!! ___('isp-access-dashboard-buy-button') !!}
                                             </a>
                                         </div>
                                     </div>
@@ -341,10 +340,10 @@
                             @else
                                 <div class="grid h-40 place-items-center">
                                     <h3 class="text-4xl text-white text-center">
-                                        {{ ___('isp-access-dashboard-nofeatured-title') }}
+                                        {!! ___('isp-access-dashboard-nofeatured-title') !!}
                                         <br>
                                         <small class="text-xs">
-                                            {{ ___('isp-access-dashboard-nofeatured-instruction') }}
+                                            {!! ___('isp-access-dashboard-nofeatured-instruction') !!}
                                         </small>
                                     </h3>
                                 </div>
@@ -357,7 +356,7 @@
 
             @if (false)
                 <h3 class="text-center font-normal italic text-lg">
-                    {{ ___('isp-access-dashboard-quick-links') }}
+                    {!! ___('isp-access-dashboard-quick-links') !!}
                 </h3>
                 <div class="grid grid-cols-4 gap-4 mt-2 my-4">
                     <div class="text-center rounded shadow sm:p-2 bg-white">
@@ -370,7 +369,7 @@
                         </a>
                         <br>
                         <small class="text-xs">
-                            {{ ___('isp-access-dashboard-quick-links-google') }}
+                            {!! ___('isp-access-dashboard-quick-links-google') !!}
 
                         </small>
                     </div>
@@ -384,7 +383,7 @@
                         </a>
                         <br>
                         <small class="text-xs">
-                            {{ ___('isp-access-dashboard-quick-links-youtube') }}
+                            {!! ___('isp-access-dashboard-quick-links-youtube') !!}
                         </small>
 
                     </div>
@@ -398,7 +397,7 @@
                         </a>
                         <br>
                         <small class="text-xs">
-                            {{ ___('isp-access-dashboard-quick-links-facebook') }}
+                            {!! ___('isp-access-dashboard-quick-links-facebook') !!}
                         </small>
                     </div>
                     <div class="text-center rounded shadow sm:p-2 bg-white">
@@ -411,7 +410,7 @@
                         </a>
                         <br>
                         <small class="text-xs">
-                            {{ ___('isp-access-dashboard-quick-links-twitter') }}
+                            {!! ___('isp-access-dashboard-quick-links-twitter') !!}
                         </small>
 
                     </div>
@@ -423,36 +422,36 @@
 
                 @if ($invoices->count() > 0)
                     <h3 class="text-center font-normal italic text-lg">
-                        {{ ___('isp-access-dashboard-purchase-request') }}
+                        {!! ___('isp-access-dashboard-purchase-request') !!}
                     </h3>
                     @foreach ($invoices as $invoice)
                         <div role="listitem" class="text-center bg-white p-2 shadow ring-1 ring-gray-900/5 rounded m-2">
                             <h2 class="text-lg font-semibold leading-6 text-gray-800 dark:text-white pb-3 p-3">
-                                {{ $invoice->title }}
+                                {!! $invoice->title !!}
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h2>
 
                             <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                <b>{{ ___('isp-access-dashboard-purchase-request-date') }}:</b>
-                                {{ date('d/m/y H:i', strtotime($invoice->created_at)) }},
-                                <b>{{ ___('isp-access-dashboard-purchase-request-status') }}:</b> <span
-                                    class="uppercase">{{ $invoice->status }}</span>
+                                <b>{!! ___('isp-access-dashboard-purchase-request-date') !!}:</b>
+                                {!! date('d/m/y H:i', strtotime($invoice->created_at)) !!},
+                                <b>{!! ___('isp-access-dashboard-purchase-request-status') !!}:</b> <span
+                                    class="uppercase">{!! $invoice->status !!}</span>
                             </small>
                             <div class="items-center justify-between flex">
                                 <p class="mt-4 text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                    {{ number_format($invoice->total) }}
-                                    <span class="text-base font-normal">{{ $currency->code }}</span>
+                                    {!! number_format($invoice->total) !!}
+                                    <span class="text-base font-normal">{!! $currency->code !!}</span>
                                 </p>
                                 <div>
                                     <a id='invoice-cancel'
-                                        href="{{ url(route('isp_access_invoicecancel', ['id' => $invoice->id, 'return_url' => $return_url])) }}"
+                                        href="{!! url(route('isp_access_invoicecancel', ['id' => $invoice->id, 'return_url' => $return_url])) !!}"
                                         class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                        {{ ___('isp-access-dashboard-purchase-request-cancel') }}
+                                        {!! ___('isp-access-dashboard-purchase-request-cancel') !!}
                                     </a>
                                     <a id='invoice-complete'
-                                        href="{{ url(route('account_payment', ['invoice_id' => $invoice->id, 'return_url' => $return_url])) }}"
+                                        href="{!! url(route('account_payment', ['invoice_id' => $invoice->id, 'return_url' => $return_url])) !!}"
                                         class="ml-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                        {{ ___('isp-access-dashboard-purchase-request-payment') }}
+                                        {!! ___('isp-access-dashboard-purchase-request-payment') !!}
                                     </a>
                                 </div>
                             </div>
@@ -461,7 +460,7 @@
                 @endif
 
                 @if ($packages->count() > 0)
-                    <h3 class="text-center font-normal italic text-lg"> {{ ___('isp-access-dashboard-package-title') }}
+                    <h3 class="text-center font-normal italic text-lg"> {!! ___('isp-access-dashboard-package-title') !!}
                     </h3>
                     @foreach ($packages as $package)
                         <div class="mb-5">
@@ -469,29 +468,28 @@
 
                                 <div class="text-center mb-1 ">
                                     <h2 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center">
-                                        {{ $package->title }}
+                                        {!! $package->title !!}
                                     </h2>
 
                                     <small class="text-xs leading-6 text-gray-600 dark:text-gray-200 md:w-80">
-                                        {{ $package->description }}, {{ ___('isp-access-dashboard-package-package') }}:
-                                        {{ $package->package_title }},
-                                        {{ ___('isp-access-dashboard-package-speed') }}:
-                                        {{ $package->speed }}
-                                        {{ $package->speed_type == 'kilobyte' ? 'KB' : ($package->speed_type == 'megabyte' ? 'MB' : 'GB') }}
+                                        {!! $package->description !!}, {!! ___('isp-access-dashboard-package-package') !!}:
+                                        {!! $package->package_title !!},
+                                        {!! ___('isp-access-dashboard-package-speed') !!}:
+                                        {!! $package->speed !!}
+                                        {!! $package->speed_type == 'kilobyte' ? 'KB' : ($package->speed_type == 'megabyte' ? 'MB' : 'GB') !!}
                                     </small>
                                 </div>
 
                                 <div class="items-center justify-between flex">
                                     <p class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white md:mt-0">
-                                        {{ number_format($package->amount) }}
-                                        <span class="text-base font-normal"> {{ $currency->code }} </span>
+                                        {!! number_format($package->amount) !!}
+                                        <span class="text-base font-normal"> {!! $currency->code !!} </span>
                                     </p>
                                     <div>
                                         <a id='package'
-                                            @if (!$partner) href="{{ url(route('isp_access_buyform', ['package_id' => $package->id, 'return_url' => $return_url])) }}"
-                                            @else href="{{ url(route('isp_access_buypackage', ['id' => $package->id, 'return_url' => $return_url])) }}" @endif
+                                            href="{!! url(route('isp_access_buypackage', ['id' => $package->id, 'return_url' => $return_url])) !!}"
                                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                            {{ ___('isp-access-dashboard-package-button') }}
+                                            {!! ___('isp-access-dashboard-package-button') !!}
                                         </a>
                                     </div>
                                 </div>
@@ -509,7 +507,7 @@
             <div class="w-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
-                    &copy;2022 - {{ date('Y') }}. {{ ___('isp-copy-right') }}
+                    &copy;2022 - {!! date('Y') !!}. {!! ___('isp-copy-right') !!}
                 </p>
             </div>
         </div>
