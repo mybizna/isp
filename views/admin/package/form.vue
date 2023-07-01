@@ -1,5 +1,5 @@
 <template>
-    <edit-render :path_param="['isp', 'package']" :model="model" >
+    <edit-render :path_param="['isp', 'package']" :model="model">
 
         <div class="row">
             <div class="col-md-6">
@@ -8,9 +8,12 @@
                 <FormKit v-model="model.title" label="Title" id="title" type="text" validation="required" />
                 <FormKit v-model="model.slug" label="Slug" id="slug" type="text" validation="required" />
                 <FormKit v-model="model.pool" label="Pool" id="pool" type="text" validation="required" />
-                
+                <FormKit v-model="model.amount" label="Amount" id="amount" type="text" validation="required" />
                 <FormKit v-model="model.billing_cycle_id" label="Billing Cycle" id="billing_cycle_id"
                     :setting="setting.billing_cycle_id" type="recordselect" validation="required" />
+                <FormKit v-model="model.gateway_id" label="Gateway" id="gateway_id" :setting="setting.gateway_id"
+                    type="recordselect" validation="required" />
+
 
                 <div class="row">
                     <div class="col-md-4">
@@ -24,8 +27,8 @@
                             </div>
                             <div class="flex-none w-20">
                                 <FormKit v-model="model.speed_type" id="speed_type" type="select" validation="required"
-                                    :options="{ 'kilobyte': 'KBps', 'megabyte': 'MBps', 'gigabyte': 'GBps' }" inner-class="$reset formkit-inner"
-                                    wrapper-class="$reset formkit-wrapper" />
+                                    :options="{ 'kilobyte': 'KBps', 'megabyte': 'MBps', 'gigabyte': 'GBps' }"
+                                    inner-class="$reset formkit-inner" wrapper-class="$reset formkit-wrapper" />
                             </div>
                         </div>
                     </div>
@@ -61,6 +64,9 @@
                         validation="required" />
                     <FormKit v-model="model.featured" label="Featured" id="featured" type="switch" validation="required" />
                     <FormKit v-model="model.default" label="Default" id="default" type="switch" validation="required" />
+                    <FormKit v-model="model.is_unlimited" label="Unlimited" id="is_unlimited" type="switch"
+                        validation="required" />
+
                 </div>
             </div>
         </div>
@@ -81,21 +87,31 @@ export default {
                 pool: "",
                 description: "",
                 billing_cycle_id: "",
+                gateway_id: "",
                 speed: "",
                 speed_type: "",
                 published: "",
                 is_hidden: "",
                 featured: "",
                 amount: "",
+                default: "",
+                bundle: "",
+                bundle_type: "",
+                is_unlimited: "",
+
             },
             setting: {
                 billing_cycle_id: {
-                    url: "isp/admin/billing_cycle/recordselect",
+                    path_param: ["isp", "billing_cycle"],
                     fields: ['title'],
                     template: '[title]',
                 },
-
-            }
+                gateway_id: {
+                    path_param: ["isp", "gateway"],
+                    fields: ['title'],
+                    template: '[title]',
+                },
+            },
         };
     }
 };
