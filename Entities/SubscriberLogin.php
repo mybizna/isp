@@ -6,6 +6,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
 use Modules\Base\Entities\BaseModel;
 
+use Modules\Core\Classes\Views\ListTable;
+use Modules\Core\Classes\Views\FormBuilder;
+
 class SubscriberLogin extends BaseModel
 {
 
@@ -13,6 +16,56 @@ class SubscriberLogin extends BaseModel
     public $migrationDependancy = [];
     protected $table = "isp_subscriber_login";
 
+
+    public function listTable(){
+        // listing view fields
+        $fields = new ListTable();
+
+        $fields->name('mac')->type('text')->ordering(true);
+        $fields->name('ip')->type('text')->ordering(true);
+        $fields->name('username')->type('text')->ordering(true);
+        $fields->name('link_login')->type('text')->ordering(true);
+        $fields->name('link_orig')->type('text')->ordering(true);
+        $fields->name('error')->type('text')->ordering(true);
+        $fields->name('chap_id')->type('text')->ordering(true);
+        $fields->name('chap_challenge')->type('text')->ordering(true);
+
+        return $fields;
+
+    }
+    
+    public function formBuilder(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('mac')->type('text')->group('w-1/2');
+        $fields->name('ip')->type('text')->group('w-1/2');
+        $fields->name('username')->type('text')->group('w-1/2');
+        $fields->name('link_login')->type('text')->group('w-1/2');
+        $fields->name('link_orig')->type('text')->group('w-1/2');
+        $fields->name('error')->type('text')->group('w-1/2');
+        $fields->name('chap_id')->type('text')->group('w-1/2');
+        $fields->name('chap_challenge')->type('text')->group('w-1/2');
+        $fields->name('link_login_id')->type('text')->group('w-1/2');
+        $fields->name('link_orig_esc')->type('text')->group('w-1/2');
+        $fields->name('mac_esc')->type('text')->group('w-1/2');
+
+
+        return $fields;
+
+    }
+
+    public function filter(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('mac')->type('text')->group('w-1/2');
+        $fields->name('ip')->type('text')->group('w-1/2');
+        $fields->name('username')->type('text')->group('w-1/2');
+
+        return $fields;
+
+    }
     /**
      * List of fields for managing postings.
      *

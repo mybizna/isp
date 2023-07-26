@@ -26,13 +26,13 @@ class PaidPackageActivation
     public function handle($event)
     {
         //
-        $subscription = new Subscription();
-
+        
         $invoice = $event->invoice;
         $invoice_item = $event->invoice_item;
-
+        
         
         if ($invoice_item->module == 'Isp' && $invoice_item->model == 'Package') {
+            $subscription = new Subscription();
             
             $subscriber = Subscriber::where('partner_id', $invoice->partner_id)->first();
 

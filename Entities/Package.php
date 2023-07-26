@@ -6,6 +6,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
 use Modules\Base\Entities\BaseModel;
 
+use Modules\Core\Classes\Views\ListTable;
+use Modules\Core\Classes\Views\FormBuilder;
+
 class Package extends BaseModel
 {
 
@@ -17,6 +20,59 @@ class Package extends BaseModel
     public $migrationDependancy = ['isp_billing_cycle'];
     protected $table = "isp_package";
 
+
+    public function listTable(){
+        // listing view fields
+        $fields = new ListTable();
+
+        $fields->name('title')->type('text')->ordering(true);
+        $fields->name('slug')->type('text')->ordering(true);
+        $fields->name('pool')->type('text')->ordering(true);
+        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->ordering(true);
+        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->ordering(true);
+        $fields->name('speed')->type('text')->ordering(true);
+        $fields->name('speed_type')->type('text')->ordering(true);
+        $fields->name('bundle')->type('text')->ordering(true);
+        $fields->name('bundle_type')->type('text')->ordering(true);
+        $fields->name('published')->type('switch')->ordering(true);
+
+        return $fields;
+
+    }
+    
+    public function formBuilder(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('title')->type('text')->group('w-1/2');
+        $fields->name('slug')->type('text')->group('w-1/2');
+        $fields->name('pool')->type('text')->group('w-1/2');
+        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->group('w-1/2');
+        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->group('w-1/2');
+        $fields->name('speed')->type('text')->group('w-1/2');
+        $fields->name('speed_type')->type('text')->group('w-1/2');
+        $fields->name('bundle')->type('text')->group('w-1/2');
+        $fields->name('bundle_type')->type('text')->group('w-1/2');
+        $fields->name('published')->type('switch')->group('w-1/2');
+        $fields->name('description')->type('textarea')->group('w-full');
+
+        return $fields;
+
+    }
+
+    public function filter(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('title')->type('text')->group('w-1/6');
+        $fields->name('slug')->type('text')->group('w-1/6');
+        $fields->name('pool')->type('text')->group('w-1/6');
+        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->group('w-1/6');
+        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->group('w-1/6');
+
+        return $fields;
+
+    }
     /**
      * List of fields for managing postings.
      *

@@ -24,15 +24,13 @@ class IspPackageUpdated
      */
     public function handle($event)
     {
-        
-        $table_name = $event->table_name;
-        
-        if ($table_name == 'isp_package') {
-            $freeradius = new Freeradius();
+        if ($event->table_name == 'isp_package') {
+            if (defined('MYBIZNA_MIGRATION') && MYBIZNA_MIGRATION) {
+                return;
+            }
 
-            $model = $event->model;
-            
-            $freeradius->setPackages($model);
+            $freeradius = new Freeradius();
+            $freeradius->setPackages($event->model);
         }
 
     }

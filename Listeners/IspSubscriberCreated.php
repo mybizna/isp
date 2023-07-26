@@ -24,11 +24,12 @@ class IspSubscriberCreated
      */
     public function handle($event)
     {
-        $freeradius = new Freeradius();
-
-        $table_name = $event->table_name;
-
-        if ($table_name == 'isp_subscriber') {
+        if ($event->table_name == 'isp_subscriber') {
+            if (defined('MYBIZNA_MIGRATION') && MYBIZNA_MIGRATION) {
+                return;
+            }
+            
+            $freeradius = new Freeradius();
             $freeradius->setSubscriber($event->model);
         }
 

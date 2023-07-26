@@ -24,13 +24,13 @@ class IspPackageDeleted
      */
     public function handle($event)
     {
-        $freeradius = new Freeradius();
-        
-        $table_name = $event->table_name;
-
-        if ($table_name == 'isp_package') {
-            $model = $event->model;
-            $freeradius->deletePackage($model);
+        if ($event->table_name == 'isp_package') {
+            if (defined('MYBIZNA_MIGRATION') && MYBIZNA_MIGRATION) {
+                return;
+            }
+            
+            $freeradius = new Freeradius();
+            $freeradius->deletePackage($event->model);
         }
 
     }

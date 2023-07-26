@@ -6,6 +6,9 @@ use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
 
+use Modules\Core\Classes\Views\ListTable;
+use Modules\Core\Classes\Views\FormBuilder;
+
 class Subscriber extends BaseModel
 {
 
@@ -13,6 +16,43 @@ class Subscriber extends BaseModel
     public $migrationDependancy = [];
     protected $table = "isp_subscriber";
 
+
+    public function listTable(){
+        // listing view fields
+        $fields = new ListTable();
+
+        $fields->name('username')->type('text')->ordering(true);
+        $fields->name('had_trail')->type('switch')->ordering(true);
+        $fields->name('partner_id')->type('recordpicker')->table('partner')->ordering(true);
+
+        return $fields;
+
+    }
+    
+    public function formBuilder(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('username')->type('text')->group('w-1/2');
+        $fields->name('password')->type('password')->group('w-1/2');
+        $fields->name('had_trail')->type('switch')->group('w-1/2');
+        $fields->name('partner_id')->type('recordpicker')->table('partner')->group('w-1/2');
+
+        return $fields;
+
+    }
+
+    public function filter(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('username')->type('text')->group('w-1/6');
+        $fields->name('had_trail')->type('switch')->group('w-1/6');
+        $fields->name('partner_id')->type('recordpicker')->table('partner')->group('w-1/6');
+
+        return $fields;
+
+    }
     /**
      * List of fields for managing postings.
      *

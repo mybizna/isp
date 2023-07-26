@@ -24,13 +24,13 @@ class IspSubscriberDeleted
      */
     public function handle($event)
     {
-        $freeradius = new Freeradius();
-        
-        $table_name = $event->table_name;
-
-        if ($table_name == 'isp_subscriber') {
-            $model = $event->model;
-            $freeradius->deleteSubscriber($model);
+        if ($event->table_name == 'isp_subscriber') {
+            if (defined('MYBIZNA_MIGRATION') && MYBIZNA_MIGRATION) {
+                return;
+            }
+            
+            $freeradius = new Freeradius();
+            $freeradius->deleteSubscriber($event->model);
 
         }
 

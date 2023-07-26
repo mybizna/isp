@@ -17,6 +17,10 @@ class Freeradius
     public function __construct()
     {
         $gateway = Gateway::where(['type' => 'freeradius', 'published' => true])->first();
+        
+        if(defined('MYBIZNA_MIGRATION') && MYBIZNA_MIGRATION) {
+            return;
+         }
 
         if (!$gateway) {
             throw new \Exception("No Freeradius gateway set.", 1);

@@ -6,6 +6,9 @@ use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
 
+use Modules\Core\Classes\Views\ListTable;
+use Modules\Core\Classes\Views\FormBuilder;
+
 class Payment extends BaseModel
 {
 
@@ -13,6 +16,53 @@ class Payment extends BaseModel
     public $migrationDependancy = ['isp_subscription', 'account_invoice'];
     protected $table = "isp_payment";
 
+
+    public function listTable(){
+        // listing view fields
+        $fields = new ListTable();
+
+        $fields->name('title')->type('text')->ordering(true);
+        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->ordering(true);
+        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->ordering(true);
+        $fields->name('is_paid')->type('switch')->ordering(true);
+        $fields->name('completed')->type('switch')->ordering(true);
+        $fields->name('successful')->type('switch')->ordering(true);
+
+
+        return $fields;
+
+    }
+    
+    public function formBuilder(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('title')->type('text')->group('w-1/2');
+        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->group('w-1/2');
+        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->group('w-1/2');
+        $fields->name('is_paid')->type('switch')->group('w-1/2');
+        $fields->name('completed')->type('switch')->group('w-1/2');
+        $fields->name('successful')->type('switch')->group('w-1/2');
+        $fields->name('description')->type('textarea')->group('w-full');
+
+
+        return $fields;
+
+    }
+
+    public function filter(){
+        // listing view fields
+        $fields = new FormBuilder();
+
+        $fields->name('title')->type('text')->group('w-1/6');
+        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->group('w-1/6');
+        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->group('w-1/6');
+
+        
+
+        return $fields;
+
+    }
     /**
      * List of fields for managing postings.
      *
