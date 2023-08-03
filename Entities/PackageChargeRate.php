@@ -2,27 +2,40 @@
 
 namespace Modules\Isp\Entities;
 
-use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-
-use Modules\Core\Classes\Views\ListTable;
-use Modules\Core\Classes\Views\FormBuilder;
+use Modules\Base\Entities\BaseModel;
 
 class PackageChargeRate extends BaseModel
 {
-
-    protected $fillable = ['package_charge_id', 'rate_id', 'published'];
-    public $migrationDependancy = ['isp_package','account_rate'];
-     protected $table = "isp_package_charge_rate";
- 
     /**
-     * List of fields for managing postings.
+     * The fields that can be filled
+     *
+     * @var array<string>
+     */
+    protected $fillable = ['package_charge_id', 'rate_id', 'published'];
+
+    /**
+     * List of tables names that are need in this model during migration.
+     *
+     * @var array<string>
+     */
+    public array $migrationDependancy = ['isp_package', 'account_rate'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = "isp_package_charge_rate";
+
+    /**
+     * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table)
+    public function migration(Blueprint $table): void
     {
         $table->increments('id');
         $table->foreignId('package_charge_id');
@@ -30,7 +43,14 @@ class PackageChargeRate extends BaseModel
         $table->boolean('published')->default(true)->nullable();
     }
 
-    public function post_migration(Blueprint $table)
+    /**
+     * Handle post migration processes for adding foreign keys.
+     *
+     * @param Blueprint $table
+     *
+     * @return void
+     */
+    public function post_migration(Blueprint $table): void
     {
         Migration::addForeign($table, 'isp_package_charge', 'package_charge_id');
         Migration::addForeign($table, 'account_rate', 'rate_id');

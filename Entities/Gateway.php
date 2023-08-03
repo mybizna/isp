@@ -2,21 +2,41 @@
 
 namespace Modules\Isp\Entities;
 
-use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
-
-use Modules\Core\Classes\Views\ListTable;
-use Modules\Core\Classes\Views\FormBuilder;
+use Modules\Base\Classes\Views\FormBuilder;
+use Modules\Base\Classes\Views\ListTable;
+use Modules\Base\Entities\BaseModel;
 
 class Gateway extends BaseModel
 {
-
+    /**
+     * The fields that can be filled
+     *
+     * @var array<string>
+     */
     protected $fillable = ['title', 'username', 'password', 'database', 'ip_address', 'port', 'type', 'published'];
-    public $migrationDependancy = [];
+
+    /**
+     * List of tables names that are need in this model during migration.
+     *
+     * @var array<string>
+     */
+    public array $migrationDependancy = [];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = "isp_gateway";
 
-
-    public function listTable(){
+    /**
+     * Function for defining list of fields in table view.
+     *
+     * @return ListTable
+     */
+    public function listTable(): ListTable
+    {
         // listing view fields
         $fields = new ListTable();
 
@@ -26,15 +46,19 @@ class Gateway extends BaseModel
         $fields->name('ip_address')->type('text')->ordering(true);
         $fields->name('port')->type('text')->ordering(true);
         $fields->name('type')->type('text')->ordering(true);
-        $fields->name('published')->type('switch')->ordering(true); 
-
-
+        $fields->name('published')->type('switch')->ordering(true);
 
         return $fields;
 
     }
-    
-    public function formBuilder(){
+
+    /**
+     * Function for defining list of fields in form view.
+     * 
+     * @return FormBuilder
+     */
+    public function formBuilder(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -51,7 +75,13 @@ class Gateway extends BaseModel
 
     }
 
-    public function filter(){
+    /**
+     * Function for defining list of fields in filter view.
+     * 
+     * @return FormBuilder
+     */
+    public function filter(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -64,12 +94,12 @@ class Gateway extends BaseModel
 
     }
     /**
-     * List of fields for managing postings.
+     * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table)
+    public function migration(Blueprint $table): void
     {
         $table->increments('id');
         $table->string('title');
@@ -81,6 +111,5 @@ class Gateway extends BaseModel
         $table->string('type');
         $table->boolean('published')->default(true)->nullable();
     }
-
 
 }

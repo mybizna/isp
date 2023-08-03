@@ -4,24 +4,44 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
+use Modules\Base\Classes\Views\FormBuilder;
+use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
-
-use Modules\Core\Classes\Views\ListTable;
-use Modules\Core\Classes\Views\FormBuilder;
 
 class Package extends BaseModel
 {
-
+    /**
+     * The fields that can be filled
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'title', 'slug', 'pool', 'description', 'billing_cycle_id', 'gateway_id',
         'speed', 'speed_type', 'bundle', 'bundle_type', 'published',
         'featured', 'default', 'is_unlimited', 'is_hidden', 'amount',
     ];
-    public $migrationDependancy = ['isp_billing_cycle'];
+
+    /**
+     * List of tables names that are need in this model during migration.
+     *
+     * @var array<string>
+     */
+    public array $migrationDependancy = ['isp_billing_cycle'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = "isp_package";
 
-
-    public function listTable(){
+    /**
+     * Function for defining list of fields in table view.
+     *
+     * @return ListTable
+     */
+    public function listTable(): ListTable
+    {
         // listing view fields
         $fields = new ListTable();
 
@@ -39,8 +59,14 @@ class Package extends BaseModel
         return $fields;
 
     }
-    
-    public function formBuilder(){
+
+    /**
+     * Function for defining list of fields in form view.
+     * 
+     * @return FormBuilder
+     */
+    public function formBuilder(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -60,7 +86,13 @@ class Package extends BaseModel
 
     }
 
-    public function filter(){
+    /**
+     * Function for defining list of fields in filter view.
+     * 
+     * @return FormBuilder
+     */
+    public function filter(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -74,12 +106,12 @@ class Package extends BaseModel
 
     }
     /**
-     * List of fields for managing postings.
+     * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table)
+    public function migration(Blueprint $table): void
     {
         $table->increments('id');
         $table->string('title');
@@ -104,7 +136,14 @@ class Package extends BaseModel
         $table->double('amount', 8, 2)->nullable();
     }
 
-    public function post_migration(Blueprint $table)
+    /**
+     * Handle post migration processes for adding foreign keys.
+     *
+     * @param Blueprint $table
+     *
+     * @return void
+     */
+    public function post_migration(Blueprint $table): void
     {
         Migration::addForeign($table, 'isp_billing_cycle', 'billing_cycle_id');
         Migration::addForeign($table, 'isp_gateway', 'gateway_id');

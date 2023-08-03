@@ -3,14 +3,24 @@
 namespace Modules\Isp\Entities\Data;
 
 use Modules\Base\Classes\Datasetter;
-use Illuminate\Support\Facades\DB;
 
 class Gateway
 {
-
+    /**
+     * Set ordering of the Class to be migrated.
+     * 
+     * @var int
+     */
     public $ordering = 1;
 
-    public function data(Datasetter $datasetter)
+    /**
+     * Run the database seeds with system default records.
+     *
+     * @param Datasetter $datasetter
+     *
+     * @return void
+     */
+    public function data(Datasetter $datasetter): void
     {
         $datasetter->add_data('isp', 'gateway', 'type', [
             "title" => "Freeradius",
@@ -20,9 +30,8 @@ class Gateway
             "ip_address" => "127.0.0.1",
             "port" => "3306",
             "type" => "freeradius",
-            "published" => true
+            "published" => true,
         ]);
-
 
     }
 }

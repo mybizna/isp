@@ -7,9 +7,21 @@ use Modules\Base\Classes\Datasetter;
 
 class LanguageTranslation
 {
+    /**
+     * Set ordering of the Class to be migrated.
+     * 
+     * @var int
+     */
     public $ordering = 5;
 
-    public function data(Datasetter $datasetter)
+    /**
+     * Run the database seeds with system default records.
+     *
+     * @param Datasetter $datasetter
+     *
+     * @return void
+     */
+    public function data(Datasetter $datasetter): void
     {
         $languages = DB::table('core_language')->get();
 

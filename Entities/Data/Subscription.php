@@ -3,17 +3,26 @@
 namespace Modules\Isp\Entities\Data;
 
 use Modules\Base\Classes\Datasetter;
-use Illuminate\Support\Facades\DB;
 
 class Subscription
 {
-
+    /**
+     * Set ordering of the Class to be migrated.
+     * 
+     * @var int
+     */
     public $ordering = 3;
 
-    public function data(Datasetter $datasetter)
+    /**
+     * Run the database seeds with system default records.
+     *
+     * @param Datasetter $datasetter
+     *
+     * @return void
+     */
+    public function data(Datasetter $datasetter): void
     {
 
-  
         $datasetter->add_data('core', 'notification', 'slug', [
             "slug" => "isp_subscription_add",
             "short" => 'Your subscription account [{{ $username }}] has been added.',
@@ -28,12 +37,12 @@ class Subscription
             <h3> Subscriber Account: {{ $username }} .</h3>
             <br><br>
             Your subscription account [{{ $username }}] has been added.
-            <br><br> 
+            <br><br>
             If you need any help, please let us know so that we can assist you.
             <br><br>
             Thanks,',
         ]);
-  
+
         $datasetter->add_data('core', 'notification', 'slug', [
             "slug" => "isp_subscription_save",
             "short" => 'Your subscription account [{{ $username }}] has been saved.',
@@ -48,7 +57,7 @@ class Subscription
             <h3> Subscriber Account: {{ $username }} .</h3>
             <br><br>
             Your subscription account [{{ $username }}] has been saved.
-            <br><br> 
+            <br><br>
             If you need any help, please let us know so that we can assist you.
             <br><br>
             Thanks,',

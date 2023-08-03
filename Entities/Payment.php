@@ -2,22 +2,42 @@
 
 namespace Modules\Isp\Entities;
 
-use Modules\Base\Entities\BaseModel;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-
-use Modules\Core\Classes\Views\ListTable;
-use Modules\Core\Classes\Views\FormBuilder;
+use Modules\Base\Classes\Views\FormBuilder;
+use Modules\Base\Classes\Views\ListTable;
+use Modules\Base\Entities\BaseModel;
 
 class Payment extends BaseModel
 {
-
+    /**
+     * The fields that can be filled
+     *
+     * @var array<string>
+     */
     protected $fillable = ['title', 'subscription_id', 'invoice_id', 'description', 'is_paid', 'completed', 'successful'];
-    public $migrationDependancy = ['isp_subscription', 'account_invoice'];
+
+    /**
+     * List of tables names that are need in this model during migration.
+     *
+     * @var array<string>
+     */
+    public array $migrationDependancy = ['isp_subscription', 'account_invoice'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = "isp_payment";
 
-
-    public function listTable(){
+    /**
+     * Function for defining list of fields in table view.
+     *
+     * @return ListTable
+     */
+    public function listTable(): ListTable
+    {
         // listing view fields
         $fields = new ListTable();
 
@@ -28,12 +48,17 @@ class Payment extends BaseModel
         $fields->name('completed')->type('switch')->ordering(true);
         $fields->name('successful')->type('switch')->ordering(true);
 
-
         return $fields;
 
     }
-    
-    public function formBuilder(){
+
+    /**
+     * Function for defining list of fields in form view.
+     * 
+     * @return FormBuilder
+     */
+    public function formBuilder(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -45,12 +70,17 @@ class Payment extends BaseModel
         $fields->name('successful')->type('switch')->group('w-1/2');
         $fields->name('description')->type('textarea')->group('w-full');
 
-
         return $fields;
 
     }
 
-    public function filter(){
+    /**
+     * Function for defining list of fields in filter view.
+     * 
+     * @return FormBuilder
+     */
+    public function filter(): FormBuilder
+    {
         // listing view fields
         $fields = new FormBuilder();
 
@@ -58,18 +88,16 @@ class Payment extends BaseModel
         $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->group('w-1/6');
         $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->group('w-1/6');
 
-        
-
         return $fields;
 
     }
     /**
-     * List of fields for managing postings.
+     * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table)
+    public function migration(Blueprint $table): void
     {
         $table->increments('id');
         $table->string('title');
@@ -81,7 +109,14 @@ class Payment extends BaseModel
         $table->boolean('successful')->default(0)->nullable();
     }
 
-    public function post_migration(Blueprint $table)
+    /**
+     * Handle post migration processes for adding foreign keys.
+     *
+     * @param Blueprint $table
+     *
+     * @return void
+     */
+    public function post_migration(Blueprint $table): void
     {
         Migration::addForeign($table, 'isp_subscription', 'subscription_id');
         Migration::addForeign($table, 'account_invoice', 'invoice_id');

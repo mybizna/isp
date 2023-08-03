@@ -3,14 +3,24 @@
 namespace Modules\Isp\Entities\Data;
 
 use Modules\Base\Classes\Datasetter;
-use Illuminate\Support\Facades\DB;
 
 class BillingCycle
 {
-
+    /**
+     * Set ordering of the Class to be migrated.
+     * 
+     * @var int
+     */
     public $ordering = 1;
 
-    public function data(Datasetter $datasetter)
+    /**
+     * Run the database seeds with system default records.
+     *
+     * @param Datasetter $datasetter
+     *
+     * @return void
+     */
+    public function data(Datasetter $datasetter): void
     {
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
             "title" => "10 Minute",
@@ -18,7 +28,7 @@ class BillingCycle
             "slug" => "10-minute",
             "duration_type" => "minute",
             "duration" => 10,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -27,7 +37,7 @@ class BillingCycle
             "slug" => "20-minute",
             "duration_type" => "minute",
             "duration" => 20,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -36,7 +46,7 @@ class BillingCycle
             "slug" => "30-minute",
             "duration_type" => "minute",
             "duration" => 30,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -45,7 +55,7 @@ class BillingCycle
             "slug" => "1-hour",
             "duration_type" => "hour",
             "duration" => 1,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -54,7 +64,7 @@ class BillingCycle
             "slug" => "3-hour",
             "duration_type" => "hour",
             "duration" => 3,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -63,7 +73,7 @@ class BillingCycle
             "slug" => "6-hour",
             "duration_type" => "hour",
             "duration" => 6,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -72,7 +82,7 @@ class BillingCycle
             "slug" => "12-hour",
             "duration_type" => "hour",
             "duration" => 12,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -81,7 +91,7 @@ class BillingCycle
             "slug" => "1-day",
             "duration_type" => "day",
             "duration" => 1,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -90,7 +100,7 @@ class BillingCycle
             "slug" => "2-day",
             "duration_type" => "day",
             "duration" => 2,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -99,7 +109,7 @@ class BillingCycle
             "slug" => "5-day",
             "duration_type" => "day",
             "duration" => 5,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -108,7 +118,7 @@ class BillingCycle
             "slug" => "1-week",
             "duration_type" => "week",
             "duration" => 1,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -117,7 +127,7 @@ class BillingCycle
             "slug" => "2-week",
             "duration_type" => "week",
             "duration" => 2,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -126,7 +136,7 @@ class BillingCycle
             "slug" => "3-week",
             "duration_type" => "week",
             "duration" => 3,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -135,7 +145,7 @@ class BillingCycle
             "slug" => "1-month",
             "duration_type" => "month",
             "duration" => 1,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -144,7 +154,7 @@ class BillingCycle
             "slug" => "2-month",
             "duration_type" => "month",
             "duration" => 2,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -153,7 +163,7 @@ class BillingCycle
             "slug" => "quarterly",
             "duration_type" => "month",
             "duration" => 3,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -162,7 +172,7 @@ class BillingCycle
             "slug" => "biannually",
             "duration_type" => "month",
             "duration" => 6,
-            "published" => true
+            "published" => true,
         ]);
 
         $datasetter->add_data('isp', 'billing_cycle', 'slug', [
@@ -171,9 +181,8 @@ class BillingCycle
             "slug" => "annually",
             "duration_type" => "year",
             "duration" => 1,
-            "published" => true
+            "published" => true,
         ]);
-
 
     }
 }

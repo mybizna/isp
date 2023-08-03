@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Modules\Base\Classes\Fetch\Rights $this */
+
 $this->add_right("isp", "billing_cycle", "administrator", view:true, add:true, edit:true, delete:true);
 $this->add_right("isp", "billing_cycle", "manager", view:true, add:true, edit:true, delete:true);
 $this->add_right("isp", "billing_cycle", "supervisor", view:true, add:true, edit:true, delete:true);

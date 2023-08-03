@@ -2,17 +2,28 @@
 
 namespace Modules\Isp\Entities\Data;
 
-use Modules\Base\Classes\Datasetter;
 use Illuminate\Support\Facades\DB;
+use Modules\Base\Classes\Datasetter;
 
 class PackageCharge
 {
-
+    /**
+     * Set ordering of the Class to be migrated.
+     * 
+     * @var int
+     */
     public $ordering = 7;
 
-    public function data(Datasetter $datasetter)
-    {   
-        
+    /**
+     * Run the database seeds with system default records.
+     *
+     * @param Datasetter $datasetter
+     *
+     * @return void
+     */
+    public function data(Datasetter $datasetter): void
+    {
+
         $ledger_id = DB::table('account_ledger')->where('slug', 'sales_revenue')->value('id');
         $package_id = DB::table('isp_package')->where('slug', '1m-ppp')->value('id');
         $datasetter->add_data('isp', 'package_charge', 'slug', [
@@ -22,8 +33,8 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 10,
-            "published" => true
-        ]);   
+            "published" => true,
+        ]);
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Cable",
@@ -32,7 +43,7 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 6,
-            "published" => true
+            "published" => true,
         ]);
 
         $ledger_id = DB::table('account_ledger')->where('slug', 'service_revenue')->value('id');
@@ -43,7 +54,7 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 15,
-            "published" => true
+            "published" => true,
         ]);
 
         $ledger_id = DB::table('account_ledger')->where('slug', 'sales_revenue')->value('id');
@@ -55,8 +66,8 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 10,
-            "published" => true
-        ]);   
+            "published" => true,
+        ]);
 
         $datasetter->add_data('isp', 'package_charge', 'slug', [
             "title" => "Cable",
@@ -65,7 +76,7 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 6,
-            "published" => true
+            "published" => true,
         ]);
 
         $ledger_id = DB::table('account_ledger')->where('slug', 'service_revenue')->value('id');
@@ -76,8 +87,8 @@ class PackageCharge
             "package_id" => $package_id,
             "ledger_id" => $ledger_id,
             "amount" => 15,
-            "published" => true
+            "published" => true,
         ]);
-        
+
     }
 }
