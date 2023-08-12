@@ -18,6 +18,13 @@ class SubscriberLogin extends BaseModel
     protected $fillable = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', 'mac_esc'];
 
     /**
+     * The fields that are to be render when performing relationship queries.
+     *
+     * @var array<string>
+     */
+    public $rec_names = ['mac', 'username'];
+
+    /**
      * List of tables names that are need in this model during migration.
      *
      * @var array<string>
@@ -56,7 +63,7 @@ class SubscriberLogin extends BaseModel
 
     /**
      * Function for defining list of fields in form view.
-     * 
+     *
      * @return FormBuilder
      */
     public function formBuilder(): FormBuilder
@@ -82,7 +89,7 @@ class SubscriberLogin extends BaseModel
 
     /**
      * Function for defining list of fields in filter view.
-     * 
+     *
      * @return FormBuilder
      */
     public function filter(): FormBuilder

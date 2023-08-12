@@ -16,6 +16,13 @@ class PackageChargeRate extends BaseModel
     protected $fillable = ['package_charge_id', 'rate_id', 'published'];
 
     /**
+     * The fields that are to be render when performing relationship queries.
+     *
+     * @var array<string>
+     */
+    public $rec_names = ['package_charge_id', 'rate_id'];
+
+    /**
      * List of tables names that are need in this model during migration.
      *
      * @var array<string>

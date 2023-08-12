@@ -17,6 +17,15 @@ class Subscriber extends BaseModel
      */
     protected $fillable = ['username', 'password', 'had_trail', 'partner_id'];
 
+
+    /**
+     * The fields that are to be render when performing relationship queries.
+     *
+     * @var array<string>
+     */
+    public $rec_names = ['username'];
+    
+ 
     /**
      * List of tables names that are need in this model during migration.
      *
