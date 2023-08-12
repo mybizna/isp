@@ -50,8 +50,8 @@ class PackageCharge extends BaseModel
 
         $fields->name('title')->type('text')->ordering(true);
         $fields->name('slug')->type('text')->ordering(true);
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->ordering(true);
-        $fields->name('ledger_id')->type('recordpicker')->table('account_ledger')->ordering(true);
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->ordering(true);
+        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->ordering(true);
         $fields->name('quantity')->type('text')->ordering(true);
         $fields->name('description')->type('textarea')->ordering(true);
         $fields->name('price')->type('text')->ordering(true);
@@ -73,8 +73,8 @@ class PackageCharge extends BaseModel
 
         $fields->name('title')->type('text')->group('w-1/2');
         $fields->name('slug')->type('text')->group('w-1/2');
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->group('w-1/2');
-        $fields->name('ledger_id')->type('recordpicker')->table('account_ledger')->group('w-1/2');
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->group('w-1/2');
+        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->group('w-1/2');
         $fields->name('quantity')->type('text')->group('w-1/2');
         $fields->name('description')->type('textarea')->group('w-full');
         $fields->name('price')->type('text')->group('w-1/2');
@@ -96,8 +96,8 @@ class PackageCharge extends BaseModel
 
         $fields->name('title')->type('text')->group('w-1/6');
         $fields->name('slug')->type('text')->group('w-1/6');
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->group('w-1/6');
-        $fields->name('ledger_id')->type('recordpicker')->table('account_ledger')->group('w-1/6');
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->group('w-1/6');
+        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->group('w-1/6');
         $fields->name('quantity')->type('text')->group('w-1/6');
         $fields->name('price')->type('text')->group('w-1/6');
         $fields->name('published')->type('switch')->group('w-1/6');

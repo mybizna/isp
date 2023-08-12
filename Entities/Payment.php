@@ -49,8 +49,8 @@ class Payment extends BaseModel
         $fields = new ListTable();
 
         $fields->name('title')->type('text')->ordering(true);
-        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->ordering(true);
-        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->ordering(true);
+        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->ordering(true);
+        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->ordering(true);
         $fields->name('is_paid')->type('switch')->ordering(true);
         $fields->name('completed')->type('switch')->ordering(true);
         $fields->name('successful')->type('switch')->ordering(true);
@@ -70,8 +70,8 @@ class Payment extends BaseModel
         $fields = new FormBuilder();
 
         $fields->name('title')->type('text')->group('w-1/2');
-        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->group('w-1/2');
-        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->group('w-1/2');
+        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->group('w-1/2');
+        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->group('w-1/2');
         $fields->name('is_paid')->type('switch')->group('w-1/2');
         $fields->name('completed')->type('switch')->group('w-1/2');
         $fields->name('successful')->type('switch')->group('w-1/2');
@@ -92,8 +92,8 @@ class Payment extends BaseModel
         $fields = new FormBuilder();
 
         $fields->name('title')->type('text')->group('w-1/6');
-        $fields->name('subscription_id')->type('recordpicker')->table('isp_subscription')->group('w-1/6');
-        $fields->name('invoice_id')->type('recordpicker')->table('account_invoice')->group('w-1/6');
+        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->group('w-1/6');
+        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->group('w-1/6');
 
         return $fields;
 

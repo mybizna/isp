@@ -55,8 +55,8 @@ class Package extends BaseModel
         $fields->name('title')->type('text')->ordering(true);
         $fields->name('slug')->type('text')->ordering(true);
         $fields->name('pool')->type('text')->ordering(true);
-        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->ordering(true);
-        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->ordering(true);
+        $fields->name('billing_cycle_id')->type('recordpicker')->table(['isp', 'billing_cycle'])->ordering(true);
+        $fields->name('gateway_id')->type('recordpicker')->table(['isp', 'gateway'])->ordering(true);
         $fields->name('speed')->type('text')->ordering(true);
         $fields->name('speed_type')->type('text')->ordering(true);
         $fields->name('bundle')->type('text')->ordering(true);
@@ -80,8 +80,8 @@ class Package extends BaseModel
         $fields->name('title')->type('text')->group('w-1/2');
         $fields->name('slug')->type('text')->group('w-1/2');
         $fields->name('pool')->type('text')->group('w-1/2');
-        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->group('w-1/2');
-        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->group('w-1/2');
+        $fields->name('billing_cycle_id')->type('recordpicker')->table(['isp', 'billing_cycle'])->group('w-1/2');
+        $fields->name('gateway_id')->type('recordpicker')->table(['isp', 'gateway'])->group('w-1/2');
         $fields->name('speed')->type('text')->group('w-1/2');
         $fields->name('speed_type')->type('text')->group('w-1/2');
         $fields->name('bundle')->type('text')->group('w-1/2');
@@ -106,8 +106,8 @@ class Package extends BaseModel
         $fields->name('title')->type('text')->group('w-1/6');
         $fields->name('slug')->type('text')->group('w-1/6');
         $fields->name('pool')->type('text')->group('w-1/6');
-        $fields->name('billing_cycle_id')->type('recordpicker')->table('isp_billing_cycle')->group('w-1/6');
-        $fields->name('gateway_id')->type('recordpicker')->table('isp_gateway')->group('w-1/6');
+        $fields->name('billing_cycle_id')->type('recordpicker')->table(['isp', 'billing_cycle'])->group('w-1/6');
+        $fields->name('gateway_id')->type('recordpicker')->table(['isp', 'gateway'])->group('w-1/6');
 
         return $fields;
 

@@ -48,7 +48,7 @@ class MacAddress extends BaseModel
         // listing view fields
         $fields = new ListTable();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->ordering(true);
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->ordering(true);
         $fields->name('mac')->type('text')->ordering(true);
 
         return $fields;
@@ -65,7 +65,7 @@ class MacAddress extends BaseModel
         // listing view fields
         $fields = new FormBuilder();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->group('w-1/2');
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->group('w-1/2');
         $fields->name('mac')->type('text')->group('w-1/2');
 
         return $fields;
@@ -82,7 +82,7 @@ class MacAddress extends BaseModel
         // listing view fields
         $fields = new FormBuilder();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->group('w-1/6');
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->group('w-1/6');
         $fields->name('mac')->type('text')->group('w-1/6');
 
         return $fields;

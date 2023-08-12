@@ -48,8 +48,8 @@ class Subscription extends BaseModel
         // listing view fields
         $fields = new ListTable();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->ordering(true);
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->ordering(true);
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->ordering(true);
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->ordering(true);
         $fields->name('start_date')->type('datetime')->ordering(true);
         $fields->name('end_date')->type('datetime')->ordering(true);
 
@@ -67,8 +67,8 @@ class Subscription extends BaseModel
         // listing view fields
         $fields = new FormBuilder();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->group('w-1/2');
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->group('w-1/2');
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->group('w-1/2');
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->group('w-1/2');
         $fields->name('start_date')->type('datetime')->group('w-1/2');
         $fields->name('end_date')->type('datetime')->group('w-1/2');
 
@@ -86,8 +86,8 @@ class Subscription extends BaseModel
         // listing view fields
         $fields = new FormBuilder();
 
-        $fields->name('subscriber_id')->type('recordpicker')->table('isp_subscriber')->group('w-1/2');
-        $fields->name('package_id')->type('recordpicker')->table('isp_package')->group('w-1/2');
+        $fields->name('subscriber_id')->type('recordpicker')->table(['isp', 'subscriber'])->group('w-1/2');
+        $fields->name('package_id')->type('recordpicker')->table(['isp', 'package'])->group('w-1/2');
         $fields->name('start_date')->type('datetime')->group('w-1/2');
         $fields->name('end_date')->type('datetime')->group('w-1/2');
 

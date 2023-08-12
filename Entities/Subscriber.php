@@ -52,7 +52,7 @@ class Subscriber extends BaseModel
 
         $fields->name('username')->type('text')->ordering(true);
         $fields->name('had_trail')->type('switch')->ordering(true);
-        $fields->name('partner_id')->type('recordpicker')->table('partner')->ordering(true);
+        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->ordering(true);
 
         return $fields;
 
@@ -71,7 +71,7 @@ class Subscriber extends BaseModel
         $fields->name('username')->type('text')->group('w-1/2');
         $fields->name('password')->type('password')->group('w-1/2');
         $fields->name('had_trail')->type('switch')->group('w-1/2');
-        $fields->name('partner_id')->type('recordpicker')->table('partner')->group('w-1/2');
+        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->group('w-1/2');
 
         return $fields;
 
@@ -89,7 +89,7 @@ class Subscriber extends BaseModel
 
         $fields->name('username')->type('text')->group('w-1/6');
         $fields->name('had_trail')->type('switch')->group('w-1/6');
-        $fields->name('partner_id')->type('recordpicker')->table('partner')->group('w-1/6');
+        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->group('w-1/6');
 
         return $fields;
 
