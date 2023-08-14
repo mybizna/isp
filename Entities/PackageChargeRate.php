@@ -42,24 +42,12 @@ class PackageChargeRate extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table): void
+    public function fields(Blueprint $table): void
     {
-        $table->increments('id');
-        $table->foreignId('package_charge_id');
-        $table->foreignId('rate_id');
-        $table->boolean('published')->default(true)->nullable();
+        $this->fields->increments('id')->html('text');
+        $this->fields->foreignId('package_charge_id')->html('recordpicker')->table(['isp', 'package_charge']);
+        $this->fields->foreignId('rate_id')->html('recordpicker')->table(['account', 'rate']);
+        $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
-    /**
-     * Handle post migration processes for adding foreign keys.
-     *
-     * @param Blueprint $table
-     *
-     * @return void
-     */
-    public function post_migration(Blueprint $table): void
-    {
-        Migration::addForeign($table, 'isp_package_charge', 'package_charge_id');
-        Migration::addForeign($table, 'account_rate', 'rate_id');
-    }
 }

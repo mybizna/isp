@@ -39,93 +39,22 @@ class Payment extends BaseModel
     protected $table = "isp_payment";
 
     /**
-     * Function for defining list of fields in table view.
-     *
-     * @return ListTable
-     */
-    public function listTable(): ListTable
-    {
-        // listing view fields
-        $fields = new ListTable();
-
-        $fields->name('title')->type('text')->ordering(true);
-        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->ordering(true);
-        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->ordering(true);
-        $fields->name('is_paid')->type('switch')->ordering(true);
-        $fields->name('completed')->type('switch')->ordering(true);
-        $fields->name('successful')->type('switch')->ordering(true);
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in form view.
-     *
-     * @return FormBuilder
-     */
-    public function formBuilder(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('title')->type('text')->group('w-1/2');
-        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->group('w-1/2');
-        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->group('w-1/2');
-        $fields->name('is_paid')->type('switch')->group('w-1/2');
-        $fields->name('completed')->type('switch')->group('w-1/2');
-        $fields->name('successful')->type('switch')->group('w-1/2');
-        $fields->name('description')->type('textarea')->group('w-full');
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in filter view.
-     *
-     * @return FormBuilder
-     */
-    public function filter(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('title')->type('text')->group('w-1/6');
-        $fields->name('subscription_id')->type('recordpicker')->table(['isp', 'subscription'])->group('w-1/6');
-        $fields->name('invoice_id')->type('recordpicker')->table(['account', 'invoice'])->group('w-1/6');
-
-        return $fields;
-
-    }
-    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table): void
+    public function fields(Blueprint $table): void
     {
-        $table->increments('id');
-        $table->string('title');
-        $table->foreignId('subscription_id')->nullable();
-        $table->foreignId('invoice_id')->nullable();
-        $table->string('description')->nullable();
-        $table->boolean('is_paid')->default(0)->nullable();
-        $table->boolean('completed')->default(0)->nullable();
-        $table->boolean('successful')->default(0)->nullable();
+        $this->fields->increments('id')->html('text');
+        $this->fields->string('title')->html('text');
+        $this->fields->foreignId('subscription_id')->nullable()->html('recordpicker')->table(['isp', 'subscription']);
+        $this->fields->foreignId('invoice_id')->nullable()->html('recordpicker')->table(['account', 'invoice']);
+        $this->fields->string('description')->nullable()->html('textarea');
+        $this->fields->boolean('is_paid')->default(0)->nullable()->html('switch');
+        $this->fields->boolean('completed')->default(0)->nullable()->html('switch');
+        $this->fields->boolean('successful')->default(0)->nullable()->html('switch');
     }
 
-    /**
-     * Handle post migration processes for adding foreign keys.
-     *
-     * @param Blueprint $table
-     *
-     * @return void
-     */
-    public function post_migration(Blueprint $table): void
-    {
-        Migration::addForeign($table, 'isp_subscription', 'subscription_id');
-        Migration::addForeign($table, 'account_invoice', 'invoice_id');
-    }
+ 
 }

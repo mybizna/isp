@@ -4,8 +4,6 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-use Modules\Base\Classes\Views\FormBuilder;
-use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
 
 class PaymentChargeRate extends BaseModel
@@ -39,78 +37,16 @@ class PaymentChargeRate extends BaseModel
     protected $table = "isp_payment_charge_rate";
 
     /**
-     * Function for defining list of fields in table view.
-     *
-     * @return ListTable
-     */
-    public function listTable(): ListTable
-    {
-        // listing view fields
-        $fields = new ListTable();
-
-        $fields->name('payment_charge_id')->type('recordpicker')->table(['isp', 'payment_charge'])->ordering(true);
-        $fields->name('rate_id')->type('recordpicker')->table(['account', 'rate'])->ordering(true);
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in form view.
-     *
-     * @return FormBuilder
-     */
-    public function formBuilder(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('payment_charge_id')->type('recordpicker')->table(['isp', 'payment_charge'])->group('w-1/2');
-        $fields->name('rate_id')->type('recordpicker')->table(['account', 'rate'])->group('w-1/2');
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in filter view.
-     *
-     * @return FormBuilder
-     */
-    public function filter(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('payment_charge_id')->type('recordpicker')->table(['isp', 'payment_charge'])->group('w-1/2');
-        $fields->name('rate_id')->type('recordpicker')->table(['account', 'rate'])->group('w-1/2');
-
-        return $fields;
-
-    }
-    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table): void
+    public function fields(Blueprint $table): void
     {
-        $table->increments('id');
-        $table->foreignId('payment_charge_id');
-        $table->foreignId('rate_id');
+        $this->fields->increments('id');
+        $this->fields->foreignId('payment_charge_id')->html('recordpicker')->table(['isp', 'payment_charge']);
+        $this->fields->foreignId('rate_id')->html('recordpicker')->table(['account', 'rate']);
     }
 
-    /**
-     * Handle post migration processes for adding foreign keys.
-     *
-     * @param Blueprint $table
-     *
-     * @return void
-     */
-    public function post_migration(Blueprint $table): void
-    {
-        Migration::addForeign($table, 'isp_payment_charge', 'payment_charge_id');
-        Migration::addForeign($table, 'account_rate', 'rate_id');
-    }
 }

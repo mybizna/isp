@@ -4,8 +4,6 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-use Modules\Base\Classes\Views\FormBuilder;
-use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
 
 class PaymentCharge extends BaseModel
@@ -39,98 +37,22 @@ class PaymentCharge extends BaseModel
     protected $table = "isp_payment_charge";
 
     /**
-     * Function for defining list of fields in table view.
-     *
-     * @return ListTable
-     */
-    public function listTable(): ListTable
-    {
-        // listing view fields
-        $fields = new ListTable();
-
-        $fields->name('title')->type('text')->ordering(true);
-        $fields->name('slug')->type('text')->ordering(true);
-        $fields->name('price')->type('text')->ordering(true);
-        $fields->name('payment_id')->type('recordpicker')->table(['isp', 'payment'])->ordering(true);
-        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->ordering(true);
-        $fields->name('quantity')->type('text')->ordering(true);
-        $fields->name('published')->type('switch')->ordering(true);
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in form view.
-     *
-     * @return FormBuilder
-     */
-    public function formBuilder(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('title')->type('text')->group('w-1/2');
-        $fields->name('slug')->type('text')->group('w-1/2');
-        $fields->name('price')->type('text')->group('w-1/2');
-        $fields->name('payment_id')->type('recordpicker')->table(['isp', 'payment'])->group('w-1/2');
-        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->group('w-1/2');
-        $fields->name('quantity')->type('text')->group('w-1/2');
-        $fields->name('published')->type('switch')->group('w-1/2');
-        $fields->name('description')->type('textarea')->group('w-full');
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in filter view.
-     *
-     * @return FormBuilder
-     */
-    public function filter(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('title')->type('text')->group('w-1/6');
-        $fields->name('slug')->type('text')->group('w-1/6');
-        $fields->name('payment_id')->type('recordpicker')->table(['isp', 'payment'])->group('w-1/6');
-        $fields->name('ledger_id')->type('recordpicker')->table(['account', 'ledger'])->group('w-1/6');
-        $fields->name('published')->type('switch')->group('w-1/6');
-
-        return $fields;
-
-    }
-    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table): void
+    public function fields(Blueprint $table): void
     {
-        $table->increments('id');
-        $table->string('title');
-        $table->string('slug');
-        $table->foreignId('payment_id');
-        $table->foreignId('ledger_id');
-        $table->integer('quantity')->default(1);
-        $table->string('description')->nullable();
-        $table->double('price', 8, 2)->nullable();
-        $table->boolean('published')->default(true)->nullable();
+        $this->fields->increments('id')->html('text');
+        $this->fields->string('title')->html('text');
+        $this->fields->string('slug')->html('text');
+        $this->fields->foreignId('payment_id')->html('recordpicker')->table(['isp', 'payment']);
+        $this->fields->foreignId('ledger_id')->html('recordpicker')->table(['account', 'ledger']);
+        $this->fields->integer('quantity')->default(1)->html('number');
+        $this->fields->string('description')->nullable()->html('textarea');
+        $this->fields->double('price', 8, 2)->nullable()->html('number');
+        $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
-    /**
-     * Handle post migration processes for adding foreign keys.
-     *
-     * @param Blueprint $table
-     *
-     * @return void
-     */
-    public function post_migration(Blueprint $table): void
-    {
-        Migration::addForeign($table, 'isp_payment', 'payment_id');
-        Migration::addForeign($table, 'account_ledger', 'ledger_id');
-    }
 }

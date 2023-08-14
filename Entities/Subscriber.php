@@ -4,8 +4,6 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-use Modules\Base\Classes\Views\FormBuilder;
-use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
 
 class Subscriber extends BaseModel
@@ -17,15 +15,13 @@ class Subscriber extends BaseModel
      */
     protected $fillable = ['username', 'password', 'had_trail', 'partner_id'];
 
-
     /**
      * The fields that are to be render when performing relationship queries.
      *
      * @var array<string>
      */
     public $rec_names = ['username'];
-    
- 
+
     /**
      * List of tables names that are need in this model during migration.
      *
@@ -41,83 +37,17 @@ class Subscriber extends BaseModel
     protected $table = "isp_subscriber";
 
     /**
-     * Function for defining list of fields in table view.
-     *
-     * @return ListTable
-     */
-    public function listTable(): ListTable
-    {
-        // listing view fields
-        $fields = new ListTable();
-
-        $fields->name('username')->type('text')->ordering(true);
-        $fields->name('had_trail')->type('switch')->ordering(true);
-        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->ordering(true);
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in form view.
-     * 
-     * @return FormBuilder
-     */
-    public function formBuilder(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('username')->type('text')->group('w-1/2');
-        $fields->name('password')->type('password')->group('w-1/2');
-        $fields->name('had_trail')->type('switch')->group('w-1/2');
-        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->group('w-1/2');
-
-        return $fields;
-
-    }
-
-    /**
-     * Function for defining list of fields in filter view.
-     * 
-     * @return FormBuilder
-     */
-    public function filter(): FormBuilder
-    {
-        // listing view fields
-        $fields = new FormBuilder();
-
-        $fields->name('username')->type('text')->group('w-1/6');
-        $fields->name('had_trail')->type('switch')->group('w-1/6');
-        $fields->name('partner_id')->type('recordpicker')->table(['partner'])->group('w-1/6');
-
-        return $fields;
-
-    }
-    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
      * @return void
      */
-    public function migration(Blueprint $table): void
+    public function fields(Blueprint $table): void
     {
-        $table->increments('id');
-        $table->string('username')->unique();
-        $table->string('password');
-        $table->boolean('had_trail')->default(0)->nullable();
-        $table->foreignId('partner_id')->nullable();
-    }
-
-    /**
-     * Handle post migration processes for adding foreign keys.
-     *
-     * @param Blueprint $table
-     *
-     * @return void
-     */
-    public function post_migration(Blueprint $table): void
-    {
-        Migration::addForeign($table, 'partner', 'partner_id');
+        $this->fields->increments('id')->html('text');
+        $this->fields->string('username')->unique()->html('text');
+        $this->fields->string('password')->html('text');
+        $this->fields->boolean('had_trail')->default(0)->nullable()->html('switch');
+        $this->fields->foreignId('partner_id')->nullable()->html('recordpicker')->table(['partner']);
     }
 }
