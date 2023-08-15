@@ -46,10 +46,10 @@ class Package extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
@@ -73,4 +73,16 @@ class Package extends BaseModel
         $this->fields->double('amount', 8, 2)->nullable()->html('number');
     }
 
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'pool', 'billing_cycle_id', 'gateway_id', 'speed', 'speed_type', 'bundle', 'bundle_type', 'published'],
+            'filter' => ['title', 'billing_cycle_id', 'gateway_id', 'published'],
+        ];
+
+        return $structure;
+    }
 }

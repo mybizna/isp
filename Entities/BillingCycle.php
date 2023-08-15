@@ -41,7 +41,7 @@ class BillingCycle extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
         
@@ -52,5 +52,18 @@ class BillingCycle extends BaseModel
         $this->fields->string('duration')->nullable()->html('number');
         $this->fields->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('month')->nullable()->html('switch');
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'slug', 'duration', 'duration_type', 'published'],
+            'filter' => ['title', 'duration', 'duration_type', 'published'],
+        ];
+
+        return $structure;
     }
 }

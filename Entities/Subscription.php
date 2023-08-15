@@ -44,7 +44,7 @@ class Subscription extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
         
@@ -53,6 +53,19 @@ class Subscription extends BaseModel
         $this->fields->foreignId('package_id')->html('recordpicker')->table(['isp', 'package']);
         $this->fields->datetime('start_date')->html('datetime');
         $this->fields->datetime('end_date')->html('datetime');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['subscriber_id', 'package_id', 'start_date', 'end_date'],
+            'filter' => ['subscriber_id', 'package_id', 'start_date', 'end_date'],
+        ];
+
+        return $structure;
     }
 
 }

@@ -42,7 +42,7 @@ class SubscriberLogin extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
@@ -58,6 +58,19 @@ class SubscriberLogin extends BaseModel
         $this->fields->string('link_login_id')->nullable()->html('text');
         $this->fields->string('link_orig_esc')->nullable()->html('text');
         $this->fields->string('mac_esc')->nullable()->html('text');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc'],
+            'filter' => ['mac', 'ip', 'username'],
+        ];
+
+        return $structure;
     }
 
 }

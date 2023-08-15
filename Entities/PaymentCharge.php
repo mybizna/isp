@@ -42,7 +42,7 @@ class PaymentCharge extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
         
@@ -55,6 +55,19 @@ class PaymentCharge extends BaseModel
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->double('price', 8, 2)->nullable()->html('number');
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'payment_id', 'ledger_id', 'price', 'published'],
+            'filter' => ['title', 'payment_id', 'ledger_id',],
+        ];
+
+        return $structure;
     }
 
 }

@@ -4,8 +4,6 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-use Modules\Base\Classes\Views\FormBuilder;
-use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
 
 class Payment extends BaseModel
@@ -44,10 +42,10 @@ class Payment extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->foreignId('subscription_id')->nullable()->html('recordpicker')->table(['isp', 'subscription']);
@@ -58,5 +56,17 @@ class Payment extends BaseModel
         $this->fields->boolean('successful')->default(0)->nullable()->html('switch');
     }
 
- 
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'subscription_id', 'invoice_id', 'is_paid', 'completed', 'successful'],
+            'filter' => ['title', 'subscription_id', 'invoice_id', 'successful'],
+        ];
+
+        return $structure;
+    }
+
 }

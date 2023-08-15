@@ -41,7 +41,7 @@ class Gateway extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
         
@@ -54,6 +54,19 @@ class Gateway extends BaseModel
         $this->fields->string('port')->html('text');
         $this->fields->string('type')->html('text');
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'],
+            'filter' => ['title', 'username', 'published'],
+        ];
+
+        return $structure;
     }
 
 }

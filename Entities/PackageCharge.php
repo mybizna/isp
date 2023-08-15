@@ -42,10 +42,10 @@ class PackageCharge extends BaseModel
      * @param Blueprint $table
      * @return void
      */
-    public function fields(Blueprint $table): void
+    public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
@@ -55,5 +55,18 @@ class PackageCharge extends BaseModel
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->double('price', 8, 2)->nullable()->html('number');
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
+    }
+
+    /**
+     * List of structure for this model.
+     */
+    public function structure($structure): array
+    {
+        $structure = [
+            'table' => ['title', 'slug', 'package_id', 'ledger_id', 'price', 'quantity', 'published'],
+            'filter' => ['title', 'package_id', 'ledger_id', 'published'],
+        ];
+
+        return $structure;
     }
 }
