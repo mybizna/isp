@@ -44,13 +44,15 @@ class BillingCycle extends BaseModel
     public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
+        $duration_type = ['minute' => 'Minute', 'hour' => 'Hour', 'day' => 'Day', 'week' => 'Week', 'month' => 'Month', 'year' => 'Year'];
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->string('duration')->nullable()->html('number');
-        $this->fields->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('month')->nullable()->html('switch');
+        $this->fields->enum('duration_type', array_keys($duration_type))->options($duration_type)->default('month')->nullable()->html('switch');
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 

@@ -49,8 +49,8 @@ class Subscription extends BaseModel
         $this->fields = $table ?? new Blueprint($this->table);
         
         $this->fields->increments('id')->html('text');
-        $this->fields->foreignId('subscriber_id')->html('recordpicker')->table(['isp', 'subscriber']);
-        $this->fields->foreignId('package_id')->html('recordpicker')->table(['isp', 'package']);
+        $this->fields->foreignId('subscriber_id')->html('recordpicker')->relation(['isp', 'subscriber']);
+        $this->fields->foreignId('package_id')->html('recordpicker')->relation(['isp', 'package']);
         $this->fields->datetime('start_date')->html('datetime');
         $this->fields->datetime('end_date')->html('datetime');
     }

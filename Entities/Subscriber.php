@@ -50,7 +50,7 @@ class Subscriber extends BaseModel
         $this->fields->string('username')->unique()->html('text');
         $this->fields->string('password')->html('text');
         $this->fields->boolean('had_trail')->default(0)->nullable()->html('switch');
-        $this->fields->foreignId('partner_id')->nullable()->html('recordpicker')->table(['partner']);
+        $this->fields->foreignId('partner_id')->nullable()->html('recordpicker')->relation(['partner']);
     }
 
     /**

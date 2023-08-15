@@ -49,8 +49,8 @@ class PackageCharge extends BaseModel
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
-        $this->fields->foreignId('package_id')->html('recordpicker')->table(['isp', 'package']);
-        $this->fields->foreignId('ledger_id')->html('recordpicker')->table(['account', 'ledger']);
+        $this->fields->foreignId('package_id')->html('recordpicker')->relation(['isp', 'package']);
+        $this->fields->foreignId('ledger_id')->html('recordpicker')->relation(['account', 'ledger']);
         $this->fields->tinyInteger('quantity')->default(1)->html('text');
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->double('price', 8, 2)->nullable()->html('number');

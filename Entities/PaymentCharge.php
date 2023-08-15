@@ -49,8 +49,8 @@ class PaymentCharge extends BaseModel
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
-        $this->fields->foreignId('payment_id')->html('recordpicker')->table(['isp', 'payment']);
-        $this->fields->foreignId('ledger_id')->html('recordpicker')->table(['account', 'ledger']);
+        $this->fields->foreignId('payment_id')->html('recordpicker')->relation(['isp', 'payment']);
+        $this->fields->foreignId('ledger_id')->html('recordpicker')->relation(['account', 'ledger']);
         $this->fields->integer('quantity')->default(1)->html('number');
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->double('price', 8, 2)->nullable()->html('number');

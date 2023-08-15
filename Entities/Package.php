@@ -50,20 +50,23 @@ class Package extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
+        $speed_type = ['gigabyte' => 'Gigabyte', 'kilobyte' => 'Kilobyte', 'megabyte' => 'Megabyte'];
+        $speed_type_color = ['gigabyte' => 'green', 'kilobyte' => 'red', 'megabyte' => 'blue'];
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
         $this->fields->string('pool')->html('text');
         $this->fields->string('description')->nullable()->html('textarea');
 
-        $this->fields->foreignId('billing_cycle_id')->nullable()->html('recordpicker')->table(['isp', 'billing_cycle']);
-        $this->fields->foreignId('gateway_id')->nullable()->html('recordpicker')->table(['isp', 'gateway']);
+        $this->fields->foreignId('billing_cycle_id')->nullable()->html('recordpicker')->relation(['isp', 'billing_cycle']);
+        $this->fields->foreignId('gateway_id')->nullable()->html('recordpicker')->relation(['isp', 'gateway']);
 
         $this->fields->string('speed')->nullable()->html('text');
-        $this->fields->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable()->html('switch');
+        $this->fields->enum('speed_type', array_keys($speed_type))->options($speed_type)->color($speed_type_color)->default('megabyte')->nullable()->html('switch');
 
         $this->fields->string('bundle')->nullable()->html('text');
-        $this->fields->enum('bundle_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable()->html('switch');
+        $this->fields->enum('bundle_type', array_keys($speed_type))->options($speed_type)->color($speed_type_color)->default('megabyte')->nullable()->html('switch');
 
         $this->fields->boolean('published')->default(1)->nullable()->html('switch');
         $this->fields->boolean('featured')->default(0)->nullable()->html('switch');

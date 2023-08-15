@@ -48,8 +48,8 @@ class Payment extends BaseModel
 
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
-        $this->fields->foreignId('subscription_id')->nullable()->html('recordpicker')->table(['isp', 'subscription']);
-        $this->fields->foreignId('invoice_id')->nullable()->html('recordpicker')->table(['account', 'invoice']);
+        $this->fields->foreignId('subscription_id')->nullable()->html('recordpicker')->relation(['isp', 'subscription']);
+        $this->fields->foreignId('invoice_id')->nullable()->html('recordpicker')->relation(['account', 'invoice']);
         $this->fields->string('description')->nullable()->html('textarea');
         $this->fields->boolean('is_paid')->default(0)->nullable()->html('switch');
         $this->fields->boolean('completed')->default(0)->nullable()->html('switch');
