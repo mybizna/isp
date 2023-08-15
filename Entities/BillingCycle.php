@@ -43,6 +43,8 @@ class BillingCycle extends BaseModel
      */
     public function fields(Blueprint $table): void
     {
+        $this->fields = $table ?? new Blueprint($this->table);
+        
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');

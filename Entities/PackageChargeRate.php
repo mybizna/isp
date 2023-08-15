@@ -44,6 +44,8 @@ class PackageChargeRate extends BaseModel
      */
     public function fields(Blueprint $table): void
     {
+        $this->fields = $table ?? new Blueprint($this->table);
+        
         $this->fields->increments('id')->html('text');
         $this->fields->foreignId('package_charge_id')->html('recordpicker')->table(['isp', 'package_charge']);
         $this->fields->foreignId('rate_id')->html('recordpicker')->table(['account', 'rate']);
