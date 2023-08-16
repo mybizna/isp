@@ -45,7 +45,7 @@ class PaymentCharge extends BaseModel
     public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
@@ -62,9 +62,16 @@ class PaymentCharge extends BaseModel
      */
     public function structure($structure): array
     {
+
         $structure = [
             'table' => ['title', 'payment_id', 'ledger_id', 'price', 'published'],
-            'filter' => ['title', 'payment_id', 'ledger_id',],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title', 'slug']],
+                ['label' => 'Payment Charge', 'class' => 'w-1/2', 'fields' => ['payment_id', 'ledger_id']],
+                ['label' => 'Amount', 'class' => 'w-1/2', 'fields' => ['price', 'quantity']],
+                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['published']],
+            ],
+            'filter' => ['title', 'payment_id', 'ledger_id'],
         ];
 
         return $structure;

@@ -61,8 +61,17 @@ class Payment extends BaseModel
      */
     public function structure($structure): array
     {
+
+        //'title', 'subscription_id', 'invoice_id', 'description', 'is_paid', 'completed', 'successful'
+
         $structure = [
             'table' => ['title', 'subscription_id', 'invoice_id', 'is_paid', 'completed', 'successful'],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title']],
+                ['label' => 'Payment', 'class' => 'w-1/2', 'fields' => ['subscription_id', 'invoice_id']],
+                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['is_paid', 'completed', 'successful']],
+                ['label' => 'Description', 'class' => 'w-full', 'fields' => ['description']],
+            ],
             'filter' => ['title', 'subscription_id', 'invoice_id', 'successful'],
         ];
 

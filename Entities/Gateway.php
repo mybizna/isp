@@ -44,7 +44,7 @@ class Gateway extends BaseModel
     public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->string('title')->html('text');
         $this->fields->string('username')->html('text');
@@ -61,8 +61,14 @@ class Gateway extends BaseModel
      */
     public function structure($structure): array
     {
+
         $structure = [
             'table' => ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title']],
+                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['username', 'password', 'database', 'ip_address']],
+                ['label' => 'Other', 'class' => 'w-1/2', 'fields' => ['port', 'type', 'published']],
+            ],
             'filter' => ['title', 'username', 'published'],
         ];
 

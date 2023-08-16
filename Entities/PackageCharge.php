@@ -62,8 +62,16 @@ class PackageCharge extends BaseModel
      */
     public function structure($structure): array
     {
+
         $structure = [
             'table' => ['title', 'slug', 'package_id', 'ledger_id', 'price', 'quantity', 'published'],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title', 'slug']],
+                ['label' => 'Package', 'class' => 'w-1/2', 'fields' => ['package_id', 'ledger_id']],
+                ['label' => 'Price', 'class' => 'w-1/2', 'fields' => ['price', 'quantity']],
+                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['published']],
+                ['label' => 'Description', 'class' => 'w-full', 'fields' => ['description']],
+            ],
             'filter' => ['title', 'package_id', 'ledger_id', 'published'],
         ];
 

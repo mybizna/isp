@@ -65,8 +65,16 @@ class SubscriberLogin extends BaseModel
      */
     public function structure($structure): array
     {
+
+        //['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', 'mac_esc'
+
         $structure = [
             'table' => ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc'],
+            'form' => [
+                ['label' => 'Mac', 'class' => 'w-full', 'fields' => ['mac']],
+                ['label' => 'Main', 'class' => 'w-1/2', 'fields' => [ 'ip', 'username', 'link_login', 'link_orig', 'error','mac_esc',]],
+                ['label' => 'Main', 'class' => 'w-1/2', 'fields' => [ 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', ]],
+            ],
             'filter' => ['mac', 'ip', 'username'],
         ];
 

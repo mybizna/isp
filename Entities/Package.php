@@ -81,8 +81,17 @@ class Package extends BaseModel
      */
     public function structure($structure): array
     {
+
         $structure = [
             'table' => ['title', 'pool', 'billing_cycle_id', 'gateway_id', 'speed', 'speed_type', 'bundle', 'bundle_type', 'published'],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title', 'slug']],
+                ['label' => 'Bundle', 'class' => 'w-1/2', 'fields' => ['bundle', 'bundle_type']],
+                ['label' => 'Speed', 'class' => 'w-1/2', 'fields' => ['speed', 'speed_type']],
+                ['label' => 'Package', 'class' => 'w-1/2', 'fields' => ['pool', 'billing_cycle_id', 'gateway_id', 'amount', 'default']],
+                ['label' => 'Package', 'class' => 'w-1/2', 'fields' => ['published', 'featured', 'is_unlimited', 'is_hidden']],
+                ['label' => 'Description', 'class' => 'w-full', 'fields' => ['description']],
+            ],
             'filter' => ['title', 'billing_cycle_id', 'gateway_id', 'published'],
         ];
 

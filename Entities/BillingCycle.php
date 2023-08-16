@@ -61,8 +61,14 @@ class BillingCycle extends BaseModel
      */
     public function structure($structure): array
     {
+
         $structure = [
             'table' => ['title', 'slug', 'duration', 'duration_type', 'published'],
+            'form' => [
+                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title', 'slug']],
+                ['label' => 'Duration', 'class' => 'w-1/2', 'fields' => ['duration', 'duration_type']],
+                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['published']],
+            ],
             'filter' => ['title', 'duration', 'duration_type', 'published'],
         ];
 
