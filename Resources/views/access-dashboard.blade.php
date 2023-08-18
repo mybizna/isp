@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="bg-blue-50">
-        <div class="w-full md:w-4/5 lg:w-1/2 mx-auto pt-5">
+        <div class="col-span-full md:w-4/5 lg:col-span-6 mx-auto pt-5">
 
             @if ($partner)
                 <div
@@ -25,7 +25,7 @@
 
                                     <div class="flex-auto">
                                         <div class="flex flex-wrap">
-                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                            <div class="flex-auto col-span-6 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
                                                     {!! ___('isp-access-dashboard-current-active-package-package') !!}
                                                 </p>
@@ -36,7 +36,7 @@
                                                 </p>
                                             </div>
 
-                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                            <div class="flex-auto col-span-6 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
                                                     {!! ___('isp-access-dashboard-current-active-package-limits') !!}
                                                 </p>
@@ -57,7 +57,7 @@
 
                                             </div>
 
-                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                            <div class="flex-auto col-span-6 sm:w-1/4 pt-2 pl-2">
                                                 <p class="mb-0 leading-normal text-white text-sm">
                                                     {!! ___('isp-access-dashboard-current-active-package-expire') !!}
                                                 </p>
@@ -67,7 +67,7 @@
                                                 </span>
                                             </div>
 
-                                            <div class="flex-auto w-1/2 sm:w-1/4 pt-2 pl-2">
+                                            <div class="flex-auto col-span-6 sm:w-1/4 pt-2 pl-2">
                                                 @if ($current_package->duration)
                                                     <p class="mb-0 text-white text-xs">
                                                         ({!! $current_package->duration !!}{!! $current_package->duration_type !!})
@@ -108,7 +108,7 @@
 
                                 <div class="relative overflow-x-auto px-2">
                                     <table
-                                        class="w-full text-sm text-left text-gray-500 mb-3 border-r border-r-blue-300/20  border-l border-l-blue-300/20">
+                                        class="col-span-full text-sm text-left text-gray-500 mb-3 border-r border-r-blue-300/20  border-l border-l-blue-300/20">
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50/30">
                                             <tr>
                                                 <th scope="col" class="py-2 text-white text-center">
@@ -227,7 +227,7 @@
 
             <div>
                 <div class="sm:flex">
-                    <div class="sm:flex-auto sm:w-1/2 @if (!$partner) hidden sm:block @endif">
+                    <div class="sm:flex-auto sm:col-span-6 @if (!$partner) hidden sm:block @endif">
                         <div class="shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2 h-40">
                             @if (!$partner)
                                 <div class="text-center">
@@ -305,7 +305,7 @@
 
                         </div>
                     </div>
-                    <div class="sm:flex-auto sm:w-1/2">
+                    <div class="sm:flex-auto sm:col-span-6">
                         <div
                             class=" shadow-xl rounded-md bg-gradient-to-br from-pink-500 via-red-900 to-pink-700 hover:from-pink-500  hover:via-red-900  hover:to-yellow-900 sm:ml-2 m-1">
 
@@ -504,7 +504,7 @@
 
     <div class="relative overflow-hidden mb-8">
         <div class="overflow-hidden px-3 py-10 flex justify-center">
-            <div class="w-full max-w-xs login-card">
+            <div class="col-span-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
                     &copy;2022 - {!! date('Y') !!}. {!! ___('isp-copy-right') !!}

@@ -58,10 +58,8 @@ class Subscriber extends BaseModel
      */
     public function structure($structure): array
     {
-        $structure = [
-            'table' => ['username', 'had_trail', 'partner_id'],
-            'filter' => ['username', 'partner_id'],
-        ];
+        $structure['table'] = ['username', 'had_trail', 'partner_id'];
+        $structure['filter'] = ['username', 'partner_id'];
 
         return $structure;
     }

@@ -2,10 +2,10 @@
 
 @section('content')
     <section class="bg-blue-50 dark:bg-blue-900 h-full h-screen">
-        <div class="w-full md:w-4/5 lg:w-2/4 mx-auto pt-10">
+        <div class="col-span-full md:w-4/5 lg:w-2/4 mx-auto pt-10">
 
             <div class="sm:flex">
-                <div class="sm:flex-auto sm:w-1/2  my-5">
+                <div class="sm:flex-auto sm:col-span-6  my-5">
                     <div class=" shadow-xl rounded-md bg-white sm:mr-2 m-1 pt-2 p-2">
 
                         <h3 class="text-2xl font-semibold leading-6 text-gray-800 dark:text-white text-center pt-2">
@@ -62,7 +62,7 @@
 
     <div class="relative overflow-hidden mb-8">
         <div class="overflow-hidden px-3 py-10 flex justify-center">
-            <div class="w-full max-w-xs login-card">
+            <div class="col-span-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
                     &copy;2022 - {!! date('Y') !!}. {!! ___('isp-copy-right') !!}

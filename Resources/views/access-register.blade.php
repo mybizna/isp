@@ -5,7 +5,7 @@
         @csrf
         <div class="relative overflow-hidden mb-8">
             <div class="overflow-hidden px-3 py-10 flex justify-center">
-                <div class="w-full max-w-xs login-card">
+                <div class="col-span-full max-w-xs login-card">
                     <h3 style="text-align: center"> - {!! ___('isp-access-register-title') !!} - </h3>
                     <div class="bg-white">
                         <div class="mb-4">
@@ -13,7 +13,7 @@
                                 {!! ___('isp-access-register-name') !!}
                             </label>
                             <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                class="shadow appearance-none border rounded col-span-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="name" name="name" type="text"
                                 placeholder="{!! ___('isp-access-register-name') !!}" required>
                         </div>
@@ -22,7 +22,7 @@
                                 {!! ___('isp-access-register-username') !!}
                             </label>
                             <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                class="shadow appearance-none border rounded col-span-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="username" name="username" type="text"
                                 placeholder="{!! ___('isp-access-register-username') !!}" required>
                         </div>
@@ -32,7 +32,7 @@
                                 {!! ___('isp-access-register-password') !!}
                             </label>
                             <input
-                                class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                class="shadow appearance-none border border-red-500 rounded col-span-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password" name="password" type="password" placeholder="******************" required>
                             <p class="text-red-500 text-xs italic">{!! ___('isp-access-register-password-label') !!}</p>
                         </div>
@@ -42,7 +42,7 @@
                                 {!! ___('isp-access-register-phone') !!}
                             </label>
                             <input id="phone" name="phone" type="tel" placeholder="722-xxx-xxx"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                class="shadow appearance-none border rounded col-span-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div class="mb-4">
@@ -50,7 +50,7 @@
                                 {!! ___('isp-access-register-email') !!}
                             </label>
                             <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                class="shadow appearance-none border rounded col-span-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="email" name="email" type="email"
                                 placeholder="{!! ___('isp-access-register-email') !!}">
                         </div>

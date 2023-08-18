@@ -64,16 +64,14 @@ class Payment extends BaseModel
 
         //'title', 'subscription_id', 'invoice_id', 'description', 'is_paid', 'completed', 'successful'
 
-        $structure = [
-            'table' => ['title', 'subscription_id', 'invoice_id', 'is_paid', 'completed', 'successful'],
-            'form' => [
-                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title']],
-                ['label' => 'Payment', 'class' => 'w-1/2', 'fields' => ['subscription_id', 'invoice_id']],
-                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['is_paid', 'completed', 'successful']],
-                ['label' => 'Description', 'class' => 'w-full', 'fields' => ['description']],
-            ],
-            'filter' => ['title', 'subscription_id', 'invoice_id', 'successful'],
+        $structure['table'] = ['title', 'subscription_id', 'invoice_id', 'is_paid', 'completed', 'successful'];
+        $structure['form'] = [
+            ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title']],
+            ['label' => 'Payment', 'class' => 'col-span-6', 'fields' => ['subscription_id', 'invoice_id']],
+            ['label' => 'Setting', 'class' => 'col-span-6', 'fields' => ['is_paid', 'completed', 'successful']],
+            ['label' => 'Description', 'class' => 'col-span-full', 'fields' => ['description']],
         ];
+        $structure['filter'] = ['title', 'subscription_id', 'invoice_id', 'successful'];
 
         return $structure;
     }

@@ -2,10 +2,10 @@
 
 @section('content')
     <section class="bg-blue-50 dark:bg-blue-900 h-full h-screen">
-        <div class="w-full md:w-4/5 lg:w-2/4 mx-auto pt-4">
+        <div class="col-span-full md:w-4/5 lg:w-2/4 mx-auto pt-4">
 
             <div class="sm:flex">
-                <div class="sm:flex-auto sm:w-1/2  my-3">
+                <div class="sm:flex-auto sm:col-span-6  my-3">
 
                     <form method="POST" action="{!! url(route('isp_access_savelogin')) !!}">
                         @csrf
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="md:w-2/3">
                                         <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-w-xs"
+                                            class="shadow appearance-none border rounded col-span-full py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-w-xs"
                                             id="phone_number" name="phone" type="tel" placeholder="0722xxxxxx"
                                             required>
 
@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="md:w-2/3">
                                         <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-w-xs"
+                                            class="shadow appearance-none border rounded col-span-full py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-w-xs"
                                             id="passcode" name="passcode" type="tel" placeholder="{!! ___('isp-access-login-passcode') !!}" required>
 
                                     </div>
@@ -73,7 +73,7 @@
 
     <div class="relative overflow-hidden mb-8">
         <div class="overflow-hidden px-3 py-10 flex justify-center">
-            <div class="w-full max-w-xs login-card">
+            <div class="col-span-full max-w-xs login-card">
 
                 <p class="text-center text-gray-500 text-xs">
                     &copy;2022 - {!! date('Y') !!}. {!! ___('isp-copy-right') !!}

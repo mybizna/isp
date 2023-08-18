@@ -4,8 +4,6 @@ namespace Modules\Isp\Entities;
 
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Classes\Migration;
-use Modules\Base\Classes\Views\FormBuilder;
-use Modules\Base\Classes\Views\ListTable;
 use Modules\Base\Entities\BaseModel;
 
 class Subscription extends BaseModel
@@ -47,7 +45,7 @@ class Subscription extends BaseModel
     public function fields(Blueprint $table = null): void
     {
         $this->fields = $table ?? new Blueprint($this->table);
-        
+
         $this->fields->increments('id')->html('text');
         $this->fields->foreignId('subscriber_id')->html('recordpicker')->relation(['isp', 'subscriber']);
         $this->fields->foreignId('package_id')->html('recordpicker')->relation(['isp', 'package']);
@@ -60,10 +58,8 @@ class Subscription extends BaseModel
      */
     public function structure($structure): array
     {
-        $structure = [
-            'table' => ['subscriber_id', 'package_id', 'start_date', 'end_date'],
-            'filter' => ['subscriber_id', 'package_id', 'start_date', 'end_date'],
-        ];
+        $structure['table'] = ['subscriber_id', 'package_id', 'start_date', 'end_date'];
+        $structure['filter'] = ['subscriber_id', 'package_id', 'start_date', 'end_date'];
 
         return $structure;
     }

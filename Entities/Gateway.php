@@ -62,15 +62,13 @@ class Gateway extends BaseModel
     public function structure($structure): array
     {
 
-        $structure = [
-            'table' => ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'],
-            'form' => [
-                ['label' => 'Title', 'class' => 'w-full', 'fields' => ['title']],
-                ['label' => 'Setting', 'class' => 'w-1/2', 'fields' => ['username', 'password', 'database', 'ip_address']],
-                ['label' => 'Other', 'class' => 'w-1/2', 'fields' => ['port', 'type', 'published']],
-            ],
-            'filter' => ['title', 'username', 'published'],
+        $structure['table'] = ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'];
+        $structure['form'] = [
+            ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title']],
+            ['label' => 'Setting', 'class' => 'col-span-6', 'fields' => ['username', 'password', 'database', 'ip_address']],
+            ['label' => 'Other', 'class' => 'col-span-6', 'fields' => ['port', 'type', 'published']],
         ];
+        $structure['filter'] = ['title', 'username', 'published'];
 
         return $structure;
     }
