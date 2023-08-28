@@ -46,7 +46,7 @@ class MacAddress extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->foreignId('subscriber_id')->nullable()->html('recordpicker')->relation(['isp', 'subscriber']);
         $this->fields->string('mac')->nullable()->html('text');
     }

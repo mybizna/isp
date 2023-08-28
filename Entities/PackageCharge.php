@@ -46,7 +46,7 @@ class PackageCharge extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
         $this->fields->foreignId('package_id')->html('recordpicker')->relation(['isp', 'package']);

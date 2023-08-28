@@ -46,7 +46,7 @@ class SubscriberLogin extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('mac')->nullable()->html('text');
         $this->fields->string('ip')->nullable()->html('text');
         $this->fields->string('username')->nullable()->html('text');

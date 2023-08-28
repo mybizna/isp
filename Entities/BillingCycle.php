@@ -47,7 +47,7 @@ class BillingCycle extends BaseModel
 
         $duration_type = ['minute' => 'Minute', 'hour' => 'Hour', 'day' => 'Day', 'week' => 'Week', 'month' => 'Month', 'year' => 'Year'];
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
         $this->fields->string('description')->nullable()->html('textarea');

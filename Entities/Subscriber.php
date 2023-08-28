@@ -46,7 +46,7 @@ class Subscriber extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('username')->unique()->html('text');
         $this->fields->string('password')->html('text');
         $this->fields->boolean('had_trail')->default(0)->nullable()->html('switch');

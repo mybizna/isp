@@ -53,7 +53,7 @@ class Package extends BaseModel
         $speed_type = ['gigabyte' => 'Gigabyte', 'kilobyte' => 'Kilobyte', 'megabyte' => 'Megabyte'];
         $speed_type_color = ['gigabyte' => 'green', 'kilobyte' => 'red', 'megabyte' => 'blue'];
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('title')->html('text');
         $this->fields->string('slug')->html('text');
         $this->fields->string('pool')->html('text');

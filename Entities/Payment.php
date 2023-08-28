@@ -46,7 +46,7 @@ class Payment extends BaseModel
     {
         $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('text');
+        $this->fields->increments('id')->html('hidden');
         $this->fields->string('title')->html('text');
         $this->fields->foreignId('subscription_id')->nullable()->html('recordpicker')->relation(['isp', 'subscription']);
         $this->fields->foreignId('invoice_id')->nullable()->html('recordpicker')->relation(['account', 'invoice']);
