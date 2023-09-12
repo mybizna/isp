@@ -1,3 +1,3 @@
 <?php
 
-$this->add_widget("isp", "dashboard-footer1", "Isp", "isp/widgets/isp.vue", 1, false);
+$this->add_widget("isp", "dashboard-side", "Isp", "isp/widgets/isp.vue", 2, false);
