@@ -37,6 +37,13 @@ class SubscriberLogin extends BaseModel
     protected $table = "isp_subscriber_login";
 
     /**
+     * Set if model is visible from frontend.
+     *
+     * @var bool
+     */
+    protected bool $show_frontend = true;
+
+    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
@@ -65,7 +72,6 @@ class SubscriberLogin extends BaseModel
      */
     public function structure($structure): array
     {
-
 
         $structure['table'] = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc'];
         $structure['form'] = [

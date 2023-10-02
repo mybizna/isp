@@ -37,6 +37,13 @@ class Subscriber extends BaseModel
     protected $table = "isp_subscriber";
 
     /**
+     * Set if model is visible from frontend.
+     *
+     * @var bool
+     */
+    protected bool $show_frontend = true;
+
+    /**
      * List of fields to be migrated to the datebase when creating or updating model during migration.
      *
      * @param Blueprint $table
