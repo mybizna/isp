@@ -44,6 +44,27 @@ $this->add_right("isp", "package_charge_rate", "staff", view:true, add:true, edi
 $this->add_right("isp", "package_charge_rate", "registered", view:true, add:true);
 $this->add_right("isp", "package_charge_rate", "guest", view:true, );
 
+$this->add_right("isp", "payment", "administrator", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment", "manager", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment", "supervisor", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment", "staff", view:true, add:true, edit:true);
+$this->add_right("isp", "payment", "registered", view:true, add:true);
+$this->add_right("isp", "payment", "guest", view:true, );
+
+$this->add_right("isp", "payment_charge", "administrator", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge", "manager", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge", "supervisor", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge", "staff", view:true, add:true, edit:true);
+$this->add_right("isp", "payment_charge", "registered", view:true, add:true);
+$this->add_right("isp", "payment_charge", "guest", view:true, );
+
+$this->add_right("isp", "payment_charge_rate", "administrator", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge_rate", "manager", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge_rate", "supervisor", view:true, add:true, edit:true, delete:true);
+$this->add_right("isp", "payment_charge_rate", "staff", view:true, add:true, edit:true);
+$this->add_right("isp", "payment_charge_rate", "registered", view:true, add:true);
+$this->add_right("isp", "payment_charge_rate", "guest", view:true, );
+
 $this->add_right("isp", "subscriber", "administrator", view:true, add:true, edit:true, delete:true);
 $this->add_right("isp", "subscriber", "manager", view:true, add:true, edit:true, delete:true);
 $this->add_right("isp", "subscriber", "supervisor", view:true, add:true, edit:true, delete:true);
