@@ -62,33 +62,80 @@ class Package
             "is_hidden" => 1,
         ]);
 
-        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
-
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-hour')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
-            "title" => "1M Hotspot",
-            "slug" => "1m-hotspot",
+            "title" => "1 Hr",
             "pool" => "dhcp",
-            "description" => "1M Hotspot",
+            "description" => "1 Hour",
             "gateway_id" => $gateway_id,
             "billing_cycle_id" => $billing_cycle_id,
-            "amount" => 100,
-            "speed" => "1",
-            "speed_type" => "megabyte",
+            "amount" => 5,
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
         ]);
 
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '3-hour')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
-            "title" => "2M Hotspot",
-            "slug" => "2m-hotspot",
+            "title" => "3 Hr",
             "pool" => "dhcp",
-            "description" => "2M Hotspot",
+            "description" => "3 Hour",
             "gateway_id" => $gateway_id,
             "billing_cycle_id" => $billing_cycle_id,
-            "amount" => 150,
-            "speed" => "2",
-            "speed_type" => "megabyte",
+            "amount" => 10,
+            "published" => true,
+            "featured" => 0,
+            "is_hidden" => 0,
+        ]);  
+
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '12-hour')->value('id');
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "12 Hr",
+            "pool" => "dhcp",
+            "description" => "12 Hour",
+            "gateway_id" => $gateway_id,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 50,
+            "published" => true,
+            "featured" => 0,
+            "is_hidden" => 0,
+        ]);   
+
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-day')->value('id');
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "1 Day",
+            "pool" => "dhcp",
+            "description" => "1 Day",
+            "gateway_id" => $gateway_id,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 90,
+            "published" => true,
+            "featured" => 0,
+            "is_hidden" => 0,
+        ]); 
+
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '2-week')->value('id');
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "2 Wk",
+            "pool" => "dhcp",
+            "description" => "2 Week",
+            "gateway_id" => $gateway_id,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 250,
+            "published" => true,
+            "featured" => 0,
+            "is_hidden" => 0,
+        ]);  
+
+        $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
+        $datasetter->add_data('isp', 'package', 'slug', [
+            "title" => "1 Mth",
+            "slug" => "1-mth",
+            "pool" => "dhcp",
+            "description" => "1 Month",
+            "gateway_id" => $gateway_id,
+            "billing_cycle_id" => $billing_cycle_id,
+            "amount" => 500,
             "published" => true,
             "featured" => 1,
             "is_hidden" => 0,
