@@ -15,7 +15,7 @@ class Package extends BaseModel
      */
     protected $fillable = [
         'title', 'slug', 'pool', 'description', 'billing_cycle_id', 'gateway_id',
-        'speed', 'speed_type', 'bundle', 'bundle_type', 'published',
+        'speed', 'speed_type', 'bundle', 'bundle_type', 'published', 'ordering',
         'featured', 'default', 'is_unlimited', 'is_hidden', 'amount',
     ];
 
@@ -68,6 +68,8 @@ class Package extends BaseModel
         $this->fields->string('bundle')->nullable()->html('text');
         $this->fields->enum('bundle_type', array_keys($speed_type))->options($speed_type)->color($speed_type_color)->default('megabyte')->nullable()->html('switch');
 
+        $this->fields->integer('ordering')->html('text');
+
         $this->fields->boolean('published')->default(1)->nullable()->html('switch');
         $this->fields->boolean('featured')->default(0)->nullable()->html('switch');
         $this->fields->boolean('default')->default(0)->nullable()->html('switch');
@@ -82,13 +84,13 @@ class Package extends BaseModel
     public function structure($structure): array
     {
 
-        $structure['table'] = ['title', 'pool', 'billing_cycle_id', 'gateway_id', 'speed', 'speed_type', 'bundle', 'bundle_type', 'published'];
+        $structure['table'] = ['title', 'pool', 'billing_cycle_id', 'gateway_id', 'speed', 'speed_type', 'bundle', 'bundle_type', 'amount', 'featured', 'ordering', 'published'];
         $structure['form'] = [
             ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
             ['label' => 'Bundle', 'class' => 'col-span-6', 'fields' => ['bundle', 'bundle_type']],
             ['label' => 'Speed', 'class' => 'col-span-6', 'fields' => ['speed', 'speed_type']],
             ['label' => 'Package', 'class' => 'col-span-6', 'fields' => ['pool', 'billing_cycle_id', 'gateway_id', 'amount', 'default']],
-            ['label' => 'Package', 'class' => 'col-span-6', 'fields' => ['published', 'featured', 'is_unlimited', 'is_hidden']],
+            ['label' => 'Package', 'class' => 'col-span-6', 'fields' => ['published', 'featured', 'is_unlimited', 'is_hidden', 'ordering']],
             ['label' => 'Description', 'class' => 'col-span-full', 'fields' => ['description']],
         ];
         $structure['filter'] = ['title', 'billing_cycle_id', 'gateway_id', 'published'];
