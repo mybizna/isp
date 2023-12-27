@@ -16,8 +16,8 @@
     }
   ],
   "require": {
-    "mybizna/core": ">=1.0.0",
-    "mybizna/account": ">=1.0.0"
+    "mybizna/core": ">=23.06.0",
+    "mybizna/account": ">=23.06.0"
   },
   "extra": {
     "laravel": {
