@@ -2,7 +2,7 @@
   "name": "mybizna/isp",
   "description": "",
   "type": "asgard-module",
-  "version": "23.12.004",
+  "version": "24.01.001",
   "license": "GPL-3.0-or-later",
   "authors": [
     {
@@ -10,7 +10,7 @@
       "homepage": "https://mybizna.com",
       "email": "info@mybizna.com"
     },
-    { 
+    {
       "name": "Dedan Irungu",
       "email": "dedanirungu@gmail.com"
     }
