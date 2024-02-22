@@ -66,9 +66,9 @@ class PaymentCharge extends BaseModel
         $structure['table'] = ['title', 'payment_id', 'ledger_id', 'price', 'published'];
         $structure['form'] = [
             ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Payment Charge', 'class' => 'col-span-6', 'fields' => ['payment_id', 'ledger_id']],
-            ['label' => 'Amount', 'class' => 'col-span-6', 'fields' => ['price', 'quantity']],
-            ['label' => 'Setting', 'class' => 'col-span-6', 'fields' => ['published']],
+            ['label' => 'Payment Charge', 'class' => 'col-span-full md:col-span-6', 'fields' => ['payment_id', 'ledger_id']],
+            ['label' => 'Amount', 'class' => 'col-span-full md:col-span-6', 'fields' => ['price', 'quantity']],
+            ['label' => 'Setting', 'class' => 'col-span-full md:col-span-6ull md:col-span-6', 'fields' => ['published']],
         ];
         $structure['filter'] = ['title', 'payment_id', 'ledger_id'];
 
