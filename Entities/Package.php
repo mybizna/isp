@@ -87,10 +87,10 @@ class Package extends BaseModel
         $structure['table'] = ['title', 'pool', 'billing_cycle_id', 'gateway_id', 'speed', 'speed_type', 'bundle', 'bundle_type', 'amount', 'featured', 'ordering', 'published'];
         $structure['form'] = [
             ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Bundle', 'class' => 'col-span-full md:col-span-6', 'fields' => ['bundle', 'bundle_type']],
-            ['label' => 'Speed', 'class' => 'col-span-full md:col-span-6', 'fields' => ['speed', 'speed_type']],
-            ['label' => 'Package', 'class' => 'col-span-full md:col-span-6', 'fields' => ['pool', 'billing_cycle_id', 'gateway_id', 'amount', 'default']],
-            ['label' => 'Package', 'class' => 'col-span-full md:col-span-6', 'fields' => ['published', 'featured', 'is_unlimited', 'is_hidden', 'ordering']],
+            ['label' => 'Bundle', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['bundle', 'bundle_type']],
+            ['label' => 'Speed', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['speed', 'speed_type']],
+            ['label' => 'Package', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['pool', 'billing_cycle_id', 'gateway_id', 'amount', 'default']],
+            ['label' => 'Package', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published', 'featured', 'is_unlimited', 'is_hidden', 'ordering']],
             ['label' => 'Description', 'class' => 'col-span-full', 'fields' => ['description']],
         ];
         $structure['filter'] = ['title', 'billing_cycle_id', 'gateway_id', 'published'];

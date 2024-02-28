@@ -65,8 +65,8 @@ class Gateway extends BaseModel
         $structure['table'] = ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'];
         $structure['form'] = [
             ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title']],
-            ['label' => 'Setting', 'class' => 'col-span-full md:col-span-6', 'fields' => ['username', 'password', 'database', 'ip_address']],
-            ['label' => 'Other', 'class' => 'col-span-full md:col-span-6', 'fields' => ['port', 'type', 'published']],
+            ['label' => 'Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['username', 'password', 'database', 'ip_address']],
+            ['label' => 'Other', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['port', 'type', 'published']],
         ];
         $structure['filter'] = ['title', 'username', 'published'];
 
