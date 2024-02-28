@@ -75,9 +75,9 @@ class SubscriberLogin extends BaseModel
 
         $structure['table'] = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc'];
         $structure['form'] = [
-            ['label' => 'Mac', 'class' => 'col-span-full', 'fields' => ['mac']],
-            ['label' => 'Main', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc']],
-            ['label' => 'Main', 'class' => 'col-span-full md:col-span-6ull  md:col-span-6 md:pr-2', 'fields' => ['chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc']],
+            ['label' => 'Subscriber Login Mac', 'class' => 'col-span-full', 'fields' => ['mac']],
+            ['label' => 'Subscriber Login Detail', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc']],
+            ['label' => 'Subscriber Login Setting', 'class' => 'col-span-full md:col-span-6ull  md:col-span-6 md:pr-2', 'fields' => ['chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc']],
         ];
         $structure['filter'] = ['mac', 'ip', 'username'];
 

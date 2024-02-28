@@ -65,11 +65,11 @@ class PackageCharge extends BaseModel
 
         $structure['table'] = ['title', 'slug', 'package_id', 'ledger_id', 'price', 'quantity', 'published'];
         $structure['form'] = [
-            ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Package', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['package_id', 'ledger_id']],
-            ['label' => 'Price', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['price', 'quantity']],
-            ['label' => 'Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published']],
-            ['label' => 'Description', 'class' => 'col-span-full', 'fields' => ['description']],
+            ['label' => 'Package Charge Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
+            ['label' => 'Package Charge Detail', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['package_id', 'ledger_id']],
+            ['label' => 'Package Charge Price', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['price', 'quantity']],
+            ['label' => 'Package Charge Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published']],
+            ['label' => 'Package Charge Description', 'class' => 'col-span-full', 'fields' => ['description']],
         ];
         $structure['filter'] = ['title', 'package_id', 'ledger_id', 'published'];
 

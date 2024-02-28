@@ -64,9 +64,9 @@ class BillingCycle extends BaseModel
 
         $structure['table'] = ['title', 'slug', 'duration', 'duration_type', 'published'];
         $structure['form'] = [
-            ['label' => 'Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Duration', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['duration', 'duration_type']],
-            ['label' => 'Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published']],
+            ['label' => 'Billing Cylcle Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
+            ['label' => 'Billing Cylcle Duration', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['duration', 'duration_type']],
+            ['label' => 'Billing Cylcle Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published']],
         ];
         $structure['filter'] = ['title', 'duration', 'duration_type', 'published'];
 
