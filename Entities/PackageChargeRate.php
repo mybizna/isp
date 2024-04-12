@@ -52,4 +52,15 @@ class PackageChargeRate extends BaseModel
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
+
+    /**
+     * Define rights for this model.
+     *
+     * @return array
+     */
+    public function rights(): array
+    {
+
+    }
+
 }

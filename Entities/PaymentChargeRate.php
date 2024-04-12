@@ -51,4 +51,15 @@ class PaymentChargeRate extends BaseModel
         $this->fields->foreignId('rate_id')->html('recordpicker')->relation(['account', 'rate']);
     }
 
+
+    /**
+     * Define rights for this model.
+     *
+     * @return array
+     */
+    public function rights(): array
+    {
+
+    }
+
 }

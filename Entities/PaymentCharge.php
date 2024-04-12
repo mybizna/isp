@@ -75,4 +75,15 @@ class PaymentCharge extends BaseModel
         return $structure;
     }
 
+
+    /**
+     * Define rights for this model.
+     *
+     * @return array
+     */
+    public function rights(): array
+    {
+
+    }
+
 }
