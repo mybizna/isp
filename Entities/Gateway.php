@@ -15,20 +15,6 @@ class Gateway extends BaseModel
     protected $fillable = ['title', 'username', 'password', 'database', 'ip_address', 'port', 'type', 'published'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['title'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = [];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -56,38 +42,9 @@ class Gateway extends BaseModel
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-
-        $structure['table'] = ['title', 'username', 'database', 'ip_address', 'port', 'type', 'published'];
-        $structure['form'] = [
-            ['label' => 'Gateway Title', 'class' => 'col-span-full', 'fields' => ['title']],
-            ['label' => 'Gateway Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['username', 'password', 'database', 'ip_address']],
-            ['label' => 'Gateway Other', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['port', 'type', 'published']],
-        ];
-        $structure['filter'] = ['title', 'username', 'published'];
-
-        return $structure;
-    }
+   
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
 
-        $rights['staff'] = [];
-        $rights['registered'] = [];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
 
 }

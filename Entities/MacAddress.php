@@ -16,20 +16,6 @@ class MacAddress extends BaseModel
     protected $fillable = ['subscriber_id', 'mac'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['subscriber_id', 'mac'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = ['isp_subscriber'];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -52,20 +38,6 @@ class MacAddress extends BaseModel
     }
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
-
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
+   
 
 }

@@ -16,20 +16,6 @@ class SubscriberLogin extends BaseModel
     protected $fillable = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc', 'mac_esc'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['mac', 'username'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = [];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -67,38 +53,9 @@ class SubscriberLogin extends BaseModel
         $this->fields->string('mac_esc')->nullable()->html('text');
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-
-        $structure['table'] = ['mac', 'ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc'];
-        $structure['form'] = [
-            ['label' => 'Subscriber Login Mac', 'class' => 'col-span-full', 'fields' => ['mac']],
-            ['label' => 'Subscriber Login Detail', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['ip', 'username', 'link_login', 'link_orig', 'error', 'mac_esc']],
-            ['label' => 'Subscriber Login Setting', 'class' => 'col-span-full md:col-span-6ull  md:col-span-6 md:pr-2', 'fields' => ['chap_id', 'chap_challenge', 'link_login_id', 'link_orig_esc']],
-        ];
-        $structure['filter'] = ['mac', 'ip', 'username'];
-
-        return $structure;
-    }
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
 
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
 
-        return $rights;
-    }
 
 }

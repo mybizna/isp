@@ -15,20 +15,6 @@ class BillingCycle extends BaseModel
     protected $fillable = ['title', 'slug', 'description', 'duration', 'duration_type', 'published'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['title'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = [];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -56,37 +42,8 @@ class BillingCycle extends BaseModel
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-
-        $structure['table'] = ['title', 'slug', 'duration', 'duration_type', 'published'];
-        $structure['form'] = [
-            ['label' => 'Billing Cylcle Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Billing Cylcle Duration', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['duration', 'duration_type']],
-            ['label' => 'Billing Cylcle Setting', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['published']],
-        ];
-        $structure['filter'] = ['title', 'duration', 'duration_type', 'published'];
-
-        return $structure;
-    }
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
 
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
+  
 }

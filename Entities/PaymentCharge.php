@@ -16,20 +16,6 @@ class PaymentCharge extends BaseModel
     protected $fillable = ['title', 'slug', 'payment_id', 'ledger_id', 'price', 'quantity', 'published'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['title'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = ['isp_payment', 'account_ledger'];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -57,39 +43,8 @@ class PaymentCharge extends BaseModel
         $this->fields->boolean('published')->default(true)->nullable()->html('switch');
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-
-        $structure['table'] = ['title', 'payment_id', 'ledger_id', 'price', 'published'];
-        $structure['form'] = [
-            ['label' => 'Payment Charge Title', 'class' => 'col-span-full', 'fields' => ['title', 'slug']],
-            ['label' => 'Payment Charge Detail', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['payment_id', 'ledger_id']],
-            ['label' => 'Payment Charge Amount', 'class' => 'col-span-full  md:col-span-6 md:pr-2', 'fields' => ['price', 'quantity']],
-            ['label' => 'Payment Charge Setting', 'class' => 'col-span-full md:col-span-6ull  md:col-span-6 md:pr-2', 'fields' => ['published']],
-        ];
-        $structure['filter'] = ['title', 'payment_id', 'ledger_id'];
-
-        return $structure;
-    }
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
 
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
 
 }

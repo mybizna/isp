@@ -16,20 +16,6 @@ class Subscription extends BaseModel
     protected $fillable = ['subscriber_id', 'package_id', 'start_date', 'end_date'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['subscriber_id', 'package_id'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = ['isp_subscriber', 'isp_package'];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -60,32 +46,9 @@ class Subscription extends BaseModel
         $this->fields->datetime('end_date')->html('datetime');
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-        $structure['table'] = ['subscriber_id', 'package_id', 'start_date', 'end_date'];
-        $structure['filter'] = ['subscriber_id', 'package_id', 'start_date', 'end_date'];
-
-        return $structure;
-    }
+  
 
 
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
 
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
 
 }

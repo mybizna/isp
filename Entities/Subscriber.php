@@ -16,20 +16,6 @@ class Subscriber extends BaseModel
     protected $fillable = ['username', 'password', 'had_trail', 'partner_id'];
 
     /**
-     * The fields that are to be render when performing relationship queries.
-     *
-     * @var array<string>
-     */
-    public $rec_names = ['username'];
-
-    /**
-     * List of tables names that are need in this model during migration.
-     *
-     * @var array<string>
-     */
-    public array $migrationDependancy = [];
-
-    /**
      * The table associated with the model.
      *
      * @var string
@@ -60,30 +46,6 @@ class Subscriber extends BaseModel
         $this->fields->foreignId('partner_id')->nullable()->html('recordpicker')->relation(['partner']);
     }
 
-    /**
-     * List of structure for this model.
-     */
-    public function structure($structure): array
-    {
-        $structure['table'] = ['username', 'had_trail', 'partner_id'];
-        $structure['filter'] = ['username', 'partner_id'];
+  
 
-        return $structure;
-    }
-
-    /**
-     * Define rights for this model.
-     *
-     * @return array
-     */
-    public function rights(): array
-    {
-        $rights = parent::rights();
-
-        $rights['staff'] = ['view' => true];
-        $rights['registered'] = ['view' => true];
-        $rights['guest'] = [];
-
-        return $rights;
-    }
 }
