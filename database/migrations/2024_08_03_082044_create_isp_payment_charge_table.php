@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('isp_payment_charge', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->string('title');
+            $table->string('slug');
+            $table->foreignId('payment_id');
+            $table->foreignId('ledger_id');
+            $table->integer('quantity')->default(1);
+            $table->string('description')->nullable();
+            $table->double('price', 8, 2)->nullable();
+            $table->boolean('published')->default(true)->nullable();
+
             $table->timestamps();
         });
     }

@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('isp_package_charge_rate', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->foreignId('payment_charge_id');
+            $table->foreignId('rate_id');
+            $table->boolean('published')->default(true)->nullable();
+
             $table->timestamps();
         });
     }

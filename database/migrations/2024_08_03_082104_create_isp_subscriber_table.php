@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('isp_subscriber', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->string('username');
+            $table->string('password');
+            $table->boolean('had_trail')->default(0)->nullable();
+            $table->foreignId('partner_id')->nullable();
+
             $table->timestamps();
         });
     }

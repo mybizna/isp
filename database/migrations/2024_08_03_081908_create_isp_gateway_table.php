@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('isp_gateway', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->string('title');
+            $table->string('username');
+            $table->string('password');
+            $table->string('database');
+            $table->string('ip_address');
+            $table->string('port');
+            $table->string('type');
+            $table->boolean('published')->nullable()->default(true);
+
             $table->timestamps();
         });
     }

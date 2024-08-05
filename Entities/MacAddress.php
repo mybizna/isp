@@ -22,20 +22,7 @@ class MacAddress extends BaseModel
      */
     protected $table = "isp_mac_address";
 
-    /**
-     * List of fields to be migrated to the datebase when creating or updating model during migration.
-     *
-     * @param Blueprint $table
-     * @return void
-     */
-    public function fields(Blueprint $table = null): void
-    {
-        $this->fields = $table ?? new Blueprint($this->table);
 
-        $this->fields->increments('id')->html('hidden');
-        $this->fields->foreignId('subscriber_id')->nullable()->html('recordpicker')->relation(['isp', 'subscriber']);
-        $this->fields->string('mac')->nullable()->html('text');
-    }
 
 
    

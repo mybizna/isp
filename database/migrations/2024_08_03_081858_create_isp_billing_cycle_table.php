@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('isp_billing_cycle', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title');
+            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->string('duration')->nullable();
+            $table->enum('duration_type', ['day', 'week', 'month', 'year'])->default('month')->nullable();
+            $table->boolean('published')->default(true)->nullable();
+
+
+    
             
             $table->timestamps();
         });

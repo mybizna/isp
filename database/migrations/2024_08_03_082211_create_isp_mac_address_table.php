@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('isp_mac_address', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->foreignId('subscriber_id')->nullable();
+            $table->string('mac')->nullable();
+
             $table->timestamps();
         });
     }

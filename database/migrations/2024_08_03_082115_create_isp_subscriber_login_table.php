@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('isp_subscriber_login', function (Blueprint $table) {
             $table->id();
-            
+
+            $table->string('mac')->nullable();
+            $table->string('ip')->nullable();
+            $table->string('username')->nullable();
+            $table->string('link_login')->nullable();
+            $table->string('link_orig')->nullable();
+            $table->string('error')->nullable();
+            $table->string('chap_id')->nullable();
+            $table->string('chap_challenge')->nullable();
+            $table->string('link_login_id')->nullable();
+            $table->string('link_orig_esc')->nullable();
+            $table->string('mac_esc')->nullable();
+
             $table->timestamps();
         });
     }
