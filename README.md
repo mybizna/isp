@@ -20,7 +20,7 @@ The ISP module provides a range of features to streamline your internet service 
 To leverage these features, access the MyBizNa ERP application and navigate to the ISP module. Explore the available options to efficiently manage your ISP operations, enhance customer satisfaction, and optimize business processes.
 
 ## Requirements
-Mybizna ERP version 1.0 or above
+Mybizna ERP version 2024.1 or above
 
 ## Support
 If you have any questions or need assistance, please contact our support team. We're always happy to help!
