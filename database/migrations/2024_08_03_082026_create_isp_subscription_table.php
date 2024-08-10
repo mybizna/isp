@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('isp_subscription', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('subscriber_id')->constrained('isp_subscriber')->onDelete('cascade')->index('subscriber_id');
-            $table->foreignId('package_id')->constrained('isp_package')->onDelete('cascade')->index('package_id');
+            $table->foreignId('subscriber_id')->constrained('isp_subscriber')->onDelete('cascade')->index('isp_subscription_subscriber_id');
+            $table->foreignId('package_id')->constrained('isp_package')->onDelete('cascade')->index('isp_subscription_package_id');
             $table->datetime('start_date');
             $table->datetime('end_date');
 

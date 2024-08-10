@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('isp_mac_address', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('subscriber_id')->constrained('isp_subscriber')->onDelete('cascade')->nullable()->index('subscriber_id');
+            $table->foreignId('subscriber_id')->constrained('isp_subscriber')->onDelete('cascade')->nullable()->index('isp_mac_address_subscriber_id');
             $table->string('mac')->nullable();
 
             $table->timestamps();
