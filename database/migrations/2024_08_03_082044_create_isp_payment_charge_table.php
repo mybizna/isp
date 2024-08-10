@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('slug');
-            $table->foreignId('payment_id');
-            $table->foreignId('ledger_id');
+            $table->foreignId('payment_id')->constrained('isp_payment')->onDelete('cascade')->index('payment_id');
+            $table->foreignId('ledger_id')->constrained('account_ledger')->onDelete('cascade')->index('ledger_id');
             $table->integer('quantity')->default(1);
             $table->string('description')->nullable();
             $table->double('price', 8, 2)->nullable();

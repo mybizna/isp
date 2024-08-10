@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->boolean('had_trail')->default(0)->nullable();
-            $table->foreignId('partner_id')->nullable();
+            $table->foreignId('partner_id')->constrained('partner_partner')->onDelete('cascade')->nullable()->index('partner_id');
 
             $table->timestamps();
         });

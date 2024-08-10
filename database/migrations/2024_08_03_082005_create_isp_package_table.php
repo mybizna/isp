@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('pool');
             $table->string('description')->nullable();
-            $table->foreignId('billing_cycle_id')->nullable();
-            $table->foreignId('gateway_id')->nullable();
+            $table->foreignId('billing_cycle_id')->constrained('account_billing_cycle')->onDelete('cascade')->nullable()->index('billing_cycle_id');
+            $table->foreignId('gateway_id')->constrained('account_gateway')->onDelete('cascade')->nullable()->index('gateway_id');
             $table->string('speed')->nullable();
             $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
             $table->string('bundle')->nullable();
