@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('payment_charge_id')->constrained('isp_payment_charge')->onDelete('cascade')->index('payment_charge_id');
-            $table->foreignId('rate_id')->constrained('account_ledger')->onDelete('cascade')->index('rate_id');
+            $table->foreignId('rate_id')->constrained('account_rate')->onDelete('cascade')->index('rate_id');
 
             $table->timestamps();
         });
