@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Isp\Entities;
+namespace Modules\Isp\Models;
 
-use Modules\Base\Entities\BaseModel;
+use Modules\Base\Models\BaseModel;
 
 class BillingCycle extends BaseModel
 {

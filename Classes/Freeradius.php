@@ -5,10 +5,10 @@ namespace Modules\Isp\Classes;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Modules\Isp\Entities\Gateway;
-use Modules\Isp\Entities\Package;
-use Modules\Isp\Entities\Subscriber;
-use Modules\Isp\Entities\Subscription;
+use Modules\Isp\Modelsateway;
+use Modules\Isp\Modelsackage;
+use Modules\Isp\Modelsubscriber;
+use Modules\Isp\Modelsubscription;
 
 class Freeradius
 {

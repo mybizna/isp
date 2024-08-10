@@ -8,8 +8,8 @@ use Modules\Account\Classes\Ledger;
 use Modules\Base\Http\Controllers\BaseController;
 use Modules\Core\Classes\Currency;
 use Modules\Isp\Classes\Subscription;
-use Modules\Isp\Entities\SubscriberLogin;
-use Modules\Isp\Entities\Subscription as DBSubscription;
+use Modules\Isp\Models\SubscriberLogin;
+use Modules\Isp\Models\Subscription as DBSubscription;
 use Session;
 
 class SubscriptionController extends BaseController
@@ -143,8 +143,6 @@ class SubscriptionController extends BaseController
         $data['return_url'] = $request->get('return_url');
         $data['currency'] = $currency->getDefaultCurrency();
 
-       
-
         $subscriber = $subscription->getSubscriber($data);
 
         if ($subscriber) {
@@ -152,7 +150,7 @@ class SubscriptionController extends BaseController
         } else {
             $invoice = $subscription->saveSubcriber($request, $data);
         }
-       
+
         $request->session()->put('subscription_data', $data);
 
         if ($invoice) {
@@ -163,7 +161,7 @@ class SubscriptionController extends BaseController
                     ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
             } else {
                 return redirect()
-                    ->route('account_payment', ['invoice_id' => $invoice->id,'return_url' => $data['return_url']])
+                    ->route('account_payment', ['invoice_id' => $invoice->id, 'return_url' => $data['return_url']])
                     ->header('pragma', 'no-cache')
                     ->header('Cache-Control', 'no-store,no-cache, must-revalidate, post-check=0, pre-check=0');
             }

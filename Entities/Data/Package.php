@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Isp\Entities\Data;
+namespace Modules\Isp\Models\Data;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Base\Classes\Datasetter;
@@ -9,7 +9,7 @@ class Package
 {
     /**
      * Set ordering of the Class to be migrated.
-     * 
+     *
      * @var int
      */
     public $ordering = 5;
@@ -90,7 +90,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
-        ]);  
+        ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '12-hour')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -105,7 +105,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
-        ]);   
+        ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-day')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -120,8 +120,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
-        ]); 
-
+        ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-week')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -136,7 +135,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
-        ]);  
+        ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '2-week')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -151,7 +150,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
-        ]);  
+        ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -167,7 +166,7 @@ class Package
             "featured" => 1,
             "is_hidden" => 0,
         ]);
-        
+
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
         $datasetter->add_data('isp', 'package', 'slug', [
             "title" => "1M-PPP",

@@ -6,27 +6,27 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Modules\Account\Classes\Invoice;
 use Modules\Account\Classes\Ledger;
-use Modules\Account\Entities\Invoice as DBInvoice;
-use Modules\Account\Entities\InvoiceItem as DBInvoiceItem;
+use Modules\Account\Models\Invoice as DBInvoice;
+use Modules\Account\Models\InvoiceItem as DBInvoiceItem;
 use Modules\Isp\Classes\Freeradius;
-use Modules\Isp\Entities\MacAddress;
-use Modules\Isp\Entities\Package;
-use Modules\Isp\Entities\Subscriber;
-use Modules\Isp\Entities\SubscriberLogin;
-use Modules\Isp\Entities\Subscription as DBSubscription;
+use Modules\Isp\Models\MacAddress;
+use Modules\Isp\Models\Package;
+use Modules\Isp\Models\Subscriber;
+use Modules\Isp\Models\SubscriberLogin;
+use Modules\Isp\Models\Subscription as DBSubscription;
 use Modules\Partner\Classes\Partner as PartnerCls;
-use Modules\Partner\Entities\Partner;
+use Modules\Partner\Models\Partner;
 
 class Subscription
 {
     public function summary($data = [])
     {
 
-        $start = new \DateTime ('now - 1 year');
-        $end = new \DateTime ();
+        $start = new \DateTime('now - 1 year');
+        $end = new \DateTime();
 
-        $interval = new \DateInterval ('P1M');
-        $period = new \DatePeriod ($start, $interval, $end);
+        $interval = new \DateInterval('P1M');
+        $period = new \DatePeriod($start, $interval, $end);
 
         $start_date = $start->modify('first day of this month')->format('Y-m-d 00:00:00');
         $end_date = $end->modify('last day of this month')->format('Y-m-d 23.59.59');
@@ -157,7 +157,7 @@ class Subscription
         }
 
         $mac_address = MacAddress::where(['subscriber_id' => $item_subscriber->id])->first();
-        
+
         if (!$mac_address) {
             $mac_address = MacAddress::updateOrCreate([
                 'subscriber_id' => $item_subscriber->id,
@@ -268,7 +268,7 @@ class Subscription
                 $date = ($package->duration) ? $date->addYears($package->duration) : $date->addYear();
                 break;
             default:
-                throw new \Exception ("Package [$package->title] does not have correct Duration setting", 1);
+                throw new \Exception("Package [$package->title] does not have correct Duration setting", 1);
                 break;
         }
 
@@ -310,7 +310,6 @@ class Subscription
         }
 
         $partner = $partner_qry->first();
-      
 
         if (!$partner) {
             $partner = $partner_cls->createPartner([
@@ -387,7 +386,7 @@ class Subscription
             $invoice->reconcileInvoices($partner_id);
             return $this->getInvoice($invoiceitem->invoice_id);
         } else {
-            return $invoice->generateInvoice($title, $partner_id, $items, description:$title);
+            return $invoice->generateInvoice($title, $partner_id, $items, description: $title);
         }
 
     }

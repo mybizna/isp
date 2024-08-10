@@ -1,10 +1,8 @@
 <?php
 
-namespace Modules\Isp\Entities;
+namespace Modules\Isp\Models;
 
-use Illuminate\Database\Schema\Blueprint;
-use Modules\Base\Classes\Migration;
-use Modules\Base\Entities\BaseModel;
+use Modules\Base\Models\BaseModel;
 
 class MacAddress extends BaseModel
 {
@@ -21,10 +19,5 @@ class MacAddress extends BaseModel
      * @var string
      */
     protected $table = "isp_mac_address";
-
-
-
-
-   
 
 }

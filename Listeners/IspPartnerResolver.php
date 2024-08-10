@@ -2,7 +2,7 @@
 
 namespace Modules\Isp\Listeners;
 
-use Modules\Isp\Entities\Subscriber;
+use Modules\Isp\Models\Subscriber;
 
 class IspPartnerResolver
 {
