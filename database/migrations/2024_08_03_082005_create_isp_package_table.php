@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('pool');
             $table->string('description')->nullable();
-            $table->foreignId('billing_cycle_id')->constrained('account_billing_cycle')->onDelete('cascade')->nullable()->index('isp_package_billing_cycle_id');
-            $table->foreignId('gateway_id')->constrained('account_gateway')->onDelete('cascade')->nullable()->index('isp_package_gateway_id');
+            $table->foreignId('billing_cycle_id')->constrained('isp_billing_cycle')->onDelete('cascade')->nullable()->index('isp_package_billing_cycle_id');
+            $table->foreignId('gateway_id')->constrained('isp_gateway')->onDelete('cascade')->nullable()->index('isp_package_gateway_id');
             $table->string('speed')->nullable();
             $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
             $table->string('bundle')->nullable();

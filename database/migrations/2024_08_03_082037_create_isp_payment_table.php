@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-            $table->foreignId('subscription_id'->constrained('isp_subscription')->onDelete('cascade'))->nullable()->index('isp_payment_subscription_id');
+            $table->foreignId('subscription_id')->constrained('isp_subscription')->onDelete('cascade')->nullable()->index('isp_payment_subscription_id');
             $table->foreignId('invoice_id')->constrained('account_invoice')->onDelete('cascade')->nullable()->index('isp_payment_invoice_id');
             $table->string('description')->nullable();
             $table->boolean('is_paid')->default(0)->nullable();
