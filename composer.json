@@ -26,7 +26,14 @@
   },
   "autoload": {
     "psr-4": {
-      "Modules\\Isp\\": ""
+      "Modules\\Isp\\": "app/",
+      "Modules\\Isp\\Database\\Factories\\": "database/factories/",
+      "Modules\\Isp\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Modules\\Isp\\Tests\\": "tests/"
     }
   }
 }
