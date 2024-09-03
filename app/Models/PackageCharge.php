@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class PackageCharge extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -19,5 +20,4 @@ class PackageCharge extends BaseModel
      * @var string
      */
     protected $table = "isp_package_charge";
-
 }

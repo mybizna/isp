@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class BillingCycle extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -19,5 +20,4 @@ class BillingCycle extends BaseModel
      * @var string
      */
     protected $table = "isp_billing_cycle";
-
 }

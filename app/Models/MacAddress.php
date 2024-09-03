@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class MacAddress extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -19,5 +20,4 @@ class MacAddress extends BaseModel
      * @var string
      */
     protected $table = "isp_mac_address";
-
 }

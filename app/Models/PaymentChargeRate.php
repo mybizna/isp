@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class PaymentChargeRate extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -19,5 +20,4 @@ class PaymentChargeRate extends BaseModel
      * @var string
      */
     protected $table = "isp_payment_charge_rate";
-
 }

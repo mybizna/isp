@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class Subscription extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -19,5 +20,4 @@ class Subscription extends BaseModel
      * @var string
      */
     protected $table = "isp_subscription";
-
 }

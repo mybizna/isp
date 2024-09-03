@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class Subscriber extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -26,5 +27,4 @@ class Subscriber extends BaseModel
      * @var bool
      */
     public bool $show_frontend = true;
-
 }

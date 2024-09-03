@@ -6,6 +6,7 @@ use Modules\Base\Models\BaseModel;
 
 class Package extends BaseModel
 {
+
     /**
      * The fields that can be filled
      *
@@ -23,5 +24,4 @@ class Package extends BaseModel
      * @var string
      */
     protected $table = "isp_package";
-
 }
