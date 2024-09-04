@@ -9,7 +9,7 @@ class IspServiceProvider extends ServiceProvider
 {
     protected string $moduleName = 'Isp';
 
-    protected string $moduleNameLower = 'Isp';
+    protected string $moduleNameLower = 'isp';
 
     /**
      * Boot the application events.

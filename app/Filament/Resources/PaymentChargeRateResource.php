@@ -2,9 +2,6 @@
 
 namespace Modules\Isp\Filament\Resources;
 
-use Modules\Isp\Filament\Resources\PaymentChargeRateResource\Pages;
-use Modules\Isp\Filament\Resources\PaymentChargeRateResource\RelationManagers;
-use Modules\Isp\Models\PaymentChargeRate;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +9,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Isp\Filament\Resources\PaymentChargeRateResource\Pages;
+use Modules\Isp\Models\PaymentChargeRate;
 
 class PaymentChargeRateResource extends Resource
 {
     protected static ?string $model = PaymentChargeRate::class;
+
+    protected static ?string $slug = 'isp/payment/charge/rate';
+
+    protected static ?string $navigationGroup = 'Isp';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

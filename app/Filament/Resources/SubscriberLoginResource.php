@@ -2,9 +2,6 @@
 
 namespace Modules\Isp\Filament\Resources;
 
-use Modules\Isp\Filament\Resources\SubscriberLoginResource\Pages;
-use Modules\Isp\Filament\Resources\SubscriberLoginResource\RelationManagers;
-use Modules\Isp\Models\SubscriberLogin;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +9,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Isp\Filament\Resources\SubscriberLoginResource\Pages;
+use Modules\Isp\Models\SubscriberLogin;
 
 class SubscriberLoginResource extends Resource
 {
     protected static ?string $model = SubscriberLogin::class;
+
+    protected static ?string $slug = 'isp/subscriber/login';
+
+    protected static ?string $navigationGroup = 'Isp';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

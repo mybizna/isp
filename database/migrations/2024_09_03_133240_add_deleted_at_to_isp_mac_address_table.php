@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('isp_mac_address', function (Blueprint $table) {
-           $table->dropColumn('deleted_at'); 
+            $table->dropColumn('deleted_at');
         });
     }
-    }
+};

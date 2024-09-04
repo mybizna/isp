@@ -2,9 +2,6 @@
 
 namespace Modules\Isp\Filament\Resources;
 
-use Modules\Isp\Filament\Resources\MacAddressResource\Pages;
-use Modules\Isp\Filament\Resources\MacAddressResource\RelationManagers;
-use Modules\Isp\Models\MacAddress;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +9,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Isp\Filament\Resources\MacAddressResource\Pages;
+use Modules\Isp\Models\MacAddress;
 
 class MacAddressResource extends Resource
 {
     protected static ?string $model = MacAddress::class;
+
+    protected static ?string $slug = 'isp/mac_address';
+
+    protected static ?string $navigationGroup = 'Isp';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

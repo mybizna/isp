@@ -2,9 +2,6 @@
 
 namespace Modules\Isp\Filament\Resources;
 
-use Modules\Isp\Filament\Resources\BillingCycleResource\Pages;
-use Modules\Isp\Filament\Resources\BillingCycleResource\RelationManagers;
-use Modules\Isp\Models\BillingCycle;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +9,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Isp\Filament\Resources\BillingCycleResource\Pages;
+use Modules\Isp\Models\BillingCycle;
 
 class BillingCycleResource extends Resource
 {
     protected static ?string $model = BillingCycle::class;
+
+    protected static ?string $slug = 'isp/billing_cycle';
+
+    protected static ?string $navigationGroup = 'Isp';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
