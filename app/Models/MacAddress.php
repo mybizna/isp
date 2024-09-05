@@ -3,6 +3,7 @@
 namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
+use Modules\Isp\Models\Subscriber;
 
 class MacAddress extends BaseModel
 {
@@ -20,4 +21,13 @@ class MacAddress extends BaseModel
      * @var string
      */
     protected $table = "isp_mac_address";
+
+    /**
+     * Add relationship to Subscriber
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subscriber()
+    {
+        return $this->belongsTo(Subscriber::class);
+    }
 }

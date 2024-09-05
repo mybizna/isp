@@ -3,6 +3,7 @@
 namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
+use Modules\Partner\Models\Partner;
 
 class Subscriber extends BaseModel
 {
@@ -27,4 +28,13 @@ class Subscriber extends BaseModel
      * @var bool
      */
     public bool $show_frontend = true;
+
+    /**
+     * Add relationship to Partner
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function partner()
+    {
+        return $this->belongsTo(Partner::class);
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace Modules\Isp\Models;
 
+use Modules\Account\Models\Ledger;
 use Modules\Base\Models\BaseModel;
+use Modules\Isp\Models\Payment;
 
 class PaymentCharge extends BaseModel
 {
@@ -20,4 +22,22 @@ class PaymentCharge extends BaseModel
      * @var string
      */
     protected $table = "isp_payment_charge";
+
+    /**
+     * Add relationship to Payment
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    /**
+     * Add relationship to Ledger
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ledger()
+    {
+        return $this->belongsTo(Ledger::class);
+    }
 }
