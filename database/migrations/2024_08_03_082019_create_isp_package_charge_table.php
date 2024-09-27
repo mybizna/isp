@@ -16,14 +16,19 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('slug');
-            $table->foreignId('package_id')->constrained('isp_package')->onDelete('cascade')->index('isp_package_charge_package_id');
-            $table->foreignId('ledger_id')->constrained('account_ledger')->onDelete('cascade')->index('isp_package_charge_ledger_id');
+            $table->foreignId('package_id')->nullable()->constrained('isp_package')->onDelete('set null');
+            $table->foreignId('ledger_id')->nullable()->constrained('account_ledger')->onDelete('set null');
             $table->tinyInteger('quantity')->default(1);
             $table->string('description')->nullable();
             $table->double('price', 8, 2)->nullable();
             $table->boolean('published')->default(true)->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

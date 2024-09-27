@@ -14,10 +14,15 @@ return new class extends Migration
         Schema::create('isp_mac_address', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('subscriber_id')->constrained('isp_subscriber')->onDelete('cascade')->nullable()->index('isp_mac_address_subscriber_id');
+            $table->foreignId('subscriber_id')->nullable()->constrained('isp_subscriber')->onDelete('set null');
             $table->string('mac')->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

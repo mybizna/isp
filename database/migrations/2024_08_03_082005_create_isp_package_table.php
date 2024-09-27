@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('pool');
             $table->string('description')->nullable();
-            $table->foreignId('billing_cycle_id')->constrained('isp_billing_cycle')->onDelete('cascade')->nullable()->index('isp_package_billing_cycle_id');
-            $table->foreignId('gateway_id')->constrained('isp_gateway')->onDelete('cascade')->nullable()->index('isp_package_gateway_id');
+            $table->foreignId('billing_cycle_id')->nullable()->constrained('isp_billing_cycle')->onDelete('set null');
+            $table->foreignId('gateway_id')->nullable()->constrained('isp_gateway')->onDelete('set null');
             $table->string('speed')->nullable();
             $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
             $table->string('bundle')->nullable();
@@ -32,7 +32,12 @@ return new class extends Migration
             $table->boolean('is_hidden')->default(false)->nullable();
             $table->decimal('amount', 8, 2)->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

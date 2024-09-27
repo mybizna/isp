@@ -15,14 +15,19 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-            $table->foreignId('subscription_id')->constrained('isp_subscription')->onDelete('cascade')->nullable()->index('isp_payment_subscription_id');
-            $table->foreignId('invoice_id')->constrained('account_invoice')->onDelete('cascade')->nullable()->index('isp_payment_invoice_id');
+            $table->foreignId('subscription_id')->nullable()->constrained('isp_subscription')->onDelete('set null');
+            $table->foreignId('invoice_id')->nullable()->constrained('account_invoice')->onDelete('set null');
             $table->string('description')->nullable();
             $table->boolean('is_paid')->default(0)->nullable();
             $table->boolean('completed')->default(0)->nullable();
             $table->boolean('successful')->default(0)->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

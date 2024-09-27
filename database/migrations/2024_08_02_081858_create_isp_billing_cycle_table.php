@@ -18,13 +18,15 @@ return new class extends Migration
             $table->string('slug');
             $table->string('description')->nullable();
             $table->string('duration')->nullable();
-            $table->enum('duration_type', ['day', 'week', 'month', 'year'])->default('month')->nullable();
+            $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('day')->nullable();
             $table->boolean('published')->default(true)->nullable();
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
 
-    
-            
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
