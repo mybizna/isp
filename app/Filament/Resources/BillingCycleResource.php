@@ -4,15 +4,12 @@ namespace Modules\Isp\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Isp\Filament\Resources\BillingCycleResource\Pages;
+use Modules\Base\Filament\Resources\BaseResource;
 use Modules\Isp\Models\BillingCycle;
 
-class BillingCycleResource extends Resource
+class BillingCycleResource extends BaseResource
 {
     protected static ?string $model = BillingCycle::class;
 
@@ -82,27 +79,4 @@ class BillingCycleResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListBillingCycles::route('/'),
-            'create' => Pages\CreateBillingCycle::route('/create'),
-            'edit' => Pages\EditBillingCycle::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
 }

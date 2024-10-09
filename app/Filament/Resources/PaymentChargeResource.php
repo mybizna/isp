@@ -4,15 +4,12 @@ namespace Modules\Isp\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Isp\Filament\Resources\PaymentChargeResource\Pages;
+use Modules\Base\Filament\Resources\BaseResource;
 use Modules\Isp\Models\PaymentCharge;
 
-class PaymentChargeResource extends Resource
+class PaymentChargeResource extends BaseResource
 {
     protected static ?string $model = PaymentCharge::class;
 
@@ -101,27 +98,4 @@ class PaymentChargeResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListPaymentCharges::route('/'),
-            'create' => Pages\CreatePaymentCharge::route('/create'),
-            'edit' => Pages\EditPaymentCharge::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
 }

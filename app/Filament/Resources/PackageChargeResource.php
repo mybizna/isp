@@ -4,15 +4,12 @@ namespace Modules\Isp\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Isp\Filament\Resources\PackageChargeResource\Pages;
+use Modules\Base\Filament\Resources\BaseResource;
 use Modules\Isp\Models\PackageCharge;
 
-class PackageChargeResource extends Resource
+class PackageChargeResource extends BaseResource
 {
     protected static ?string $model = PackageCharge::class;
 
@@ -101,27 +98,4 @@ class PackageChargeResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListPackageCharges::route('/'),
-            'create' => Pages\CreatePackageCharge::route('/create'),
-            'edit' => Pages\EditPackageCharge::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
 }

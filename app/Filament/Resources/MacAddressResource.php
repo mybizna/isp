@@ -4,15 +4,12 @@ namespace Modules\Isp\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Isp\Filament\Resources\MacAddressResource\Pages;
+use Modules\Base\Filament\Resources\BaseResource;
 use Modules\Isp\Models\MacAddress;
 
-class MacAddressResource extends Resource
+class MacAddressResource extends BaseResource
 {
     protected static ?string $model = MacAddress::class;
 
@@ -68,27 +65,4 @@ class MacAddressResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListMacAddresses::route('/'),
-            'create' => Pages\CreateMacAddress::route('/create'),
-            'edit' => Pages\EditMacAddress::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
 }

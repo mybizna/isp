@@ -4,15 +4,12 @@ namespace Modules\Isp\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Isp\Filament\Resources\SubscriptionResource\Pages;
+use Modules\Base\Filament\Resources\BaseResource;
 use Modules\Isp\Models\Subscription;
 
-class SubscriptionResource extends Resource
+class SubscriptionResource extends BaseResource
 {
     protected static ?string $model = Subscription::class;
 
@@ -79,27 +76,4 @@ class SubscriptionResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListSubscriptions::route('/'),
-            'create' => Pages\CreateSubscription::route('/create'),
-            'edit' => Pages\EditSubscription::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
 }
