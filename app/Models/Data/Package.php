@@ -41,6 +41,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 1,
+            "ordering" => 1,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
@@ -60,6 +61,7 @@ class Package
             "default" => 1,
             "featured" => 0,
             "is_hidden" => 1,
+            "ordering" => 10,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-hour')->value('id');
@@ -72,7 +74,7 @@ class Package
             "billing_cycle_id" => $billing_cycle_id,
             "amount" => 5,
             "published" => true,
-            "ordering" => 1,
+            "ordering" => 5,
             "featured" => 0,
             "is_hidden" => 0,
         ]);
@@ -90,6 +92,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '12-hour')->value('id');
@@ -105,6 +108,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-day')->value('id');
@@ -120,6 +124,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-week')->value('id');
@@ -135,6 +140,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '2-week')->value('id');
@@ -150,6 +156,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
@@ -165,6 +172,7 @@ class Package
             "published" => true,
             "featured" => 1,
             "is_hidden" => 0,
+            "ordering" => 5,
         ]);
 
         $billing_cycle_id = DB::table('isp_billing_cycle')->where('slug', '1-month')->value('id');
@@ -181,6 +189,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 1,
+            "ordering" => 5,
         ]);
 
         $datasetter->add_data('isp', 'package', 'slug', [
@@ -196,6 +205,7 @@ class Package
             "published" => true,
             "featured" => 0,
             "is_hidden" => 1,
+            "ordering" => 5,
         ]);
 
     }
