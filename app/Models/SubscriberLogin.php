@@ -3,6 +3,7 @@
 namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
+use Illuminate\Database\Schema\Blueprint;
 
 class SubscriberLogin extends BaseModel
 {
@@ -20,4 +21,23 @@ class SubscriberLogin extends BaseModel
      * @var string
      */
     protected $table = "isp_subscriber_login";
+
+
+    public function migration(Blueprint $table): void
+    {
+        $table->id();
+
+        $table->string('mac')->nullable();
+        $table->string('ip')->nullable();
+        $table->string('username')->nullable();
+        $table->string('link_login')->nullable();
+        $table->string('link_orig')->nullable();
+        $table->string('error')->nullable();
+        $table->string('chap_id')->nullable();
+        $table->string('chap_challenge')->nullable();
+        $table->string('link_login_id')->nullable();
+        $table->string('link_orig_esc')->nullable();
+        $table->string('mac_esc')->nullable();
+
+    }
 }

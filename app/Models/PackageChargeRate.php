@@ -5,6 +5,8 @@ namespace Modules\Isp\Models;
 use Modules\Base\Models\BaseModel;
 use Modules\Isp\Models\PackageCharge;
 use Modules\Isp\Models\Rate;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PackageChargeRate extends BaseModel
 {
@@ -27,7 +29,7 @@ class PackageChargeRate extends BaseModel
      * Add relationship to PackageCharge
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function packageCharge()
+    public function packageCharge(): BelongsTo
     {
         return $this->belongsTo(PackageCharge::class);
     }
@@ -36,9 +38,19 @@ class PackageChargeRate extends BaseModel
      * Add relationship to Rate
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function rate()
+    public function rate(): BelongsTo
     {
         return $this->belongsTo(Rate::class);
     }
 
+
+    public function migration(Blueprint $table): void
+    {
+        $table->id();
+
+        $table->foreignId('package_charge_id')->nullable()->constrained(table: 'isp_package_charge')->onDelete('set null');
+        $table->foreignId('rate_id')->nullable()->constrained(table: 'account_rate')->onDelete('set null');
+        $table->boolean('published')->default(true)->nullable();
+
+    }
 }

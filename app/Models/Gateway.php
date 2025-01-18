@@ -3,6 +3,7 @@
 namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
+use Illuminate\Database\Schema\Blueprint;
 
 class Gateway extends BaseModel
 {
@@ -20,4 +21,19 @@ class Gateway extends BaseModel
      * @var string
      */
     protected $table = "isp_gateway";
+
+    public function migration(Blueprint $table): void
+    {
+        $table->id();
+
+        $table->string('title');
+        $table->string('username');
+        $table->string('password');
+        $table->string('database');
+        $table->string('ip_address');
+        $table->string('port');
+        $table->string('type');
+        $table->boolean('published')->nullable()->default(true);
+
+    }
 }

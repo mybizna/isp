@@ -5,6 +5,8 @@ namespace Modules\Isp\Models;
 use Modules\Base\Models\BaseModel;
 use Modules\Isp\Models\BillingCycle;
 use Modules\Isp\Models\Gateway;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Package extends BaseModel
 {
@@ -31,7 +33,7 @@ class Package extends BaseModel
      * Add relationship to BillingCycle
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function billingCycle()
+    public function billingCycle(): BelongsTo
     {
         return $this->belongsTo(BillingCycle::class);
     }
@@ -40,9 +42,33 @@ class Package extends BaseModel
      * Add relationship to Gateway
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function gateway()
+    public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class);
     }
 
+
+    public function migration(Blueprint $table)
+    {
+        $table->id();
+
+        $table->string('title');
+        $table->string('slug');
+        $table->string('pool');
+        $table->string('description')->nullable();
+        $table->foreignId('billing_cycle_id')->nullable()->constrained(table: 'isp_billing_cycle')->onDelete('set null');
+        $table->foreignId('gateway_id')->nullable()->constrained(table: 'isp_gateway')->onDelete('set null');
+        $table->string('speed')->nullable();
+        $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
+        $table->string('bundle')->nullable();
+        $table->enum('bundle_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
+        $table->integer('ordering');
+        $table->boolean('published')->default(true)->nullable();
+        $table->boolean('featured')->default(false)->nullable();
+        $table->boolean('default')->default(false)->nullable();
+        $table->boolean('is_unlimited')->default(false)->nullable();
+        $table->boolean('is_hidden')->default(false)->nullable();
+        $table->decimal('amount', 8, 2)->nullable();
+
+    }
 }

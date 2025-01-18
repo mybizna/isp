@@ -4,6 +4,8 @@ namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
 use Modules\Partner\Models\Partner;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Subscriber extends BaseModel
 {
@@ -33,8 +35,20 @@ class Subscriber extends BaseModel
      * Add relationship to Partner
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function partner()
+    public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class);
+    }
+
+
+    public function migration(Blueprint $table): void
+    {
+        $table->id();
+
+        $table->string('username');
+        $table->string('password');
+        $table->boolean('had_trail')->default(0)->nullable();
+        $table->foreignId('partner_id')->nullable()->constrained(table: 'partner_partner')->onDelete('set null');
+
     }
 }

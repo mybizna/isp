@@ -4,6 +4,8 @@ namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
 use Modules\Isp\Models\Subscriber;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MacAddress extends BaseModel
 {
@@ -26,8 +28,16 @@ class MacAddress extends BaseModel
      * Add relationship to Subscriber
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function subscriber()
+    public function subscriber(): BelongsTo
     {
         return $this->belongsTo(Subscriber::class);
+    }
+
+    public function migration(Blueprint $table): void
+    {
+        $table->id();
+
+        $table->foreignId('subscriber_id')->nullable()->constrained(table: 'isp_subscriber')->onDelete('set null');
+        $table->string('mac')->nullable();
     }
 }
