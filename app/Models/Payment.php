@@ -3,9 +3,10 @@
 namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
-use Modules\Isp\Models\Invoice;
+use Modules\Account\Models\Invoice;
 use Modules\Isp\Models\Subscription;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends BaseModel
 {
@@ -44,7 +45,6 @@ class Payment extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->string('title');
         $table->foreignId('subscription_id')->nullable()->constrained(table: 'isp_subscription')->onDelete('set null');

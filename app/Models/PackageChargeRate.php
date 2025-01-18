@@ -4,7 +4,7 @@ namespace Modules\Isp\Models;
 
 use Modules\Base\Models\BaseModel;
 use Modules\Isp\Models\PackageCharge;
-use Modules\Isp\Models\Rate;
+use Modules\Account\Models\Rate;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -46,7 +46,6 @@ class PackageChargeRate extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->foreignId('package_charge_id')->nullable()->constrained(table: 'isp_package_charge')->onDelete('set null');
         $table->foreignId('rate_id')->nullable()->constrained(table: 'account_rate')->onDelete('set null');

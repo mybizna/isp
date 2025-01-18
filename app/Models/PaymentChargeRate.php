@@ -45,7 +45,6 @@ class PaymentChargeRate extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->foreignId('payment_charge_id')->nullable()->constrained(table: 'isp_payment_charge')->onDelete('set null');
         $table->foreignId('rate_id')->nullable()->constrained(table: 'account_rate')->onDelete('set null');

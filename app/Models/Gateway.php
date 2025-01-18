@@ -24,7 +24,6 @@ class Gateway extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->string('title');
         $table->string('username');

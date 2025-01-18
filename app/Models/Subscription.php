@@ -46,7 +46,6 @@ class Subscription extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->foreignId('subscriber_id')->nullable()->constrained(table: 'isp_subscriber')->onDelete('set null');
         $table->foreignId('package_id')->nullable()->constrained(table: 'isp_package')->onDelete('set null');

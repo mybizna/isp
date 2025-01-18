@@ -25,7 +25,6 @@ class SubscriberLogin extends BaseModel
 
     public function migration(Blueprint $table): void
     {
-        $table->id();
 
         $table->string('mac')->nullable();
         $table->string('ip')->nullable();
