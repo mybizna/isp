@@ -56,12 +56,18 @@ class PaymentCharge extends BaseModel
 
         $table->string('title');
         $table->string('slug');
-        $table->foreignId('payment_id')->nullable()->constrained(table: 'isp_payment')->onDelete('set null');
-        $table->foreignId('ledger_id')->nullable()->constrained(table: 'account_ledger')->onDelete('set null');
+        $table->unsignedBigInteger('payment_id')->nullable();
+        $table->unsignedBigInteger('ledger_id')->nullable();
         $table->integer('quantity')->default(1);
         $table->string('description')->nullable();
         $table->integer('price')->nullable();
         $table->string('currency')->default('USD');
         $table->boolean('published')->default(true)->nullable();
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('payment_id')->references('id')->on('isp_payment')->onDelete('set null');
+        $table->foreign('ledger_id')->references('id')->on('account_ledger')->onDelete('set null');
     }
 }

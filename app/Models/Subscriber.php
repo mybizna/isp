@@ -47,7 +47,11 @@ class Subscriber extends BaseModel
         $table->string('username');
         $table->string('password');
         $table->boolean('had_trail')->default(0)->nullable();
-        $table->foreignId('partner_id')->nullable()->constrained(table: 'partner_partner')->onDelete('set null');
+        $table->unsignedBigInteger('partner_id')->nullable();
+    }
 
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('partner_id')->references('id')->on('partner_partner')->onDelete('set null');
     }
 }

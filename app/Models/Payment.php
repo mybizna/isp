@@ -1,12 +1,11 @@
 <?php
-
 namespace Modules\Isp\Models;
 
-use Modules\Base\Models\BaseModel;
-use Modules\Account\Models\Invoice;
-use Modules\Isp\Models\Subscription;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Schema\Blueprint;
+use Modules\Account\Models\Invoice;
+use Modules\Base\Models\BaseModel;
+use Modules\Isp\Models\Subscription;
 
 class Payment extends BaseModel
 {
@@ -47,13 +46,19 @@ class Payment extends BaseModel
     {
 
         $table->string('title');
-        $table->foreignId('subscription_id')->nullable()->constrained(table: 'isp_subscription')->onDelete('set null');
-        $table->foreignId('invoice_id')->nullable()->constrained(table: 'account_invoice')->onDelete('set null');
+        $table->unsignedBigInteger('subscription_id')->nullable();
+        $table->unsignedBigInteger('invoice_id')->nullable();
         $table->string('description')->nullable();
         $table->boolean('is_paid')->default(0)->nullable();
         $table->boolean('completed')->default(0)->nullable();
         $table->boolean('successful')->default(0)->nullable();
 
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('subscription_id')->references('id')->on('isp_subscription')->onDelete('set null');
+        $table->foreign('invoice_id')->references('id')->on('account_invoice')->onDelete('set null');
     }
 
 }

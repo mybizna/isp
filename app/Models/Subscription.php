@@ -1,12 +1,11 @@
 <?php
-
 namespace Modules\Isp\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Schema\Blueprint;
 use Modules\Base\Models\BaseModel;
 use Modules\Isp\Models\Package;
 use Modules\Isp\Models\Subscriber;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Subscription extends BaseModel
 {
@@ -43,14 +42,18 @@ class Subscription extends BaseModel
         return $this->belongsTo(Package::class);
     }
 
-
     public function migration(Blueprint $table): void
     {
-
-        $table->foreignId('subscriber_id')->nullable()->constrained(table: 'isp_subscriber')->onDelete('set null');
-        $table->foreignId('package_id')->nullable()->constrained(table: 'isp_package')->onDelete('set null');
+        $table->unsignedBigInteger('subscriber_id')->nullable();
+        $table->unsignedBigInteger('package_id')->nullable();
         $table->datetime('start_date');
         $table->datetime('end_date');
 
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->onDelete('set null');
+        $table->foreign('package_id')->references('id')->on('isp_package')->onDelete('set null');
     }
 }

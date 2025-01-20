@@ -36,7 +36,12 @@ class MacAddress extends BaseModel
     public function migration(Blueprint $table): void
     {
 
-        $table->foreignId('subscriber_id')->nullable()->constrained(table: 'isp_subscriber')->onDelete('set null');
+        $table->unsignedBigInteger('subscriber_id')->nullable();
         $table->string('mac')->nullable();
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('subscriber_id')->references('id')->on('isp_subscriber')->onDelete('set null');
     }
 }

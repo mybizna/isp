@@ -62,8 +62,8 @@ class Package extends BaseModel
         $table->string('slug');
         $table->string('pool');
         $table->string('description')->nullable();
-        $table->foreignId('billing_cycle_id')->nullable()->constrained(table: 'isp_billing_cycle')->onDelete('set null');
-        $table->foreignId('gateway_id')->nullable()->constrained(table: 'isp_gateway')->onDelete('set null');
+        $table->unsignedBigInteger('billing_cycle_id')->nullable();
+        $table->unsignedBigInteger('gateway_id')->nullable();
         $table->string('speed')->nullable();
         $table->enum('speed_type', ['gigabyte', 'kilobyte', 'megabyte'])->default('megabyte')->nullable();
         $table->string('bundle')->nullable();
@@ -77,5 +77,11 @@ class Package extends BaseModel
         $table->integer('amount')->nullable();
         $table->string('currency')->default('USD');
 
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('billing_cycle_id')->references('id')->on('isp_billing_cycle')->onDelete('set null');
+        $table->foreign('gateway_id')->references('id')->on('isp_gateway')->onDelete('set null');
     }
 }

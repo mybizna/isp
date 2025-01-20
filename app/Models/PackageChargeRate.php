@@ -47,9 +47,16 @@ class PackageChargeRate extends BaseModel
     public function migration(Blueprint $table): void
     {
 
-        $table->foreignId('package_charge_id')->nullable()->constrained(table: 'isp_package_charge')->onDelete('set null');
-        $table->foreignId('rate_id')->nullable()->constrained(table: 'account_rate')->onDelete('set null');
+        $table->unsignedBigInteger('package_charge_id')->nullable();
+        $table->unsignedBigInteger('rate_id')->nullable();
+
         $table->boolean('published')->default(true)->nullable();
 
+    }
+
+    public function post_migration(Blueprint $table): void
+    {
+        $table->foreign('package_charge_id')->references('id')->on('isp_package_charge')->onDelete('set null');
+        $table->foreign('rate_id')->references('id')->on('account_rate')->onDelete('set null');
     }
 }
