@@ -12,7 +12,7 @@ use Modules\Isp\Models\SubscriberLogin;
 use Modules\Isp\Models\Subscription as DBSubscription;
 use Session;
 
-class SubscriptionController extends BaseController
+class IspController extends BaseController
 {
     public function summary(Request $request)
     {
